@@ -32,7 +32,7 @@ public class City extends BaseEntity{
 	@ManyToOne
 	@JoinColumn(name = "province_id")
 	private Province province;
+	private String cityCode; 
+	private String cityName; 
 	
-	private String cityCode;
-	private String cityName;
 }
