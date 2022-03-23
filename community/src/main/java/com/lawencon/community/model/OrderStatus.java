@@ -10,7 +10,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@Table(name = "order_status", uniqueConstraints = {
+@Table(uniqueConstraints = {
 	@UniqueConstraint(
 		name = "order_status_code_bk",
 		columnNames = {"status_code"}

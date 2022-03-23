@@ -10,7 +10,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@Table(name = "thread_type", uniqueConstraints = {
+@Table(uniqueConstraints = {
 	@UniqueConstraint(
 		name = "thread_type_bk",
 		columnNames = {"thread_type_code"}

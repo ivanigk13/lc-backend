@@ -8,5 +8,5 @@ import lombok.Data;
 public class GetAllPollingVoterDtoRes {
 
 	private String msg;
-	private List<GetPollingVoterDtoData> data;
+	private List<GetPollingVoterDtoDataRes> data;
 }

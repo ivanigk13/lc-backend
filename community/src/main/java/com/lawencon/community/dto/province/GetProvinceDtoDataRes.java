@@ -3,7 +3,7 @@ package com.lawencon.community.dto.province;
 import lombok.Data;
 
 @Data
-public class GetProvinceDtoData {
+public class GetProvinceDtoDataRes {
 
 	private String id;
 	private String provinceCode;

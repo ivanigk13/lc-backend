@@ -1,7 +1,6 @@
 package com.lawencon.community.model;
 
 import javax.persistence.Entity;
-import javax.persistence.Table;
 
 import com.lawencon.base.BaseEntity;
 
@@ -9,7 +8,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@Table(name = "social_media")
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class SocialMedia extends BaseEntity{

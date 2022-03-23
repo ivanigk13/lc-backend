@@ -3,7 +3,7 @@ package com.lawencon.community.dto.pollingheader;
 import lombok.Data;
 
 @Data
-public class GetPollingHeaderDtoData {
+public class GetPollingHeaderDtoDataRes {
 
 	private String id;
 	private String threadId;

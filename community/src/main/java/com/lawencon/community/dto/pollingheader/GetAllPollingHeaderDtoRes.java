@@ -8,6 +8,6 @@ import lombok.Data;
 public class GetAllPollingHeaderDtoRes {
 	
 	private String msg;
-	private List<GetPollingHeaderDtoData> data;
+	private List<GetPollingHeaderDtoDataRes> data;
 
 }

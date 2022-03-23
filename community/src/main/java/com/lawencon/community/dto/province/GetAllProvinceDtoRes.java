@@ -6,5 +6,5 @@ import lombok.Data;
 public class GetAllProvinceDtoRes {
 
 	private String msg;
-	private GetProvinceDtoData data;
+	private GetProvinceDtoDataRes data;
 }

@@ -6,5 +6,5 @@ import lombok.Data;
 public class GetByPollingHeaderIdDtoRes {
 
 	private String msg;
-	private GetPollingHeaderDtoData data;
+	private GetPollingHeaderDtoDataRes data;
 }

@@ -6,5 +6,5 @@ import lombok.Data;
 public class GetByPollingVoterIdDtoRes {
 
 	private String msg;
-	private GetPollingVoterDtoData data;
+	private GetPollingVoterDtoDataRes data;
 }

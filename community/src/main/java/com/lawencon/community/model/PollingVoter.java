@@ -3,7 +3,6 @@ package com.lawencon.community.model;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 import com.lawencon.base.BaseEntity;
 
@@ -11,7 +10,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@Table(name = "polling_voter")
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class PollingVoter extends BaseEntity{

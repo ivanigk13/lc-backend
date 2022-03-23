@@ -3,7 +3,7 @@ package com.lawencon.community.dto.pollingdetail;
 import lombok.Data;
 
 @Data
-public class GetPollingDetailDtoData {
+public class GetPollingDetailDtoDataRes {
 
 	private String id;
 	private String pollingHeaderId;
