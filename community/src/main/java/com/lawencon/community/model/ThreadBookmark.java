@@ -11,7 +11,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@Table
+@Table(name = "thread_bookmark")
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class ThreadBookmark extends BaseEntity{

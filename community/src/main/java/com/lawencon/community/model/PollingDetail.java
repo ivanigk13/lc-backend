@@ -11,7 +11,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@Table
+@Table(name = "polling_detail")
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class PollingDetail extends BaseEntity{

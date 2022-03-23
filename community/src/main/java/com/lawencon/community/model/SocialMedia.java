@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@Table
+@Table(name = "social_media")
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class SocialMedia extends BaseEntity{

@@ -11,7 +11,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@Table
+@Table(name = "polling_header")
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class PollingHeader extends BaseEntity{

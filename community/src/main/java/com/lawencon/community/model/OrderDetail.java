@@ -12,7 +12,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@Table
+@Table(name = "order_detail")
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class OrderDetail extends BaseEntity{

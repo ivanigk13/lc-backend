@@ -12,7 +12,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@Table
+@Table(name = "thread_like")
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class ThreadLike extends BaseEntity{
