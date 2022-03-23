@@ -16,24 +16,24 @@ import org.springframework.stereotype.Repository;
  * 
  */
 @Repository
-public class BaseDaoImpl<T extends BaseEntity> {
+public class AbstractJpaDao<T extends BaseEntity> {
 
 	public Class<T> clazz;
 
 	@SuppressWarnings("unchecked")
-	public BaseDaoImpl() {
-		this.clazz = (Class<T>) GenericTypeResolver.resolveTypeArgument(getClass(), BaseDaoImpl.class);
+	public AbstractJpaDao() {
+		this.clazz = (Class<T>) GenericTypeResolver.resolveTypeArgument(getClass(), AbstractJpaDao.class);
 	}
 
-	protected T getById(final UUID id) {
+	public T getById(final UUID id) {
 		return em().find(clazz, id);
 	}
 
-	protected List<T> getAll() {
+	public List<T> getAll() {
 		return em().createQuery("FROM " + clazz.getName(), clazz).getResultList();
 	}
 
-	protected T save(T entity) throws Exception {
+	public T save(T entity) throws Exception {
 		if (entity.getId() != null) {
 			entity = em().merge(entity);
 		} else {
@@ -47,7 +47,7 @@ public class BaseDaoImpl<T extends BaseEntity> {
 		em().remove(entity);
 	}
 
-	protected boolean deleteById(final Object entityId) throws Exception {
+	public boolean deleteById(final Object entityId) throws Exception {
 		T entity = null;
 		if (entityId != null && entityId instanceof UUID) {
 			entity = getById((UUID) entityId);
@@ -73,11 +73,11 @@ public class BaseDaoImpl<T extends BaseEntity> {
 		return em().createNativeQuery(sql);
 	}
 	
-	protected Long countAll() {
+	public Long countAll() {
         return (Long) em().createQuery("SELECT COUNT(id) FROM " + clazz.getName()).getSingleResult();
     }
 
-    protected List<T> getAll(int startPage, int maxPage) {
+    public List<T> getAll(int startPage, int maxPage) {
         return em().createQuery("FROM " + clazz.getName(), clazz)
                 .setFirstResult(startPage)
                 .setMaxResults(maxPage)

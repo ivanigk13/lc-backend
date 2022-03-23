@@ -3,7 +3,7 @@ package com.lawencon.base;
 /**
  * @author lawencon05
  */
-public class BaseServiceImpl {
+public class BaseService {
 
 	protected void begin() {
 		ConnHandler.begin();
