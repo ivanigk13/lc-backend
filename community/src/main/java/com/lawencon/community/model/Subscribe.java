@@ -1,7 +1,6 @@
 package com.lawencon.community.model;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 import javax.persistence.Entity;
 
@@ -16,6 +15,6 @@ import lombok.EqualsAndHashCode;
 public class Subscribe extends BaseEntity{
 
 	private static final long serialVersionUID = 8935545143374766189L;
-	private Date duration;
+	private Integer duration;
 	private BigDecimal price;
 }

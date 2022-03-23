@@ -72,5 +72,16 @@ public class BaseDaoImpl<T extends BaseEntity> {
 	protected Query createNativeQuery(String sql) {
 		return em().createNativeQuery(sql);
 	}
+	
+	protected Long countAll() {
+        return (Long) em().createQuery("SELECT COUNT(id) FROM " + clazz.getName()).getSingleResult();
+    }
+
+    protected List<T> getAll(int startPage, int maxPage) {
+        return em().createQuery("FROM " + clazz.getName(), clazz)
+                .setFirstResult(startPage)
+                .setMaxResults(maxPage)
+                .getResultList();
+    }
 
 }
