@@ -3,10 +3,13 @@ package com.lawencon.community.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.lawencon.base.BaseDaoImpl;
+import org.springframework.stereotype.Repository;
+
+import com.lawencon.base.AbstractJpaDao;
 import com.lawencon.community.model.City;
 
-public class CityDao extends BaseDaoImpl<City>{
+@Repository
+public class CityDao extends AbstractJpaDao<City>{
 
 	public List<City> getAllByProvinceId(String provinceId) {
 		String sql = "SELECT id, city_code, city_name WHERE province_id = :id ORDER BY id ASC";

@@ -3,11 +3,14 @@ package com.lawencon.community.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.lawencon.base.BaseDaoImpl;
+import org.springframework.stereotype.Repository;
+
+import com.lawencon.base.AbstractJpaDao;
 import com.lawencon.community.model.Thread;
 import com.lawencon.community.model.ThreadDetail;
 
-public class ThreadDetailDao extends BaseDaoImpl<ThreadDetail>{
+@Repository
+public class ThreadDetailDao extends AbstractJpaDao<ThreadDetail>{
 
 	public List<ThreadDetail> getAllByThreadId(String threadId) {
 		String sql = "SELECT id, thread_id, comment FROM thread_detail WHERE thread_id = :id ORDER BY id ASC";

@@ -1,8 +1,11 @@
 package com.lawencon.community.dao;
 
-import com.lawencon.base.BaseDaoImpl;
+import org.springframework.stereotype.Repository;
+
+import com.lawencon.base.AbstractJpaDao;
 import com.lawencon.community.model.ActivityType;
 
-public class ActivityTypeDao extends BaseDaoImpl<ActivityType>{
+@Repository
+public class ActivityTypeDao extends AbstractJpaDao<ActivityType>{
 
 }

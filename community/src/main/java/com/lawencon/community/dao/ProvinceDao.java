@@ -1,8 +1,11 @@
 package com.lawencon.community.dao;
 
-import com.lawencon.base.BaseDaoImpl;
+import org.springframework.stereotype.Repository;
+
+import com.lawencon.base.AbstractJpaDao;
 import com.lawencon.community.model.Province;
 
-public class ProvinceDao extends BaseDaoImpl<Province>{
+@Repository
+public class ProvinceDao extends AbstractJpaDao<Province>{
 
 }

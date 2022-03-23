@@ -1,8 +1,11 @@
 package com.lawencon.community.dao;
 
-import com.lawencon.base.BaseDaoImpl;
+import org.springframework.stereotype.Repository;
+
+import com.lawencon.base.AbstractJpaDao;
 import com.lawencon.community.model.OrderStatus;
 
-public class OrderStatusDao extends BaseDaoImpl<OrderStatus>{
+@Repository
+public class OrderStatusDao extends AbstractJpaDao<OrderStatus>{
 
 }
