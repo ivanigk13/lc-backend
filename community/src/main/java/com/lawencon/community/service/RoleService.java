@@ -1,5 +1,16 @@
 package com.lawencon.community.service;
 
-public interface RoleService {
+import org.springframework.stereotype.Service;
 
+import com.lawencon.base.BaseService;
+import com.lawencon.community.dao.RoleDao;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class RoleService extends BaseService {
+	
+	private final RoleDao roleDao;
+	
 }
