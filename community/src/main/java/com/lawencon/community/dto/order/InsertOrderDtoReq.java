@@ -9,8 +9,8 @@ import lombok.Data;
 @Data
 public class InsertOrderDtoReq {
 
-	@NotNull(message = "Order Status Id must be filled")
-	private String orderStatusId;
+	@NotNull(message = "Transaction Status Id must be filled")
+	private String transactionStatusId;
 	
 	@NotNull(message = "User Id must be filled")
 	private String userId;

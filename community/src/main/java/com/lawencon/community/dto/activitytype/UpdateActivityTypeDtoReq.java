@@ -9,10 +9,7 @@ import lombok.Data;
 public class UpdateActivityTypeDtoReq {	
 	
 	@NotNull(message = "Id must be filled")
-	private String id;
-	
-	@NotEmpty(message = "Activity Type Code must be filled")
-	private String activityTypeCode;
+	private String id;	
 	
 	@NotEmpty(message = "Activity Type Name must be filled")
 	private String activityTypeName;

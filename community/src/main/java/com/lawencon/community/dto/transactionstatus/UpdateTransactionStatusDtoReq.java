@@ -11,11 +11,7 @@ public class UpdateTransactionStatusDtoReq {
 	
 	
 	@NotNull(message = "Id is required")
-	private String id;
-	
-	@NotEmpty(message = "Status Code must be filled")
-	@Size(min = 1, max = 15, message = "Status Code min length is 1 and max length is 5")
-	private String statusCode;
+	private String id;		
 	
 	@NotEmpty(message = "Status Name must be filled")
 	@Size(min = 1, max = 30, message = "Status Name min lenght is 1 adn max length is 30")

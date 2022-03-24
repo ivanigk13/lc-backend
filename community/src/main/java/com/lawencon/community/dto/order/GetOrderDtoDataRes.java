@@ -6,7 +6,7 @@ import lombok.Data;
 public class GetOrderDtoDataRes {
 
 	private String id;
-	private String orderStatusId;
+	private String transactionStatusId;
 	private String userId;
 	private String fileId;
 	private String invoice;
