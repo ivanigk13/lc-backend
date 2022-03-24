@@ -9,10 +9,10 @@ import lombok.Data;
 @Data
 public class InsertPollingDetailDtoReq {
 
-	@NotNull(message = "polling header id must be filled")
+	@NotNull(message = "Polling Header Id must be filled")
 	private String pollingHeaderId;
 	
-	@NotEmpty(message = "polling name must be filled")
+	@NotEmpty(message = "Polling Name must be filled")
 	@Size(min = 1, max = 100, message = "polling name min length is 1 and max length is 100")
 	private String pollingName;
 	

@@ -16,7 +16,11 @@ public class UpdateActivityTypeDtoReq {
 	
 	@NotEmpty(message = "Activity Type Name must be filled")
 	private String activityTypeName;
+	
+	@NotNull(message = "Version must be filled")
 	private Integer version;
 	
-
+	@NotNull(message = "Is Active active must be filled")
+	private Boolean isActive;
+	
 }

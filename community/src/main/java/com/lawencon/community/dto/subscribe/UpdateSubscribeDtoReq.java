@@ -10,20 +10,20 @@ import lombok.Data;
 @Data
 public class UpdateSubscribeDtoReq {
 
-	@NotNull(message = "id must be filled")
+	@NotNull(message = "Id must be filled")
 	private String id;
 	
-	@NotNull(message = "version must be filled")
-	private Integer version;
-	
-	@NotNull(message = "duration must be filled")
-	@Size(min = 1, message = "duration must be at least 1")
+	@NotNull(message = "Duration must be filled")
+	@Size(min = 1, message = "Duration must be at least 1")
 	private Integer duration;
 	
-	@NotNull(message = "price must be filled")
+	@NotNull(message = "Price must be filled")
 	@Size(min = 30000, message = "price must be at least 30000")
 	private BigDecimal price;
 	
-	@NotNull(message = "is active must be filled")
+	@NotNull(message = "Version must be filled")
+	private Integer version;
+	
+	@NotNull(message = "Is Active must be filled")
 	private Boolean isActive;
 }

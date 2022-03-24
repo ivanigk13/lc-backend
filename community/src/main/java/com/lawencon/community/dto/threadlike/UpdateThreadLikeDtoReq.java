@@ -7,21 +7,21 @@ import lombok.Data;
 @Data
 public class UpdateThreadLikeDtoReq {
 
-	@NotNull(message = "id must be filled")
+	@NotNull(message = "Id must be filled")
 	private String id;
 	
-	@NotNull(message = "version must be filled")
-	private Integer version;
-
-	@NotNull(message = "is active must be filled")
-	private Boolean isActive;
-	
-	@NotNull(message = "thread id must be filled")
+	@NotNull(message = "Thread Id must be filled")
 	private String threadId;
 	
-	@NotNull(message = "user id must be filled")
+	@NotNull(message = "User Id must be filled")
 	private String userId;
 	
-	@NotNull(message = "like counter must be filled")
+	@NotNull(message = "Like Counter must be filled")
 	private Integer likeCounter;
+	
+	@NotNull(message = "Version must be filled")
+	private Integer version;
+
+	@NotNull(message = "Is Active must be filled")
+	private Boolean isActive;
 }

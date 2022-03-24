@@ -6,10 +6,10 @@ import lombok.Data;
 public class GetCityDtoDataRes {
 	
 	private String id;
-	private String province;
+	private String provinceId;
 	private String cityCode;
 	private String cityName;
-	private String createdBy;
 	private Integer version;
+	private Boolean isActive;
 
 }

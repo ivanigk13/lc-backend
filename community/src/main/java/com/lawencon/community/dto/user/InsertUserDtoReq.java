@@ -9,14 +9,14 @@ import lombok.Data;
 @Data
 public class InsertUserDtoReq {
 
-	@NotNull(message = "role id must be filled")
+	@NotNull(message = "Role Id must be filled")
 	private Long roleId;
 
-	@NotEmpty(message = "email must be filled")
-	@Size(max = 50, message = "email length maximum = 50")
+	@NotEmpty(message = "Email must be filled")
+	@Size(max = 100, message = "Email length maximum = 100")
 	private String email;
 	
-	@NotEmpty(message = "password must be filled")
-	@Size(min = 5, max = 100, message = "password length minimal = 5")
+	@NotEmpty(message = "Password must be filled")
+	@Size(min = 8, max = 100, message = "Password length minimal = 8")
 	private String password;
 }

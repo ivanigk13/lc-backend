@@ -7,6 +7,6 @@ import lombok.Data;
 @Data
 public class InsertPollingVoterDtoReq {
 
-	@NotNull(message = "polling detail id must be filled")
+	@NotNull(message = "Polling Detail id must be filled")
 	private String pollingDetailId;
 }

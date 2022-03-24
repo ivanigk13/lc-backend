@@ -6,10 +6,10 @@ import lombok.Data;
 public class GetOrderDetailDtoDataRes {
 	
 	private String id;
-	private String order;
-	private String subscribe;
-	private String activity;
-	private String createdBy;
+	private String orderId;
+	private String subscribeId;
+	private String activityId;
 	private Integer version;
+	private Boolean isActive;
 
 }

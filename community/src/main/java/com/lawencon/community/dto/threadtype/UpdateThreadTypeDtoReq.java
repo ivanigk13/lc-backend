@@ -12,13 +12,13 @@ public class UpdateThreadTypeDtoReq {
 	@NotNull(message = "id must be filled")
 	private String id;
 	
-	@NotNull(message = "version must be filled")
+	@NotEmpty(message = "Thread Type Name must be filled")
+	@Size(min = 1, max = 15, message = "Thread Type Name min length is 1 and max length is 15")
+	private String threadTypeName;
+	
+	@NotNull(message = "Version must be filled")
 	private Integer version;
 
-	@NotNull(message = "is active must be filled")
+	@NotNull(message = "Is Active must be filled")
 	private Boolean isActive;
-	
-	@NotEmpty(message = "thread type name must be filled")
-	@Size(min = 1, max = 15, message = "thread type name min length is 1 and max length is 15")
-	private String threadTypeName;
 }

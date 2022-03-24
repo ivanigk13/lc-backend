@@ -6,9 +6,9 @@ import lombok.Data;
 public class GetThreadBookmarkDtoDataRes {
 
 	private String id;
-	private Integer version;
-	private Boolean isActive;
 	private String threadId;
 	private String userId;
+	private Integer version;
+	private Boolean isActive;
 	
 }

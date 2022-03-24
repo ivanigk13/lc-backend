@@ -8,7 +8,7 @@ public class GetActivityTypeDtoDataRes {
 	private String id;
 	private String activityTypeCode;
 	private String activityTypeName;	
-	private String createdBy;
 	private Integer version;
+	private Boolean isActive;
 
 }

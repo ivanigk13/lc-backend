@@ -7,16 +7,16 @@ import lombok.Data;
 @Data
 public class UpdateSocialMediaDtoReq {
 
-	@NotNull(message = "id must be filled")
+	@NotNull(message = "Id must be filled")
 	private String id;
-	
-	@NotNull(message = "version must be filled")
-	private Integer version;
 	
 	private String instagram;
 	private String facebook;
 	private String twitter;
 	
-	@NotNull(message = "is active active must be filled")
+	@NotNull(message = "Version must be filled")
+	private Integer version;
+	
+	@NotNull(message = "Is Active active must be filled")
 	private Boolean isActive;
 }

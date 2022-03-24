@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class InsertProfileDtoReq {
 
-	@NotNull(message = "user id must be filled")
+	@NotNull(message = "User Id must be filled")
 	private String userId;
 	private String industryId;
 	private String positionId;
@@ -17,8 +17,8 @@ public class InsertProfileDtoReq {
 	private String fileId;
 	private String socialMediaId;
 	
-	@NotEmpty(message = "full name must be filled")
-	@Size(min = 1, max = 30, message = "full name min length is 1 and max length is 30")
+	@NotEmpty(message = "Full Name must be filled")
+	@Size(min = 1, max = 50, message = "Full Name min length is 1 and max length is 50")
 	private String fullName;
 	
 	private String phoneNumber;

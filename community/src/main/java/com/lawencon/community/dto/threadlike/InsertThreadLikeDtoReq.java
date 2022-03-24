@@ -7,12 +7,12 @@ import lombok.Data;
 @Data
 public class InsertThreadLikeDtoReq {
 
-	@NotNull(message = "thread id must be filled")
+	@NotNull(message = "Thread Id must be filled")
 	private String threadId;
 	
-	@NotNull(message = "user id must be filled")
+	@NotNull(message = "User Id must be filled")
 	private String userId;
 	
-	@NotNull(message = "like counter must be filled")
+	@NotNull(message = "Like Counter must be filled")
 	private Integer likeCounter;
 }
