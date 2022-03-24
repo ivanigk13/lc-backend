@@ -7,8 +7,8 @@ import lombok.Data;
 @Data
 public class InsertThreadBookmarkDtoReq {
 
-	@NotNull(message = "Thread Type Id must be filled")
-	private String threadTypeId;
+	@NotNull(message = "Thread Id must be filled")
+	private String threadId;
 	
 	@NotNull(message = "User Id must be filled")
 	private String userId;
