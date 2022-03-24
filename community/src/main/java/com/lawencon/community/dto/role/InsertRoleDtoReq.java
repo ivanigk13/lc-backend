@@ -8,11 +8,11 @@ import lombok.Data;
 @Data
 public class InsertRoleDtoReq {
 
-	@NotEmpty(message = "role code must be filled")
-	@Size(min = 1, max = 5, message = "role code min length is 1 and max length is 5")
+	@NotEmpty(message = "Role Code must be filled")
+	@Size(min = 1, max = 5, message = "Role Code min length is 1 and max length is 5")
 	private String roleCode;
 	
-	@NotEmpty(message = "role name must be filled")
-	@Size(min = 1, max = 30, message = "role name min length is 1 and max length is 30")
+	@NotEmpty(message = "Role Name must be filled")
+	@Size(min = 1, max = 30, message = "Role Name min length is 1 and max length is 30")
 	private String roleName;
 }

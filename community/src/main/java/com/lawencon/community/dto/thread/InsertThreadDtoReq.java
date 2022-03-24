@@ -9,14 +9,14 @@ import lombok.Data;
 @Data
 public class InsertThreadDtoReq {
 
-	@NotNull(message = "thread type id must be filled")
+	@NotNull(message = "Thread Type Id must be filled")
 	private String threadTypeId;
 	
-	@NotEmpty(message = "title must be filled")
-	@Size(min = 1, message = "title length must be at least 1")
+	@NotEmpty(message = "Title must be filled")
+	@Size(min = 1, message = "Title length must be at least 1")
 	private String title;
 	
-	@NotEmpty(message = "content must be filled")
-	@Size(min = 1, message = "content length must be at least 1")
+	@NotEmpty(message = "Content must be filled")
+	@Size(min = 1, message = "Content length must be at least 1")
 	private String content;
 }

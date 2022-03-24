@@ -6,9 +6,9 @@ import lombok.Data;
 public class GetSocialMediaDtoDataRes {
 
 	private String id;
-	private Integer version;
-	private Boolean isActive;
 	private String instagram;
 	private String facebook;
 	private String twitter;
+	private Integer version;
+	private Boolean isActive;
 }

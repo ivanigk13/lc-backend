@@ -9,12 +9,16 @@ import lombok.Data;
 @Data
 public class UpdateRoleDtoReq {
 
-	@NotNull(message = "role id must be filled")
+	@NotNull(message = "Role Id must be filled")
 	private String id;
 	
-	@NotEmpty(message = "role name must be filled")
-	@Size(min = 1, max = 30, message = "role code min length is 1 and max length is 30")
+	@NotEmpty(message = "Role Name must be filled")
+	@Size(min = 1, max = 30, message = "Role Node min length is 1 and max length is 30")
 	private String roleName;
 	
+	@NotNull(message = "Version must be filled")
 	private Integer version;
+	
+	@NotNull(message = "Is Active active must be filled")
+	private Boolean isActive;
 }

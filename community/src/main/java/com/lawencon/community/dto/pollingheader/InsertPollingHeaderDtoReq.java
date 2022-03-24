@@ -7,6 +7,6 @@ import lombok.Data;
 @Data
 public class InsertPollingHeaderDtoReq {
 
-	@NotNull(message = "polling id must be filled")
+	@NotNull(message = "Polling Id must be filled")
 	private String threadId;
 }

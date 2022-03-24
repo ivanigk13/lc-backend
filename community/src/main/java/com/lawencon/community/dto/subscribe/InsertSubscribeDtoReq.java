@@ -10,11 +10,11 @@ import lombok.Data;
 @Data
 public class InsertSubscribeDtoReq {
 
-	@NotNull(message = "duration must be filled")
-	@Size(min = 1, message = "duration must be at least 1")
+	@NotNull(message = "Duration must be filled")
+	@Size(min = 1, message = "Duration must be at least 1")
 	private Integer duration;
 	
-	@NotNull(message = "price must be filled")
-	@Size(min = 30000, message = "price must be at least 30000")
+	@NotNull(message = "Price must be filled")
+	@Size(min = 30000, message = "Price must be at least 30000")
 	private BigDecimal price;
 }

@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class InsertOrderDetailDtoReq {
 
-	private String order;
-	private String subscribe;
-	private String activity;
+	private String orderId;
+	private String subscribeId;
+	private String activityId;
 }

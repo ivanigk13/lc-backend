@@ -6,11 +6,11 @@ import lombok.Data;
 public class GetThreadDtoDataRes {
 
 	private String id;
-	private Integer version;
 	private String threadTypeId;
 	private String threadTypeName;
 	private String fileId;
 	private String title;
 	private String content;
+	private Integer version;
 	private Boolean isActive;
 }

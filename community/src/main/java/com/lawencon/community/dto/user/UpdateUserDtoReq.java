@@ -9,19 +9,19 @@ import lombok.Data;
 @Data
 public class UpdateUserDtoReq {
 
-	@NotNull(message = "id must be filled")
+	@NotNull(message = "Id must be filled")
 	private String id;
 	
-	@NotNull(message = "version must be filled")
-	private Integer version;
-	
-	@NotNull(message = "role id must be filled")
+	@NotNull(message = "Role id must be filled")
 	private String roleId;
 	
-	@NotEmpty(message = "password must be filled")
-	@Size(min = 8, max = 100, message = "password length minimal = 8")
+	@NotEmpty(message = "Password must be filled")
+	@Size(min = 8, max = 100, message = "Password length minimal = 8")
 	private String password;
 	
-	@NotNull(message = "is active can't be null")
+	@NotNull(message = "Version must be filled")
+	private Integer version;
+
+	@NotNull(message = "Is Active must be filled")
 	private Boolean isActive;
 }

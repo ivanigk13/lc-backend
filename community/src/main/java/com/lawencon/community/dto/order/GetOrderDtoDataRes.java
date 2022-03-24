@@ -6,11 +6,11 @@ import lombok.Data;
 public class GetOrderDtoDataRes {
 
 	private String id;
-	private String orderStatus;
-	private String user;
-	private String file;
+	private String orderStatusId;
+	private String userId;
+	private String fileId;
 	private String invoice;
-	private String createdBy;
 	private Integer version;
+	private Boolean isActive;
 
 }

@@ -8,8 +8,8 @@ import lombok.Data;
 public class GetSubscribeDtoDataRes {
 
 	private String id;
-	private Integer version;
 	private Integer duration;
 	private BigDecimal price;
+	private Integer version;
 	private Boolean isActive;
 }
