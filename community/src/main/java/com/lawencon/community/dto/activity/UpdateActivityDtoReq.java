@@ -14,10 +14,15 @@ public class UpdateActivityDtoReq {
 	
 	@NotNull(message = "Id must be filled")
 	private String id;
-	private String file;
+	
+	@NotNull(message = "File must be filled")
+	private String fileId;
+	
+	@NotNull(message = "Payment File Id must be filled")
+	private String paymentFileId;
 	
 	@NotEmpty(message = "Activity Name must be filled")
-	private String activityName;
+	private String activityName;		
 	
 	@NotNull(message = "Date Start must be filled")
 	private Date dateStart;
@@ -30,7 +35,16 @@ public class UpdateActivityDtoReq {
 	
 	@NotNull(message = "Time End must be filled")
 	private LocalTime timeEnd;
+	
+	@NotNull(message = "price must be filled" )
 	private BigDecimal price;
+	
+	@NotEmpty(message = "Location must be filled")
 	private String location;
+	
+	@NotNull(message = "Version must be filled")
 	private Integer version;
+	
+	@NotNull(message = "Is Active must be filled")
+	private Boolean isActive;
 }

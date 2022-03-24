@@ -6,18 +6,28 @@ import java.util.Date;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import lombok.Data;
 
 @Data
 public class InsertActivityDtoReq {
 
-	@NotEmpty(message = "Activity Type must be filled")
-	private String activityType;
-	private String file;
+	@NotNull(message = "Activity Type Id must be filled")
+	private String activityTypeId;
+	
+	@NotNull(message = "File Id must be filled")
+	private String fileId;
 	
 	@NotEmpty(message = "Activity Name must be filled")
+	@Size(max = 100)
 	private String activityName;
+	
+	@NotNull(message = "Category Id must be filled")
+	private String categoryId;
+	
+	@NotNull(message = "Transaction Status Id must be filled")
+	private String transactionStatusId;
 	
 	@NotNull(message = "Date Start must be filled")
 	private Date dateStart;
@@ -30,6 +40,11 @@ public class InsertActivityDtoReq {
 	
 	@NotNull(message = "Time End must be filled")
 	private LocalTime timeEnd;
+	
+	@NotNull(message = "Price must be filled")
 	private BigDecimal price;
+	
+	@NotEmpty(message = "Location must be filled")
+	@Size(max = 50)
 	private String location;
 }

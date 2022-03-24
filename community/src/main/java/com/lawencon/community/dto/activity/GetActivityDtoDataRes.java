@@ -10,9 +10,11 @@ import lombok.Data;
 public class GetActivityDtoDataRes {
 	
 	private String id;
-	private String activityType;
-	private String file;
+	private String activityTypeId;
+	private String fileId;
+	private String paymentFileId;
 	private String activityName;
+	private String categoryId;
 	private Date dateStart;
 	private Date dateEnd;
 	private LocalTime timeStart;

@@ -10,5 +10,6 @@ public class GetTransactionStatusDtoDataRes {
 	private String statusName;
 	private String createdBy;
 	private Integer version;
+	private Boolean isActive;
 
 }
