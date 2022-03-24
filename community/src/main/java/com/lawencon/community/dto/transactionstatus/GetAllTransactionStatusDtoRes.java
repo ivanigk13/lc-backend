@@ -1,12 +1,12 @@
-package com.lawencon.community.dto.orderstatus;
+package com.lawencon.community.dto.transactionstatus;
 
 import java.util.List;
 
 import lombok.Data;
 
 @Data
-public class GetAllOrderStatusDtoRes {
+public class GetAllTransactionStatusDtoRes {
 
 	private String msg;
-	private List<GetOrderStatusDtoDataRes> data;
+	private List<GetTransactionStatusDtoDataRes> data;
 }

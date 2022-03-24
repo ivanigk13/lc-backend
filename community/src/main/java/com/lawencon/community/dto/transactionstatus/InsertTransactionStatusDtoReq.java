@@ -1,11 +1,11 @@
-package com.lawencon.community.dto.orderstatus;
+package com.lawencon.community.dto.transactionstatus;
 
 import javax.validation.constraints.NotEmpty;
 
 import lombok.Data;
 
 @Data
-public class InsertOrderStatusDtoReq {
+public class InsertTransactionStatusDtoReq {
 
 	@NotEmpty(message = "Status Code must be filled")
 	private String statusCode;

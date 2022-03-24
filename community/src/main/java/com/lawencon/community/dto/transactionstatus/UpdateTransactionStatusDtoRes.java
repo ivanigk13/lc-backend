@@ -1,10 +1,10 @@
-package com.lawencon.community.dto.orderstatus;
+package com.lawencon.community.dto.transactionstatus;
 
 import lombok.Data;
 
 @Data
-public class UpdateOrderStatusDtoRes {
+public class UpdateTransactionStatusDtoRes {
 
 	private String msg;
-	private UpdateOrderStatusDtoDataRes data;
+	private UpdateTransactionStatusDtoDataRes data;
 }

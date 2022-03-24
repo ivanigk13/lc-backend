@@ -1,9 +1,9 @@
-package com.lawencon.community.dto.orderstatus;
+package com.lawencon.community.dto.transactionstatus;
 
 import lombok.Data;
 
 @Data
-public class InsertOrderStatusDtoDataRes {
+public class InsertTransactionStatusDtoDataRes {
 
 	private String id;
 }

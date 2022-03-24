@@ -1,4 +1,4 @@
-package com.lawencon.community.dto.orderstatus;
+package com.lawencon.community.dto.transactionstatus;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class UpdateOrderStatusDtoReq {
+public class UpdateTransactionStatusDtoReq {
 	
 	
 	@NotNull(message = "Id is required")
@@ -17,5 +17,6 @@ public class UpdateOrderStatusDtoReq {
 	
 	@NotEmpty(message = "Status Name must be filled")
 	private String statusName;
+	
 	private Integer version;
 }

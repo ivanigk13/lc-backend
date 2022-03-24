@@ -1,9 +1,9 @@
-package com.lawencon.community.dto.orderstatus;
+package com.lawencon.community.dto.transactionstatus;
 
 import lombok.Data;
 
 @Data
-public class UpdateOrderStatusDtoDataRes {
+public class UpdateTransactionStatusDtoDataRes {
 
 	private Integer version;
 }
