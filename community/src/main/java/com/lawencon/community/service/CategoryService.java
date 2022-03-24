@@ -27,52 +27,52 @@ public class CategoryService extends BaseService {
 	private final CategoryDao categoryDao;
 
 	public InsertCategoryDtoRes insert(InsertCategoryDtoReq data) throws Exception {
-		Category Category = new Category();
-		Category.setCategoryName(data.getCategoryName());
-		Category.setCategoryCode(data.getCategoryCode());
+		Category category = new Category();
+		category.setCategoryName(data.getCategoryName());
+		category.setCategoryCode(data.getCategoryCode());
 
 		begin();
-		Category CategoryInsert = categoryDao.save(Category);
-		InsertCategoryDtoDataRes CategoryId = new InsertCategoryDtoDataRes();
-		CategoryId.setId(CategoryInsert.getId());
+		Category categoryInsert = categoryDao.save(category);
+		InsertCategoryDtoDataRes categoryId = new InsertCategoryDtoDataRes();
+		categoryId.setId(categoryInsert.getId());
 
 		InsertCategoryDtoRes result = new InsertCategoryDtoRes();
-		result.setData(CategoryId);
+		result.setData(categoryId);
 		result.setMsg("Insert Successfully");
 		commit();
 		return result;
 	}
 
 	public UpdateCategoryDtoRes update(UpdateCategoryDtoReq data) throws Exception {
-		Category Category = categoryDao.getById(data.getId());
-		Category.setCategoryName(data.getCategoryName());
-		Category.setVersion(data.getVersion());
-		Category.setIsActive(data.getIsActive());
+		Category category = categoryDao.getById(data.getId());
+		category.setCategoryName(data.getCategoryName());
+		category.setVersion(data.getVersion());
+		category.setIsActive(data.getIsActive());
 
 		begin();
-		Category CategoryUpdate = categoryDao.save(Category);
+		Category categoryUpdate = categoryDao.save(category);
 
-		UpdateCategoryDtoDataRes CategoryVersion = new UpdateCategoryDtoDataRes();
-		CategoryVersion.setVersion(CategoryUpdate.getVersion());
+		UpdateCategoryDtoDataRes categoryVersion = new UpdateCategoryDtoDataRes();
+		categoryVersion.setVersion(categoryUpdate.getVersion());
 
 		UpdateCategoryDtoRes result = new UpdateCategoryDtoRes();
-		result.setData(CategoryVersion);
+		result.setData(categoryVersion);
 		result.setMsg("Update Successfully");
 		return result;
 	}
 
 	public GetAllCategoryDtoRes getAll() throws Exception {
-		List<Category> Categorys = categoryDao.getAll();
+		List<Category> categories = categoryDao.getAll();
 		List<GetCategoryDtoDataRes> data = new ArrayList<>();
 
-		Categorys.forEach(list -> {
-			GetCategoryDtoDataRes Category = new GetCategoryDtoDataRes();
-			Category.setId(list.getId());
-			Category.setCategoryName(list.getCategoryName());
-			Category.setCategoryCode(list.getCategoryCode());
-			Category.setVersion(list.getVersion());
-			Category.setIsActive(list.getIsActive());
-			data.add(Category);
+		categories.forEach(list -> {
+			GetCategoryDtoDataRes category = new GetCategoryDtoDataRes();
+			category.setId(list.getId());
+			category.setCategoryName(list.getCategoryName());
+			category.setCategoryCode(list.getCategoryCode());
+			category.setVersion(list.getVersion());
+			category.setIsActive(list.getIsActive());
+			data.add(category);
 		});
 
 		GetAllCategoryDtoRes result = new GetAllCategoryDtoRes();
@@ -82,17 +82,17 @@ public class CategoryService extends BaseService {
 	}
 
 	public GetByIdCategoryDtoRes getById(String id) throws Exception {
-		Category Category = categoryDao.getById(id);
+		Category category = categoryDao.getById(id);
 
-		GetCategoryDtoDataRes CategoryData = new GetCategoryDtoDataRes();
-		CategoryData.setId(Category.getId());
-		CategoryData.setCategoryName(Category.getCategoryName());
-		CategoryData.setCategoryCode(Category.getCategoryCode());
-		CategoryData.setVersion(Category.getVersion());
-		CategoryData.setIsActive(Category.getIsActive());
+		GetCategoryDtoDataRes categoryData = new GetCategoryDtoDataRes();
+		categoryData.setId(category.getId());
+		categoryData.setCategoryName(category.getCategoryName());
+		categoryData.setCategoryCode(category.getCategoryCode());
+		categoryData.setVersion(category.getVersion());
+		categoryData.setIsActive(category.getIsActive());
 
 		GetByIdCategoryDtoRes result = new GetByIdCategoryDtoRes();
-		result.setData(CategoryData);
+		result.setData(categoryData);
 
 		return result;
 	}
