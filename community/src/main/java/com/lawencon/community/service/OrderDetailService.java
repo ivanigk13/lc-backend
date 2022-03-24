@@ -25,40 +25,40 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class OrderDetailService extends BaseService{
+public class OrderDetailService extends BaseService {
 
 	private final OrderDetailDao orderDetailDao;
 	private final OrderDao orderDao;
 	private final SubscribeDao subscribeDao;
 	private final ActivityDao activityDao;
-	
+
 	public InsertOrderDetailDtoRes insert(InsertOrderDetailDtoReq data) throws Exception {
 		OrderDetail orderDetail = new OrderDetail();
 		Order order = orderDao.getById(data.getOrderId());
 		orderDetail.setOrder(order);
-		
+
 		Subscribe subscribe = subscribeDao.getById(data.getSubscribeId());
 		orderDetail.setSubscribe(subscribe);
-		
+
 		Activity activity = activityDao.getById(data.getActivityId());
 		orderDetail.setActivity(activity);
-		
+
 		begin();
 		OrderDetail orderDetailInsert = orderDetailDao.save(orderDetail);
 		InsertOrderDetailDtoDataRes orderDetailId = new InsertOrderDetailDtoDataRes();
 		orderDetailId.setId(orderDetailInsert.getId());
-		
+
 		InsertOrderDetailDtoRes result = new InsertOrderDetailDtoRes();
 		result.setData(orderDetailId);
 		result.setMsg("Insert Successfully");
 		commit();
 		return result;
 	}
-	
-	public GetAllOrderDetailDtoRes getAll() throws Exception{
+
+	public GetAllOrderDetailDtoRes getAll() throws Exception {
 		List<OrderDetail> OrderDetails = orderDetailDao.getAll();
 		List<GetOrderDetailDtoDataRes> data = new ArrayList<>();
-		
+
 		OrderDetails.forEach(list -> {
 			GetOrderDetailDtoDataRes orderDetail = new GetOrderDetailDtoDataRes();
 			orderDetail.setId(list.getId());
@@ -69,16 +69,16 @@ public class OrderDetailService extends BaseService{
 			orderDetail.setIsActive(list.getIsActive());
 			data.add(orderDetail);
 		});
-		
+
 		GetAllOrderDetailDtoRes result = new GetAllOrderDetailDtoRes();
 		result.setData(data);
-		
+
 		return result;
 	}
-	
-	public GetByIdOrderDetailDtoRes getById(String id) throws Exception{
+
+	public GetByIdOrderDetailDtoRes getById(String id) throws Exception {
 		OrderDetail orderDetail = orderDetailDao.getById(id);
-		
+
 		GetOrderDetailDtoDataRes orderDetailData = new GetOrderDetailDtoDataRes();
 		orderDetailData.setId(orderDetail.getId());
 		orderDetailData.setActivityId(orderDetail.getActivity().getId());
@@ -86,10 +86,10 @@ public class OrderDetailService extends BaseService{
 		orderDetailData.setActivityId(orderDetail.getActivity().getId());
 		orderDetailData.setVersion(orderDetail.getVersion());
 		orderDetailData.setIsActive(orderDetail.getIsActive());
-		
+
 		GetByIdOrderDetailDtoRes result = new GetByIdOrderDetailDtoRes();
-		result.setData(orderDetailData);		
-		
-		return result;		
+		result.setData(orderDetailData);
+
+		return result;
 	}
 }

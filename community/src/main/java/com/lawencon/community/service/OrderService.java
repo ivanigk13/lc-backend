@@ -25,42 +25,42 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class OrderService extends BaseService{
+public class OrderService extends BaseService {
 
 	private final OrderDao orderDao;
 	private final TransactionStatusDao transactionStatusDao;
 	private final UserDao userDao;
 	private final FileDao fileDao;
-	
+
 	public InsertOrderDtoRes insert(InsertOrderDtoReq data) throws Exception {
 		Order order = new Order();
-		
+
 		TransactionStatus transactionStatus = transactionStatusDao.getById(data.getTransactionStatusId());
-		order.setTransactionStatus(transactionStatus);	
-		
+		order.setTransactionStatus(transactionStatus);
+
 		User user = userDao.getById(data.getUserId());
 		order.setUser(user);
-		
+
 		File file = fileDao.getById(data.getFileId());
 		order.setFile(file);
 		order.setInvoice(data.getInvoice());
-		
+
 		begin();
 		Order orderInsert = orderDao.save(order);
 		InsertOrderDtoDataRes orderId = new InsertOrderDtoDataRes();
 		orderId.setId(orderInsert.getId());
-		
+
 		InsertOrderDtoRes result = new InsertOrderDtoRes();
 		result.setData(orderId);
 		result.setMsg("Insert Successfully");
 		commit();
 		return result;
 	}
-	
-	public GetAllOrderDtoRes getAll() throws Exception{
+
+	public GetAllOrderDtoRes getAll() throws Exception {
 		List<Order> orders = orderDao.getAll();
 		List<GetOrderDtoDataRes> data = new ArrayList<>();
-		
+
 		orders.forEach(list -> {
 			GetOrderDtoDataRes order = new GetOrderDtoDataRes();
 			order.setId(list.getId());
@@ -72,16 +72,16 @@ public class OrderService extends BaseService{
 			order.setIsActive(list.getIsActive());
 			data.add(order);
 		});
-		
+
 		GetAllOrderDtoRes result = new GetAllOrderDtoRes();
 		result.setData(data);
-		
+
 		return result;
 	}
-	
-	public GetByIdOrderDtoRes getById(String id) throws Exception{
+
+	public GetByIdOrderDtoRes getById(String id) throws Exception {
 		Order order = orderDao.getById(id);
-		
+
 		GetOrderDtoDataRes orderData = new GetOrderDtoDataRes();
 		orderData.setId(order.getId());
 		orderData.setTransactionStatusId(order.getTransactionStatus().getId());
@@ -89,10 +89,10 @@ public class OrderService extends BaseService{
 		orderData.setUserId(order.getUser().getId());
 		orderData.setInvoice(order.getInvoice());
 		orderData.setIsActive(order.getIsActive());
-		
+
 		GetByIdOrderDtoRes result = new GetByIdOrderDtoRes();
-		result.setData(orderData);		
-		
-		return result;		
+		result.setData(orderData);
+
+		return result;
 	}
 }
