@@ -25,7 +25,7 @@ public class AbstractJpaDao<T extends BaseEntity> {
 		this.clazz = (Class<T>) GenericTypeResolver.resolveTypeArgument(getClass(), AbstractJpaDao.class);
 	}
 
-	public T getById(final UUID id) {
+	public T getById(final String id) {
 		return em().find(clazz, id);
 	}
 
@@ -50,7 +50,7 @@ public class AbstractJpaDao<T extends BaseEntity> {
 	public boolean deleteById(final Object entityId) throws Exception {
 		T entity = null;
 		if (entityId != null && entityId instanceof UUID) {
-			entity = getById((UUID) entityId);
+			entity = getById((String) entityId);
 		}
 
 		if (entity != null) {
