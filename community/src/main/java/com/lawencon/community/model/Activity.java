@@ -28,6 +28,18 @@ public class Activity extends BaseEntity{
 	@JoinColumn(name = "file_id")
 	private File file;
 	
+	@OneToOne
+	@JoinColumn(name = "category_id")
+	private Category category;
+	
+	@OneToOne
+	@JoinColumn(name = "transaction_status_id")
+	private TransactionStatus transactionStatus;
+	
+	@OneToOne
+	@JoinColumn(name = "payment_file_id")
+	private File paymentFile;
+	
 	private String activityName;
 	private Date dateStart;
 	private Date dateEnd;

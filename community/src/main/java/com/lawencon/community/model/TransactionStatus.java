@@ -12,18 +12,18 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Table(uniqueConstraints = {
 	@UniqueConstraint(
-		name = "order_status_code_bk",
+		name = "transaction_status_code_bk",
 		columnNames = {"status_code"}
 	),
 	@UniqueConstraint(
-		name = "order_status_ck",
+		name = "transaction_status_ck",
 		columnNames = {"status_code", "status_name"}
 	)
 })
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class OrderStatus extends BaseEntity{
+public class TransactionStatus extends BaseEntity{
 	
 	private static final long serialVersionUID = 8059651552254369419L;
 	private String statusCode;

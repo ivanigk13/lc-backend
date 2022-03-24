@@ -18,8 +18,8 @@ public class Order extends BaseEntity{
 	private static final long serialVersionUID = 254974765201098981L;
 
 	@ManyToOne
-	@JoinColumn(name = "order_status_id")
-	private OrderStatus orderStatus;
+	@JoinColumn(name = "transaction_status_id")
+	private TransactionStatus transactionStatus;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
