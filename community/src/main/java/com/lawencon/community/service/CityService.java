@@ -57,6 +57,7 @@ public class CityService extends BaseService {
 
 		begin();
 		City cityUpdate = cityDao.save(city);
+		commit();
 
 		UpdateCityDtoDataRes cityVersion = new UpdateCityDtoDataRes();
 		cityVersion.setVersion(cityUpdate.getVersion());

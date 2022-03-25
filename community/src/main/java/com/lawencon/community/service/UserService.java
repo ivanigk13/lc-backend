@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.UserDao;
+import com.lawencon.community.dto.user.DeleteUserDtoRes;
 import com.lawencon.community.dto.user.GetAllUserDtoRes;
 import com.lawencon.community.dto.user.GetByIdUserDtoRes;
 import com.lawencon.community.dto.user.GetUserDtoDataRes;
@@ -113,4 +114,15 @@ public class UserService extends BaseService {
 		
 		return userRes;
 	}
-}
+	
+	public DeleteUserDtoRes deleteById(String id) throws Exception {
+		begin();
+		userDao.deleteById(id);
+		commit();
+		
+		DeleteUserDtoRes userRes = new DeleteUserDtoRes();
+		userRes.setMsg("Delete Successfully");
+		
+		return userRes;
+	}
+ }
