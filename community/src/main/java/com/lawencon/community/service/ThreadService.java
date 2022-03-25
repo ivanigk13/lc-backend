@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lawencon.base.BaseService;
+import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dao.ThreadDao;
 import com.lawencon.community.dao.ThreadTypeDao;
 import com.lawencon.community.dto.thread.GetAllThreadDtoRes;
@@ -17,6 +20,7 @@ import com.lawencon.community.dto.thread.InsertThreadDtoRes;
 import com.lawencon.community.dto.thread.UpdateThreadDtoDataRes;
 import com.lawencon.community.dto.thread.UpdateThreadDtoReq;
 import com.lawencon.community.dto.thread.UpdateThreadDtoRes;
+import com.lawencon.community.model.File;
 import com.lawencon.community.model.Thread;
 import com.lawencon.community.model.ThreadType;
 
@@ -28,14 +32,28 @@ public class ThreadService extends BaseService {
 
 	private final ThreadDao threadDao;
 	private final ThreadTypeDao threadTypeDao;
+	private final FileDao fileDao;
 
-	public InsertThreadDtoRes insert(InsertThreadDtoReq data) throws Exception {
+	public InsertThreadDtoRes insert(String content, MultipartFile file) throws Exception {
+		InsertThreadDtoReq threadReq = new ObjectMapper().readValue(content, InsertThreadDtoReq.class);
 		Thread thread = new Thread();
-		ThreadType threadType = threadTypeDao.getById(data.getThreadTypeId());
+		ThreadType threadType = threadTypeDao.getById(threadReq.getThreadTypeId());
 		thread.setThreadType(threadType);
+		
+		if(file != null ) {
+			File fileThread = new File();
+			String splitter = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1, 
+					file.getOriginalFilename().length());
+			fileThread.setExtensionName(splitter);
+			fileThread.setContent(file.getBytes());
+			fileThread.setCreatedBy("CreatedBy");
+			
+			fileThread = fileDao.save(fileThread);
+			thread.setFile(fileThread);
+		}
 
-		thread.setTitle(data.getTitle());
-		thread.setContent(data.getContent());
+		thread.setTitle(threadReq.getTitle());
+		thread.setContent(threadReq.getContent());
 
 		begin();
 		Thread threadInsert = threadDao.save(thread);
@@ -48,6 +66,7 @@ public class ThreadService extends BaseService {
 		commit();
 		return result;
 	}
+
 
 	public UpdateThreadDtoRes update(UpdateThreadDtoReq data) throws Exception {
 		Thread thread = threadDao.getById(data.getId());
