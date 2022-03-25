@@ -29,14 +29,17 @@ public class ActivityController {
 	private final ActivityService activityService;
 	
 	@PostMapping
-	public ResponseEntity<InsertActivityDtoRes> insert(@RequestPart(name="data") String data, @RequestPart(required = true) MultipartFile[] file) 
-			throws Exception{
+	public ResponseEntity<InsertActivityDtoRes> insert(
+								@RequestPart(name="data") String data, 
+								@RequestPart(required = true) MultipartFile[] file) throws Exception{
 		InsertActivityDtoRes activity = activityService.insert(data, file);
 		return new ResponseEntity<InsertActivityDtoRes>(activity, HttpStatus.CREATED);		
 	}
 	
 	@PutMapping
-	public ResponseEntity<UpdateActivityDtoRes> update(@RequestPart(name="data") String data, @RequestPart(required = true) MultipartFile[] file) throws Exception{
+	public ResponseEntity<UpdateActivityDtoRes> update(
+								@RequestPart(name="data") String data, 
+								@RequestPart(required = true) MultipartFile[] file) throws Exception{
 		UpdateActivityDtoRes activity = activityService.update(data, file);
 		return new ResponseEntity<UpdateActivityDtoRes>(activity, HttpStatus.OK);		
 	}

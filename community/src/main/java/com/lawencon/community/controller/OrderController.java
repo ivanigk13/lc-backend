@@ -27,8 +27,9 @@ public class OrderController {
 	private final OrderService orderService;
 	
 	@PostMapping
-	public ResponseEntity<InsertOrderDtoRes> insert(@RequestPart(name="data") String data, @RequestPart(required = true) MultipartFile file) 
-			throws Exception{
+	public ResponseEntity<InsertOrderDtoRes> insert(
+								@RequestPart(name="data") String data, 
+								@RequestPart(required = true) MultipartFile file) throws Exception{
 		InsertOrderDtoRes order = orderService.insert(data, file);
 		return new ResponseEntity<InsertOrderDtoRes>(order, HttpStatus.CREATED);		
 	}
