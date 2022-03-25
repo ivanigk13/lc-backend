@@ -10,6 +10,7 @@ import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dao.OrderDao;
 import com.lawencon.community.dao.TransactionStatusDao;
 import com.lawencon.community.dao.UserDao;
+import com.lawencon.community.dto.order.DeleteOrderDtoRes;
 import com.lawencon.community.dto.order.GetAllOrderDtoRes;
 import com.lawencon.community.dto.order.GetByIdOrderDtoRes;
 import com.lawencon.community.dto.order.GetOrderDtoDataRes;
@@ -94,5 +95,16 @@ public class OrderService extends BaseService {
 		result.setData(orderData);
 
 		return result;
+	}
+	
+	public DeleteOrderDtoRes deleteById(String id) throws Exception {
+		begin();
+		orderDao.deleteById(id);
+		commit();
+		
+		DeleteOrderDtoRes orderRes = new DeleteOrderDtoRes();
+		orderRes.setMsg("Delete Successfully");
+		
+		return orderRes;
 	}
 }

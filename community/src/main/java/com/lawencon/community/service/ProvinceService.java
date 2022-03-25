@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.ProvinceDao;
 import com.lawencon.community.dto.province.GetAllProvinceDtoRes;
-import com.lawencon.community.dto.province.GetByProvinceIdDtoRes;
+import com.lawencon.community.dto.province.GetByIdProvinceDtoRes;
 import com.lawencon.community.dto.province.GetProvinceDtoDataRes;
 import com.lawencon.community.model.Province;
 
@@ -20,7 +20,7 @@ public class ProvinceService extends BaseService {
 
 	private final ProvinceDao provinceDao;
 	
-	public GetByProvinceIdDtoRes getById(String id) throws Exception {
+	public GetByIdProvinceDtoRes getById(String id) throws Exception {
 		Province province = provinceDao.getById(id);
 		GetProvinceDtoDataRes provinceDataRes = new GetProvinceDtoDataRes();
 		provinceDataRes.setId(province.getId());
@@ -29,7 +29,7 @@ public class ProvinceService extends BaseService {
 		provinceDataRes.setVersion(province.getVersion());
 		provinceDataRes.setIsActive(province.getIsActive());
 		
-		GetByProvinceIdDtoRes provinceRes = new GetByProvinceIdDtoRes();
+		GetByIdProvinceDtoRes provinceRes = new GetByIdProvinceDtoRes();
 		provinceRes.setData(provinceDataRes);
 		
 		return provinceRes;

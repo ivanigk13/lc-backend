@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.CityDao;
 import com.lawencon.community.dao.ProvinceDao;
+import com.lawencon.community.dto.city.DeleteCityDtoRes;
 import com.lawencon.community.dto.city.GetAllCityDtoRes;
 import com.lawencon.community.dto.city.GetByIdCityDtoRes;
 import com.lawencon.community.dto.city.GetCityDtoDataRes;
@@ -100,5 +101,16 @@ public class CityService extends BaseService {
 		result.setData(cityData);
 
 		return result;
+	}
+	
+	public DeleteCityDtoRes deleteById(String id) throws Exception {
+		begin();
+		cityDao.deleteById(id);
+		commit();
+		
+		DeleteCityDtoRes cityRes = new DeleteCityDtoRes();
+		cityRes.setMsg("Delete Successfully");
+		
+		return cityRes;
 	}
 }

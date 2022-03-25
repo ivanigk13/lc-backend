@@ -9,7 +9,7 @@ import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.PollingDetailDao;
 import com.lawencon.community.dto.pollingdetail.DeletePollingDetailDtoRes;
 import com.lawencon.community.dto.pollingdetail.GetAllPollingDetailDtoRes;
-import com.lawencon.community.dto.pollingdetail.GetByPollingDetailIdDtoRes;
+import com.lawencon.community.dto.pollingdetail.GetByIdPollingDetailDtoRes;
 import com.lawencon.community.dto.pollingdetail.GetPollingDetailDtoDataRes;
 import com.lawencon.community.dto.pollingdetail.InsertPollingDetailDtoDataRes;
 import com.lawencon.community.dto.pollingdetail.InsertPollingDetailDtoReq;
@@ -45,7 +45,7 @@ public class PollingDetailService extends BaseService {
 		pollingDetailDataRes.setId(pollingDetail.getId());
 		
 		InsertPollingDetailDtoRes pollingDetailRes = new InsertPollingDetailDtoRes();
-		pollingDetailRes.setMsg("Insert Success!");
+		pollingDetailRes.setMsg("Insert Successfully");
 		pollingDetailRes.setData(pollingDetailDataRes);
 		
 		return pollingDetailRes;
@@ -67,13 +67,13 @@ public class PollingDetailService extends BaseService {
 		pollingDetailDataRes.setVersion(pollingDetail.getVersion());
 		
 		UpdatePollingDetailDtoRes pollingDetailRes = new UpdatePollingDetailDtoRes();
-		pollingDetailRes.setMsg("Update Success!");
+		pollingDetailRes.setMsg("Update Successfully");
 		pollingDetailRes.setData(pollingDetailDataRes);
 		
 		return pollingDetailRes;
 	}
 	
-	public GetByPollingDetailIdDtoRes getById(String id) throws Exception {
+	public GetByIdPollingDetailDtoRes getById(String id) throws Exception {
 		PollingDetail pollingDetail = pollingDetailDao.getById(id);
 		GetPollingDetailDtoDataRes pollingDetailDataRes = new GetPollingDetailDtoDataRes();
 		pollingDetailDataRes.setId(pollingDetail.getId());
@@ -83,7 +83,7 @@ public class PollingDetailService extends BaseService {
 		pollingDetailDataRes.setVersion(pollingDetail.getVersion());
 		pollingDetailDataRes.setIsActive(pollingDetail.getIsActive());
 		
-		GetByPollingDetailIdDtoRes pollingDetailRes = new GetByPollingDetailIdDtoRes();
+		GetByIdPollingDetailDtoRes pollingDetailRes = new GetByIdPollingDetailDtoRes();
 		pollingDetailRes.setData(pollingDetailDataRes);
 		
 		return pollingDetailRes;
@@ -118,7 +118,7 @@ public class PollingDetailService extends BaseService {
 		commit();
 		
 		DeletePollingDetailDtoRes pollingDetailRes = new DeletePollingDetailDtoRes();
-		pollingDetailRes.setMsg("Delete Success!");
+		pollingDetailRes.setMsg("Delete Successfully");
 		
 		return pollingDetailRes;
 	}

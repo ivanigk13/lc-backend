@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.IndustryDao;
+import com.lawencon.community.dto.industry.DeleteIndustryDtoRes;
 import com.lawencon.community.dto.industry.GetAllIndustryDtoRes;
 import com.lawencon.community.dto.industry.GetByIdIndustryDtoRes;
 import com.lawencon.community.dto.industry.GetIndustryDtoDataRes;
@@ -95,5 +96,16 @@ public class IndustryService extends BaseService{
 		result.setData(IndustryData);		
 		
 		return result;		
+	}
+	
+	public DeleteIndustryDtoRes deleteById(String id) throws Exception {
+		begin();
+		industryDao.deleteById(id);
+		commit();
+		
+		DeleteIndustryDtoRes industryRes = new DeleteIndustryDtoRes();
+		industryRes.setMsg("Delete Successfully");
+		
+		return industryRes;
 	}
 }

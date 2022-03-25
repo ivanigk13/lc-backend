@@ -9,7 +9,7 @@ import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.PollingVoterDao;
 import com.lawencon.community.dto.pollingvoter.DeletePollingVoterDtoRes;
 import com.lawencon.community.dto.pollingvoter.GetAllPollingVoterDtoRes;
-import com.lawencon.community.dto.pollingvoter.GetByPollingVoterIdDtoRes;
+import com.lawencon.community.dto.pollingvoter.GetByIdPollingVoterDtoRes;
 import com.lawencon.community.dto.pollingvoter.GetPollingVoterDtoDataRes;
 import com.lawencon.community.dto.pollingvoter.InsertPollingVoterDtoDataRes;
 import com.lawencon.community.dto.pollingvoter.InsertPollingVoterDtoReq;
@@ -43,7 +43,7 @@ public class PollingVoterService extends BaseService {
 		pollingVoterDataRes.setId(pollingVoter.getId());
 		
 		InsertPollingVoterDtoRes pollingVoterRes = new InsertPollingVoterDtoRes();
-		pollingVoterRes.setMsg("Insert Success!");
+		pollingVoterRes.setMsg("Insert Successfully");
 		pollingVoterRes.setData(pollingVoterDataRes);
 		
 		return pollingVoterRes;
@@ -65,13 +65,13 @@ public class PollingVoterService extends BaseService {
 		pollingVoterDataRes.setVersion(pollingVoter.getVersion());
 		
 		UpdatePollingVoterDtoRes pollingVoterRes = new UpdatePollingVoterDtoRes();
-		pollingVoterRes.setMsg("Update Success!");
+		pollingVoterRes.setMsg("Update Successfully");
 		pollingVoterRes.setData(pollingVoterDataRes);
 		
 		return pollingVoterRes;
 	}
 
-	public GetByPollingVoterIdDtoRes getById(String id) throws Exception {
+	public GetByIdPollingVoterDtoRes getById(String id) throws Exception {
 		PollingVoter pollingVoter = pollingVoterDao.getById(id);
 		GetPollingVoterDtoDataRes pollingVoterDataRes = new GetPollingVoterDtoDataRes();
 		PollingDetail pollingDetail = new PollingDetail();
@@ -79,7 +79,7 @@ public class PollingVoterService extends BaseService {
 		pollingVoterDataRes.setVersion(pollingVoter.getVersion());
 		pollingVoterDataRes.setIsActive(pollingVoter.getIsActive());
 		
-		GetByPollingVoterIdDtoRes pollingVoterRes = new GetByPollingVoterIdDtoRes();
+		GetByIdPollingVoterDtoRes pollingVoterRes = new GetByIdPollingVoterDtoRes();
 		pollingVoterRes.setData(pollingVoterDataRes);
 		
 		return pollingVoterRes;
@@ -112,7 +112,7 @@ public class PollingVoterService extends BaseService {
 		commit();
 		
 		DeletePollingVoterDtoRes pollingVoterRes = new DeletePollingVoterDtoRes();
-		pollingVoterRes.setMsg("Delete Success!");
+		pollingVoterRes.setMsg("Delete Successfully");
 		
 		return pollingVoterRes;
 	}  

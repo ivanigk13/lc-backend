@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.SubscribeDao;
+import com.lawencon.community.dto.subscribe.DeleteSubscribeDtoRes;
 import com.lawencon.community.dto.subscribe.GetAllSubscribeDtoRes;
 import com.lawencon.community.dto.subscribe.GetByIdSubscribeDtoRes;
 import com.lawencon.community.dto.subscribe.GetSubscribeDtoDataRes;
@@ -96,5 +97,16 @@ public class SubscribeService extends BaseService{
 		result.setData(subscribeData);
 
 		return result;
+	}
+	
+	public DeleteSubscribeDtoRes deleteById(String id) throws Exception {
+		begin();
+		subscribeDao.deleteById(id);
+		commit();
+		
+		DeleteSubscribeDtoRes subscribeRes = new DeleteSubscribeDtoRes();
+		subscribeRes.setMsg("Delete Successfully");
+		
+		return subscribeRes;
 	}
 }

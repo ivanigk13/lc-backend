@@ -11,7 +11,7 @@ import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dao.ProfileDao;
 import com.lawencon.community.dto.profile.DeleteProfileDtoRes;
 import com.lawencon.community.dto.profile.GetAllProfileDtoRes;
-import com.lawencon.community.dto.profile.GetByProfileIdDtoRes;
+import com.lawencon.community.dto.profile.GetByIdProfileDtoRes;
 import com.lawencon.community.dto.profile.GetProfileDtoDataRes;
 import com.lawencon.community.dto.profile.InsertProfileDtoDataRes;
 import com.lawencon.community.dto.profile.InsertProfileDtoReq;
@@ -75,7 +75,7 @@ public class ProfileService extends BaseService {
 			profileDataRes.setId(profile.getId());
 			
 			InsertProfileDtoRes profileRes = new InsertProfileDtoRes();
-			profileRes.setMsg("Insert Success!");
+			profileRes.setMsg("Insert Successfully");
 			profileRes.setData(profileDataRes);
 			
 			return profileRes;
@@ -126,7 +126,7 @@ public class ProfileService extends BaseService {
 			profileDataRes.setVersion(profile.getVersion());
 			
 			UpdateProfileDtoRes profileRes = new UpdateProfileDtoRes();
-			profileRes.setMsg("Update Success!");
+			profileRes.setMsg("Update Successfully");
 			profileRes.setData(profileDataRes);
 			
 			return profileRes;
@@ -139,7 +139,7 @@ public class ProfileService extends BaseService {
 		
 	}
 
-	public GetByProfileIdDtoRes getById(String id) throws Exception {
+	public GetByIdProfileDtoRes getById(String id) throws Exception {
 		Profile profile = profileDao.getById(id);
 		GetProfileDtoDataRes profileDataRes = new GetProfileDtoDataRes();
 		profileDataRes.setId(profile.getId());
@@ -155,7 +155,7 @@ public class ProfileService extends BaseService {
 		profileDataRes.setVersion(profile.getVersion());
 		profileDataRes.setIsActive(profile.getIsActive());
 		
-		GetByProfileIdDtoRes profileRes = new GetByProfileIdDtoRes();
+		GetByIdProfileDtoRes profileRes = new GetByIdProfileDtoRes();
 		profileRes.setData(profileDataRes);
 		
 		return profileRes;
@@ -197,7 +197,7 @@ public class ProfileService extends BaseService {
 		commit();
 		
 		DeleteProfileDtoRes profileRes = new DeleteProfileDtoRes();
-		profileRes.setMsg("Delete Success!");
+		profileRes.setMsg("Delete Successfully");
 		
 		return profileRes;
 	}  

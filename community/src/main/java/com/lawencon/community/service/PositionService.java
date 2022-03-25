@@ -9,7 +9,7 @@ import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.PositionDao;
 import com.lawencon.community.dto.position.DeletePositionDtoRes;
 import com.lawencon.community.dto.position.GetAllPositionDtoRes;
-import com.lawencon.community.dto.position.GetByPositionIdDtoRes;
+import com.lawencon.community.dto.position.GetByIdPositionDtoRes;
 import com.lawencon.community.dto.position.GetPositionDtoDataRes;
 import com.lawencon.community.dto.position.InsertPositionDtoDataRes;
 import com.lawencon.community.dto.position.InsertPositionDtoReq;
@@ -41,7 +41,7 @@ public class PositionService extends BaseService {
 		positionDataRes.setId(position.getId());
 		
 		InsertPositionDtoRes positionRes = new InsertPositionDtoRes();
-		positionRes.setMsg("Insert Success!");
+		positionRes.setMsg("Insert Successfully");
 		positionRes.setData(positionDataRes);
 		
 		return positionRes;
@@ -62,13 +62,13 @@ public class PositionService extends BaseService {
 		positionDataRes.setVersion(position.getVersion());
 		
 		UpdatePositionDtoRes positionRes = new UpdatePositionDtoRes();
-		positionRes.setMsg("Update SUccess!");
+		positionRes.setMsg("Update Successfully");
 		positionRes.setData(positionDataRes);
 		
 		return positionRes;
 	}
 
-	public GetByPositionIdDtoRes getById(String id) throws Exception {
+	public GetByIdPositionDtoRes getById(String id) throws Exception {
 		Position position = positionDao.getById(id);
 		GetPositionDtoDataRes positionDataRes = new GetPositionDtoDataRes();
 		positionDataRes.setId(position.getId());
@@ -77,7 +77,7 @@ public class PositionService extends BaseService {
 		positionDataRes.setVersion(position.getVersion());
 		positionDataRes.setIsActive(position.getIsActive());
 		
-		GetByPositionIdDtoRes positionRes = new GetByPositionIdDtoRes();
+		GetByIdPositionDtoRes positionRes = new GetByIdPositionDtoRes();
 		positionRes.setData(positionDataRes);
 		
 		return positionRes;
@@ -112,7 +112,7 @@ public class PositionService extends BaseService {
 		commit();
 		
 		DeletePositionDtoRes positionRes = new DeletePositionDtoRes();
-		positionRes.setMsg("Delete Success!");
+		positionRes.setMsg("Delete Successfully");
 		
 		return positionRes;
 	}  
