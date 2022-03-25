@@ -9,7 +9,7 @@ import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.PollingHeaderDao;
 import com.lawencon.community.dto.pollingheader.DeletePollingHeaderDtoRes;
 import com.lawencon.community.dto.pollingheader.GetAllPollingHeaderDtoRes;
-import com.lawencon.community.dto.pollingheader.GetByPollingHeaderIdDtoRes;
+import com.lawencon.community.dto.pollingheader.GetByIdPollingHeaderDtoRes;
 import com.lawencon.community.dto.pollingheader.GetPollingHeaderDtoDataRes;
 import com.lawencon.community.dto.pollingheader.InsertPollingHeaderDtoDataRes;
 import com.lawencon.community.dto.pollingheader.InsertPollingHeaderDtoReq;
@@ -40,13 +40,13 @@ public class PollingHeaderService extends BaseService {
 		pollingHeaderDataRes.setId(pollingHeader.getId());
 		
 		InsertPollingHeaderDtoRes pollingDetailRes = new InsertPollingHeaderDtoRes();
-		pollingDetailRes.setMsg("Insert Success!");
+		pollingDetailRes.setMsg("Insert Successfully");
 		pollingDetailRes.setData(pollingHeaderDataRes);
 	
 		return pollingDetailRes;
 	}
 	
-	public GetByPollingHeaderIdDtoRes getById(String id) throws Exception {
+	public GetByIdPollingHeaderDtoRes getById(String id) throws Exception {
 		PollingHeader pollingHeader = pollingHeaderDao.getById(id);
 		GetPollingHeaderDtoDataRes pollingHeaderDataRes = new GetPollingHeaderDtoDataRes();
 		pollingHeaderDataRes.setId(pollingHeader.getId());
@@ -54,7 +54,7 @@ public class PollingHeaderService extends BaseService {
 		pollingHeaderDataRes.setVersion(pollingHeader.getVersion());
 		pollingHeaderDataRes.setIsActive(pollingHeader.getIsActive());
 		
-		GetByPollingHeaderIdDtoRes pollingHeaderRes = new GetByPollingHeaderIdDtoRes();
+		GetByIdPollingHeaderDtoRes pollingHeaderRes = new GetByIdPollingHeaderDtoRes();
 		pollingHeaderRes.setData(pollingHeaderDataRes);
 		
 		return pollingHeaderRes;
@@ -85,7 +85,7 @@ public class PollingHeaderService extends BaseService {
 		pollingHeaderDao.deleteById(id);
 		
 		DeletePollingHeaderDtoRes pollingHeaderRes = new DeletePollingHeaderDtoRes();
-		pollingHeaderRes.setMsg("Delete Success!");
+		pollingHeaderRes.setMsg("Delete Successfully");
 		
 		return pollingHeaderRes;
 	}

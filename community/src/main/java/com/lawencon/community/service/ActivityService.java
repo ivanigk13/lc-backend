@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.ActivityDao;
 import com.lawencon.community.dao.FileDao;
+import com.lawencon.community.dto.activity.DeleteActivityDtoRes;
 import com.lawencon.community.dto.activity.GetActivityDtoDataRes;
 import com.lawencon.community.dto.activity.GetAllActivityDtoRes;
 import com.lawencon.community.dto.activity.GetByIdActivityDtoRes;
@@ -187,6 +188,17 @@ public class ActivityService extends BaseService {
 		GetByIdActivityDtoRes result = new GetByIdActivityDtoRes();
 		result.setData(activityData);
 		return result;
+	}
+	
+	public DeleteActivityDtoRes deleteById(String id) throws Exception {
+		begin();
+		activityDao.deleteById(id);
+		commit();
+		
+		DeleteActivityDtoRes activityRes = new DeleteActivityDtoRes();
+		activityRes.setMsg("Delete Successfully");
+		
+		return activityRes;
 	}
 
 }

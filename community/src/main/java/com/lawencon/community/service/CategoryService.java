@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.CategoryDao;
+import com.lawencon.community.dto.category.DeleteCategoryDtoRes;
 import com.lawencon.community.dto.category.GetAllCategoryDtoRes;
 import com.lawencon.community.dto.category.GetByIdCategoryDtoRes;
 import com.lawencon.community.dto.category.GetCategoryDtoDataRes;
@@ -51,6 +52,7 @@ public class CategoryService extends BaseService {
 
 		begin();
 		Category categoryUpdate = categoryDao.save(category);
+		commit();
 
 		UpdateCategoryDtoDataRes categoryVersion = new UpdateCategoryDtoDataRes();
 		categoryVersion.setVersion(categoryUpdate.getVersion());
@@ -95,5 +97,16 @@ public class CategoryService extends BaseService {
 		result.setData(categoryData);
 
 		return result;
+	}
+	
+	public DeleteCategoryDtoRes deleteById(String id) throws Exception {
+		begin();
+		categoryDao.deleteById(id);
+		commit();
+		
+		DeleteCategoryDtoRes categoryRes = new DeleteCategoryDtoRes();
+		categoryRes.setMsg("Delete Successfully");
+		
+		return categoryRes;
 	}
 }

@@ -3,7 +3,7 @@ package com.lawencon.community.dto.city;
 import lombok.Data;
 
 @Data
-public class DeleteByIdCityDtoRes {
+public class DeleteCityDtoRes {
 
 	private String msg;
 }

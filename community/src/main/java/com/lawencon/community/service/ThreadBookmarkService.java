@@ -9,6 +9,7 @@ import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.ThreadBookmarkDao;
 import com.lawencon.community.dao.ThreadDao;
 import com.lawencon.community.dao.UserDao;
+import com.lawencon.community.dto.threadbookmark.DeleteThreadBookmarkDtoRes;
 import com.lawencon.community.dto.threadbookmark.GetAllThreadBookmarkDtoRes;
 import com.lawencon.community.dto.threadbookmark.GetByIdThreadBookmarkDtoRes;
 import com.lawencon.community.dto.threadbookmark.GetThreadBookmarkDtoDataRes;
@@ -84,6 +85,17 @@ public class ThreadBookmarkService extends BaseService {
 		result.setData(threadBookmarkData);
 
 		return result;
+	}
+	
+	public DeleteThreadBookmarkDtoRes deleteById(String id) throws Exception {
+		begin();
+		threadBookmarkDao.deleteById(id);
+		commit();
+		
+		DeleteThreadBookmarkDtoRes threadBookmarkRes = new DeleteThreadBookmarkDtoRes();
+		threadBookmarkRes.setMsg("Delete Successfully");
+		
+		return threadBookmarkRes;
 	}
 
 }

@@ -9,7 +9,7 @@ import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.RoleDao;
 import com.lawencon.community.dto.role.DeleteRoleDtoRes;
 import com.lawencon.community.dto.role.GetAllRoleDtoRes;
-import com.lawencon.community.dto.role.GetByRoleIdDtoRes;
+import com.lawencon.community.dto.role.GetByIdRoleDtoRes;
 import com.lawencon.community.dto.role.GetRoleDtoDataRes;
 import com.lawencon.community.dto.role.InsertRoleDtoDataRes;
 import com.lawencon.community.dto.role.InsertRoleDtoReq;
@@ -41,7 +41,7 @@ public class RoleService extends BaseService {
 		roleDataRes.setId(role.getId());
 		
 		InsertRoleDtoRes roleRes = new InsertRoleDtoRes();
-		roleRes.setMsg("Insert Success!");
+		roleRes.setMsg("Insert Successfully");
 		roleRes.setData(roleDataRes);
 		
 		return roleRes;
@@ -62,13 +62,13 @@ public class RoleService extends BaseService {
 		roleDataRes.setVersion(role.getVersion());
 		
 		UpdateRoleDtoRes roleRes = new UpdateRoleDtoRes();
-		roleRes.setMsg("Update Success!");
+		roleRes.setMsg("Update Successfully");
 		roleRes.setData(roleDataRes);
 		
 		return roleRes;
 	}
 
-	public GetByRoleIdDtoRes getById(String id) throws Exception {
+	public GetByIdRoleDtoRes getById(String id) throws Exception {
 		Role role = roleDao.getById(id);
 		GetRoleDtoDataRes roleDataRes = new GetRoleDtoDataRes();
 		roleDataRes.setId(role.getId());
@@ -77,7 +77,7 @@ public class RoleService extends BaseService {
 		roleDataRes.setVersion(role.getVersion());
 		roleDataRes.setIsActive(role.getIsActive());
 		
-		GetByRoleIdDtoRes roleRes = new GetByRoleIdDtoRes();
+		GetByIdRoleDtoRes roleRes = new GetByIdRoleDtoRes();
 		roleRes.setData(roleDataRes);
 		
 		return roleRes;
@@ -111,7 +111,7 @@ public class RoleService extends BaseService {
 		commit();
 		
 		DeleteRoleDtoRes roleRes = new DeleteRoleDtoRes();
-		roleRes.setMsg("Delete Success!");
+		roleRes.setMsg("Delete Successfully");
 		
 		return roleRes;
 	} 

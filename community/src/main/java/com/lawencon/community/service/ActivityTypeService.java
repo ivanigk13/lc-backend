@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.ActivityTypeDao;
+import com.lawencon.community.dto.activitytype.DeleteActivityTypeDtoRes;
 import com.lawencon.community.dto.activitytype.GetActivityTypeDtoDataRes;
 import com.lawencon.community.dto.activitytype.GetAllActivityTypeDtoRes;
 import com.lawencon.community.dto.activitytype.GetByIdActivityTypeDtoRes;
@@ -51,6 +52,7 @@ public class ActivityTypeService extends BaseService {
 
 		begin();
 		ActivityType activityTypeUpdate = activityTypeDao.save(activityType);
+		commit();
 
 		UpdateActivityTypeDtoDataRes activityTypeVersion = new UpdateActivityTypeDtoDataRes();
 		activityTypeVersion.setVersion(activityTypeUpdate.getVersion());
@@ -95,6 +97,17 @@ public class ActivityTypeService extends BaseService {
 		result.setData(ActivityTypeData);
 
 		return result;
+	}
+	
+	public DeleteActivityTypeDtoRes deleteById(String id) throws Exception {
+		begin();
+		activityTypeDao.deleteById(id);
+		commit();
+		
+		DeleteActivityTypeDtoRes activityTypeRes = new DeleteActivityTypeDtoRes();
+		activityTypeRes.setMsg("Delete Successfully");
+		
+		return activityTypeRes;
 	}
 
 }
