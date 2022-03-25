@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dao.ProfileDao;
@@ -36,19 +37,20 @@ public class ProfileService extends BaseService {
 	private final ProfileDao profileDao;
 	private final FileDao fileDao;
 	
-	public InsertProfileDtoRes insert(InsertProfileDtoReq data, MultipartFile photo) throws Exception {
+	public InsertProfileDtoRes insert(String data, MultipartFile photo) throws Exception {
 		try {
+			InsertProfileDtoReq profileReq = new ObjectMapper().readValue(data, InsertProfileDtoReq.class);
 			Profile profile = new Profile();
 			User user = new User();
-			user.setId(data.getUserId());
+			user.setId(profileReq.getUserId());
 			profile.setUser(user);
 			Industry industry = new Industry();
-			industry.setId(data.getIndustryId());
+			industry.setId(profileReq.getIndustryId());
 			profile.setIndustry(industry);
 			Position position = new Position();
-			position.setId(data.getPositionId());
+			position.setId(profileReq.getPositionId());
 			City city = new City();
-			city.setId(data.getCityId());
+			city.setId(profileReq.getCityId());
 			
 			File file = new File();
 			String splitterFile = photo.getOriginalFilename().substring(
@@ -62,10 +64,10 @@ public class ProfileService extends BaseService {
 			
 			profile.setFile(file);
 			SocialMedia socialMedia = new SocialMedia();
-			socialMedia.setId(data.getSocialMediaId());
-			profile.setFullName(data.getFullName());
-			profile.setPhoneNumber(data.getPhoneNumber());
-			profile.setPostalCode(data.getPostalCode());
+			socialMedia.setId(profileReq.getSocialMediaId());
+			profile.setFullName(profileReq.getFullName());
+			profile.setPhoneNumber(profileReq.getPhoneNumber());
+			profile.setPostalCode(profileReq.getPostalCode());
 			profile.setCreatedBy("Profile Created By");
 			
 			profile = profileDao.save(profile);
