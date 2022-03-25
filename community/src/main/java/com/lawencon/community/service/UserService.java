@@ -94,8 +94,10 @@ public class UserService extends BaseCommunityService implements UserDetailsServ
 		return userRes;
 	}
 	
-	public GetAllUserDtoRes getAll() throws Exception {
-		List<User> users = userDao.getAll();
+	public GetAllUserDtoRes getAll(Integer start, Integer max) throws Exception {
+		List<User> users;
+		if(start==null) users = userDao.getAll();
+		else users = userDao.getAll(start, max);
 		
 		List<GetUserDtoDataRes> data = new ArrayList<GetUserDtoDataRes>();
 		

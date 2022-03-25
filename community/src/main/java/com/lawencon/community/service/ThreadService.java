@@ -96,11 +96,14 @@ public class ThreadService extends BaseCommunityService {
 		return result;
 	}
 
-	public GetAllThreadDtoRes getAll() throws Exception {
-		List<Thread> categories = threadDao.getAll();
+	public GetAllThreadDtoRes getAll(Integer start, Integer max) throws Exception {
+		List<Thread> threads;
+		if(start==null) threads = threadDao.getAll();
+		else threads = threadDao.getAll(start, max);
+		
 		List<GetThreadDtoDataRes> data = new ArrayList<>();
 
-		categories.forEach(list -> {
+		threads.forEach(list -> {
 			GetThreadDtoDataRes thread = new GetThreadDtoDataRes();
 			thread.setId(list.getId());
 			thread.setTitle(list.getTitle());

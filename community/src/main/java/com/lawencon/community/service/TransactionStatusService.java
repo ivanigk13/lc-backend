@@ -66,8 +66,11 @@ public class TransactionStatusService extends BaseCommunityService {
 		return result;
 	}
 
-	public GetAllTransactionStatusDtoRes getAll() throws Exception {
-		List<TransactionStatus> transactionStatuses = transactionStatusDao.getAll();
+	public GetAllTransactionStatusDtoRes getAll(Integer start, Integer max) throws Exception {
+		List<TransactionStatus> transactionStatuses;
+		if(start==null) transactionStatuses = transactionStatusDao.getAll();
+		else transactionStatuses = transactionStatusDao.getAll(start, max);
+		
 		List<GetTransactionStatusDtoDataRes> data = new ArrayList<>();
 
 		transactionStatuses.forEach(list -> {

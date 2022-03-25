@@ -82,8 +82,10 @@ public class ThreadTypeService extends BaseCommunityService {
 		return threadTypeRes;
 	}
 	
-	public GetAllThreadTypeDtoRes getAll() throws Exception {
-		List<ThreadType> threadTypes = threadTypeDao.getAll();
+	public GetAllThreadTypeDtoRes getAll(Integer start, Integer max) throws Exception {
+		List<ThreadType> threadTypes;
+		if(start==null) threadTypes = threadTypeDao.getAll();
+		else threadTypes = threadTypeDao.getAll(start, max);
 		
 		List<GetThreadTypeDtoDataRes> data = new ArrayList<GetThreadTypeDtoDataRes>();
 		

@@ -66,8 +66,11 @@ public class SubscribeService extends BaseCommunityService{
 		return result;
 	}
 
-	public GetAllSubscribeDtoRes getAll() throws Exception {
-		List<Subscribe> subscribes = subscribeDao.getAll();
+	public GetAllSubscribeDtoRes getAll(Integer start, Integer max) throws Exception {
+		List<Subscribe> subscribes;
+		if(start ==null) subscribes = subscribeDao.getAll();
+		else subscribes = subscribeDao.getAll(start, max);
+		
 		List<GetSubscribeDtoDataRes> data = new ArrayList<>();
 
 		subscribes.forEach(list -> {

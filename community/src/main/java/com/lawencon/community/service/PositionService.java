@@ -82,8 +82,10 @@ public class PositionService extends BaseCommunityService {
 		return positionRes;
 	}
 
-	public GetAllPositionDtoRes getAll() throws Exception {
-		List<Position> positions = positionDao.getAll();
+	public GetAllPositionDtoRes getAll(Integer start, Integer max) throws Exception {
+		List<Position> positions;
+		if(start == null) positions = positionDao.getAll();
+		else positions = positionDao.getAll(start, max);
 		
 		List<GetPositionDtoDataRes> data = new ArrayList<GetPositionDtoDataRes>();
 		

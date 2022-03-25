@@ -54,11 +54,14 @@ public class ThreadBookmarkService extends BaseCommunityService {
 		return result;
 	}
 
-	public GetAllThreadBookmarkDtoRes getAll() throws Exception {
-		List<ThreadBookmark> categories = threadBookmarkDao.getAll();
+	public GetAllThreadBookmarkDtoRes getAll(Integer start, Integer max) throws Exception {
+		List<ThreadBookmark> threadBookmarks;
+		if(start==null) threadBookmarks = threadBookmarkDao.getAll();
+		else threadBookmarks = threadBookmarkDao.getAll(start, max);
+		
 		List<GetThreadBookmarkDtoDataRes> data = new ArrayList<>();
 
-		categories.forEach(list -> {
+		threadBookmarks.forEach(list -> {
 			GetThreadBookmarkDtoDataRes threadBookmark = new GetThreadBookmarkDtoDataRes();
 			threadBookmark.setId(list.getId());
 			threadBookmark.setThreadId(list.getThread().getId());

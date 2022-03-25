@@ -162,8 +162,10 @@ public class ProfileService extends BaseCommunityService {
 		return profileRes;
 	}
 
-	public GetAllProfileDtoRes getAll() throws Exception {
-		List<Profile> profiles = profileDao.getAll();
+	public GetAllProfileDtoRes getAll(Integer start, Integer max) throws Exception {
+		List<Profile> profiles;
+		if(start == null) profiles = profileDao.getAll();
+		else profiles = profileDao.getAll(start, max);
 		
 		List<GetProfileDtoDataRes> data = new ArrayList<GetProfileDtoDataRes>();
 		

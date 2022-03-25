@@ -34,8 +34,10 @@ public class ProvinceService extends BaseCommunityService {
 		return provinceRes;
 	}
 
-	public GetAllProvinceDtoRes getAll() throws Exception {
-		List<Province> provinces = provinceDao.getAll();
+	public GetAllProvinceDtoRes getAll(Integer start, Integer max) throws Exception {
+		List<Province> provinces;
+		if(start ==null) provinces = provinceDao.getAll();
+		else provinces = provinceDao.getAll(start, max);
 		
 		List<GetProvinceDtoDataRes> data = new ArrayList<GetProvinceDtoDataRes>();
 		
