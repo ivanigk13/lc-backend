@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.TransactionStatusDao;
+import com.lawencon.community.dto.transactionstatus.DeleteTransactionStatusDtoRes;
 import com.lawencon.community.dto.transactionstatus.GetAllTransactionStatusDtoRes;
 import com.lawencon.community.dto.transactionstatus.GetByIdTransactionStatusDtoRes;
 import com.lawencon.community.dto.transactionstatus.GetTransactionStatusDtoDataRes;
@@ -51,6 +52,7 @@ public class TransactionStatusService extends BaseService {
 
 		begin();
 		TransactionStatus transactionStatusUpdate = transactionStatusDao.save(transactionStatus);
+		commit();
 
 		UpdateTransactionStatusDtoDataRes transactionStatusVersion = new UpdateTransactionStatusDtoDataRes();
 		transactionStatusVersion.setVersion(transactionStatusUpdate.getVersion());
@@ -95,5 +97,16 @@ public class TransactionStatusService extends BaseService {
 		result.setData(transactionStatusData);
 
 		return result;
+	}
+	
+	public DeleteTransactionStatusDtoRes deleteById(String id) throws Exception {
+		begin();
+		transactionStatusDao.deleteById(id);
+		commit();
+		
+		DeleteTransactionStatusDtoRes transactionStatusRes = new DeleteTransactionStatusDtoRes();
+		transactionStatusRes.setMsg("Delete Successfully");
+		
+		return transactionStatusRes;
 	}
 }

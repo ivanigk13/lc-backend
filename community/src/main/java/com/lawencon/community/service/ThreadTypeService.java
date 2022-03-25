@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.ThreadTypeDao;
+import com.lawencon.community.dto.threadtype.DeleteThreadTypeDtoRes;
 import com.lawencon.community.dto.threadtype.GetAllThreadTypeDtoRes;
 import com.lawencon.community.dto.threadtype.GetByIdThreadTypeDtoRes;
 import com.lawencon.community.dto.threadtype.GetThreadTypeDtoDataRes;
@@ -100,6 +101,17 @@ public class ThreadTypeService extends BaseService {
 		
 		GetAllThreadTypeDtoRes threadTypeRes = new GetAllThreadTypeDtoRes();
 		threadTypeRes.setData(data);
+		
+		return threadTypeRes;
+	}
+	
+	public DeleteThreadTypeDtoRes deleteById(String id) throws Exception {
+		begin();
+		threadTypeDao.deleteById(id);
+		commit();
+		
+		DeleteThreadTypeDtoRes threadTypeRes = new DeleteThreadTypeDtoRes();
+		threadTypeRes.setMsg("Delete Successfully");
 		
 		return threadTypeRes;
 	}

@@ -58,6 +58,7 @@ public class ThreadService extends BaseService {
 
 		begin();
 		Thread threadUpdate = threadDao.save(thread);
+		commit();
 
 		UpdateThreadDtoDataRes threadVersion = new UpdateThreadDtoDataRes();
 		threadVersion.setVersion(threadUpdate.getVersion());

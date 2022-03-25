@@ -59,6 +59,7 @@ public class SocialMediaService extends BaseService{
 
 		begin();
 		SocialMedia socialMediaUpdate = socialMediaDao.save(socialMedia);
+		commit();
 
 		UpdateSocialMediaDtoDataRes socialMediaVersion = new UpdateSocialMediaDtoDataRes();
 		socialMediaVersion.setVersion(socialMediaUpdate.getVersion());

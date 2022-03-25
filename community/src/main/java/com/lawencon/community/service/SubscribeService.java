@@ -53,6 +53,7 @@ public class SubscribeService extends BaseService{
 
 		begin();
 		Subscribe subscribeUpdate = subscribeDao.save(subscribe);
+		commit();
 
 		UpdateSubscribeDtoDataRes subscribeVersion = new UpdateSubscribeDtoDataRes();
 		subscribeVersion.setVersion(subscribeUpdate.getVersion());

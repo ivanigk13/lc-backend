@@ -52,6 +52,7 @@ public class IndustryService extends BaseService{
 		
 		begin();
 		Industry IndustryUpdate = industryDao.save(Industry);
+		commit();
 		
 		UpdateIndustryDtoDataRes IndustryVersion = new UpdateIndustryDtoDataRes();
 		IndustryVersion.setVersion(IndustryUpdate.getVersion());

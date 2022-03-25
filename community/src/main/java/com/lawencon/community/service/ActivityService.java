@@ -130,6 +130,7 @@ public class ActivityService extends BaseService {
 		activity.setIsActive(data.getIsActive());
 
 		Activity activityUpdate = activityDao.save(activity);
+		commit();
 
 		UpdateActivityDtoDataRes activityVersion = new UpdateActivityDtoDataRes();
 		activityVersion.setVersion(activityUpdate.getVersion());

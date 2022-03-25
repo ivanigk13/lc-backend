@@ -62,6 +62,7 @@ public class ThreadLikeService extends BaseService{
 
 		begin();
 		ThreadLike threadLikeUpdate = threadLikeDao.save(threadLike);
+		commit();
 
 		UpdateThreadLikeDtoDataRes threadLikeVersion = new UpdateThreadLikeDtoDataRes();
 		threadLikeVersion.setVersion(threadLikeUpdate.getVersion());
