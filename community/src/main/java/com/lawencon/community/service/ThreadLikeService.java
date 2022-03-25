@@ -90,5 +90,9 @@ public class ThreadLikeService extends BaseCommunityService{
 
 		return result;
 	}
+	
+	public Integer getLikeCounterByThreadId(String id) throws Exception {
+		return threadLikeDao.getLikeCounterByThreadId(id);
+	}
 
 }

@@ -82,8 +82,10 @@ public class RoleService extends BaseCommunityService {
 		return roleRes;
 	}
 
-	public GetAllRoleDtoRes getAll() throws Exception {
-		List<Role> roles = roleDao.getAll();
+	public GetAllRoleDtoRes getAll(Integer start, Integer max) throws Exception {
+		List<Role> roles;
+		if(start == null) roles = roleDao.getAll();
+		else roles = roleDao.getAll(start, max);
 		
 		List<GetRoleDtoDataRes> data = new ArrayList<GetRoleDtoDataRes>();
 		
@@ -103,6 +105,8 @@ public class RoleService extends BaseCommunityService {
 		
 		return roleRes;
 	}
+	
+	
 
 	public DeleteRoleDtoRes deleteById(String id) throws Exception {
 		begin();

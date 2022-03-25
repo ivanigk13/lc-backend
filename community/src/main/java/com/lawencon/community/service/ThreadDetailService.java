@@ -1,9 +1,13 @@
 package com.lawencon.community.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.lawencon.community.dao.ThreadDao;
 import com.lawencon.community.dao.ThreadDetailDao;
+import com.lawencon.community.dto.threaddetail.GetAllByThreadIdThreadDetailDtoRes;
 import com.lawencon.community.dto.threaddetail.GetByIdThreadDetailDtoRes;
 import com.lawencon.community.dto.threaddetail.GetThreadDetailDtoDataRes;
 import com.lawencon.community.dto.threaddetail.InsertThreadDetailDtoDataRes;
@@ -59,4 +63,25 @@ public class ThreadDetailService extends BaseCommunityService{
 
 		return result;
 	}
+	
+	public GetAllByThreadIdThreadDetailDtoRes getAllByThreadId(String id) throws Exception {
+		List<ThreadDetail> threadDetails = threadDetailDao.getAllByThreadId(id);
+		List<GetThreadDetailDtoDataRes> datas = new ArrayList<GetThreadDetailDtoDataRes>();
+		for(ThreadDetail threadDetail : threadDetails) {
+			GetThreadDetailDtoDataRes data = new GetThreadDetailDtoDataRes();
+			data.setId(threadDetail.getId());
+			data.setThreadId(threadDetail.getThread().getId());
+			data.setComment(threadDetail.getComment());
+			data.setVersion(threadDetail.getVersion());
+			data.setIsActive(threadDetail.getIsActive());
+			
+			datas.add(data);
+		}
+
+		GetAllByThreadIdThreadDetailDtoRes result = new GetAllByThreadIdThreadDetailDtoRes();
+		result.setData(datas);
+
+		return result;
+	}
+	
 }

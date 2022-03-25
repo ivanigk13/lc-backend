@@ -96,4 +96,27 @@ public class SocialMediaService extends BaseCommunityService{
 		return result;
 	}
 	
+	public GetByIdSocialMediaDtoRes getByUserId(String id) throws Exception {
+		SocialMedia socialMedia = socialMediaDao.getByUserId(id);
+
+		GetSocialMediaDtoDataRes socialMediaData = new GetSocialMediaDtoDataRes();
+		socialMediaData.setId(socialMedia.getId());
+		if(socialMedia.getInstagram() != null) {
+			socialMediaData.setInstagram(socialMedia.getInstagram());
+		}
+		if(socialMedia.getFacebook() != null) {
+			socialMediaData.setFacebook(socialMedia.getFacebook());
+		}
+		if(socialMedia.getTwitter() != null) {
+			socialMediaData.setTwitter(socialMedia.getTwitter());
+		}
+		socialMediaData.setVersion(socialMedia.getVersion());
+		socialMediaData.setIsActive(socialMedia.getIsActive());
+
+		GetByIdSocialMediaDtoRes result = new GetByIdSocialMediaDtoRes();
+		result.setData(socialMediaData);
+
+		return result;
+	}
+	
 }
