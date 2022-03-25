@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.PollingDetailDao;
 import com.lawencon.community.dto.pollingdetail.DeletePollingDetailDtoRes;
 import com.lawencon.community.dto.pollingdetail.GetAllPollingDetailDtoRes;
@@ -24,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class PollingDetailService extends BaseService {
+public class PollingDetailService extends BaseCommunityService {
 	
 	private final PollingDetailDao pollingDetailDao;
 	
@@ -35,7 +34,7 @@ public class PollingDetailService extends BaseService {
 		pollingDetail.setPollingHeader(pollingHeader);
 		pollingDetail.setPollingName(data.getPollingName());
 		pollingDetail.setPollingCounter(data.getPollingCounter());
-		pollingDetail.setCreatedBy("created By");
+		pollingDetail.setCreatedBy(getId());
 		
 		begin();
 		pollingDetail = pollingDetailDao.save(pollingDetail);
@@ -55,7 +54,7 @@ public class PollingDetailService extends BaseService {
 		PollingDetail pollingDetail = pollingDetailDao.getById(data.getId());
 		pollingDetail.setPollingName(data.getPollingName());
 		pollingDetail.setPollingCounter(data.getPollingCounter());
-		pollingDetail.setUpdatedBy("ID Updated By");
+		pollingDetail.setUpdatedBy(getId());
 		pollingDetail.setVersion(data.getVersion());
 		pollingDetail.setIsActive(data.getIsActive());
 		

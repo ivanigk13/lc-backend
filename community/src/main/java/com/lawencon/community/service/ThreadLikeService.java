@@ -2,7 +2,6 @@ package com.lawencon.community.service;
 
 import org.springframework.stereotype.Service;
 
-import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.ThreadDao;
 import com.lawencon.community.dao.ThreadLikeDao;
 import com.lawencon.community.dao.UserDao;
@@ -22,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class ThreadLikeService extends BaseService{
+public class ThreadLikeService extends BaseCommunityService{
 	
 	private final ThreadLikeDao threadLikeDao;
 	private final ThreadDao threadDao;
@@ -36,6 +35,7 @@ public class ThreadLikeService extends BaseService{
 		User user = userDao.getById(data.getUserId());
 		threadLike.setUser(user);		
 		threadLike.setLikeCounter(data.getLikeCounter());
+		threadLike.setCreatedBy(getId());
 		
 		begin();
 		ThreadLike threadLikeInsert = threadLikeDao.save(threadLike);
@@ -57,6 +57,7 @@ public class ThreadLikeService extends BaseService{
 		User user = userDao.getById(data.getUserId());
 		threadLike.setUser(user);		
 		threadLike.setLikeCounter(data.getLikeCounter());
+		threadLike.setUpdatedBy(getId());
 		threadLike.setVersion(data.getVersion());
 		threadLike.setIsActive(data.getIsActive());
 

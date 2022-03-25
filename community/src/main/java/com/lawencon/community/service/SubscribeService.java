@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.SubscribeDao;
 import com.lawencon.community.dto.subscribe.DeleteSubscribeDtoRes;
 import com.lawencon.community.dto.subscribe.GetAllSubscribeDtoRes;
@@ -23,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class SubscribeService extends BaseService{
+public class SubscribeService extends BaseCommunityService{
 
 	private final SubscribeDao subscribeDao;
 	
@@ -31,16 +30,18 @@ public class SubscribeService extends BaseService{
 		Subscribe subscribe = new Subscribe();
 		subscribe.setDuration(data.getDuration());
 		subscribe.setPrice(data.getPrice());
+		subscribe.setCreatedBy(getId());
 
 		begin();
 		Subscribe subscribeInsert = subscribeDao.save(subscribe);
+		commit();
 		InsertSubscribeDtoDataRes subscribeId = new InsertSubscribeDtoDataRes();
 		subscribeId.setId(subscribeInsert.getId());
 
 		InsertSubscribeDtoRes result = new InsertSubscribeDtoRes();
 		result.setData(subscribeId);
 		result.setMsg("Insert Successfully");
-		commit();
+		
 		return result;
 	}
 
@@ -48,6 +49,7 @@ public class SubscribeService extends BaseService{
 		Subscribe subscribe = subscribeDao.getById(data.getId());
 		subscribe.setDuration(data.getDuration());
 		subscribe.setPrice(data.getPrice());
+		subscribe.setUpdatedBy(getId());
 		subscribe.setVersion(data.getVersion());
 		subscribe.setIsActive(data.getIsActive());
 

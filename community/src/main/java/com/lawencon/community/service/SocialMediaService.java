@@ -2,7 +2,6 @@ package com.lawencon.community.service;
 
 import org.springframework.stereotype.Service;
 
-import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.SocialMediaDao;
 import com.lawencon.community.dto.socialmedia.GetByIdSocialMediaDtoRes;
 import com.lawencon.community.dto.socialmedia.GetSocialMediaDtoDataRes;
@@ -18,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class SocialMediaService extends BaseService{
+public class SocialMediaService extends BaseCommunityService{
 
 	private final SocialMediaDao socialMediaDao;
 	
@@ -27,16 +26,19 @@ public class SocialMediaService extends BaseService{
 		socialMedia.setInstagram(data.getInstagram());
 		socialMedia.setFacebook(data.getFacebook());
 		socialMedia.setTwitter(data.getTwitter());
+		socialMedia.setCreatedBy(getId());
 
 		begin();
 		SocialMedia socialMediaInsert = socialMediaDao.save(socialMedia);
+		commit();
+		
 		InsertSocialMediaDtoDataRes socialMediaId = new InsertSocialMediaDtoDataRes();
 		socialMediaId.setId(socialMediaInsert.getId());
 
 		InsertSocialMediaDtoRes result = new InsertSocialMediaDtoRes();
 		result.setData(socialMediaId);
 		result.setMsg("Insert Successfully");
-		commit();
+		
 		return result;
 	}
 
@@ -53,6 +55,7 @@ public class SocialMediaService extends BaseService{
 		if(data.getTwitter() != null) {
 		socialMedia.setTwitter(data.getTwitter());
 		}
+		socialMedia.setUpdatedBy(getId());
 		socialMedia.setVersion(data.getVersion());
 		socialMedia.setIsActive(data.getIsActive());
 		

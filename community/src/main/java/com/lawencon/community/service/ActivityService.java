@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.ActivityDao;
 import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dto.activity.DeleteActivityDtoRes;
@@ -30,7 +29,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class ActivityService extends BaseService {
+public class ActivityService extends BaseCommunityService {
 
 	private final ActivityDao activityDao;
 	private final FileDao fileDao;
@@ -50,7 +49,7 @@ public class ActivityService extends BaseService {
 					files[0].getOriginalFilename().lastIndexOf(".") + 1, files[0].getOriginalFilename().length());
 			file.setExtensionName(splitterFile);
 			file.setContent(files[0].getBytes());
-			file.setCreatedBy("ID created BY");
+			file.setCreatedBy(getId());
 
 			begin();
 			File fileActivity = fileDao.save(file);
@@ -69,7 +68,7 @@ public class ActivityService extends BaseService {
 					files[1].getOriginalFilename().lastIndexOf(".") + 1, files[1].getOriginalFilename().length());
 			file.setExtensionName(splitterPaymentFile);
 			file.setContent(files[1].getBytes());
-			file.setCreatedBy("ID created BY");
+			file.setCreatedBy(getId());
 
 			File paymentFileActivity = fileDao.save(paymentFile);
 			activity.setFile(paymentFileActivity);
@@ -107,7 +106,7 @@ public class ActivityService extends BaseService {
 				files[0].getOriginalFilename().lastIndexOf(".") + 1, files[0].getOriginalFilename().length());
 		file.setExtensionName(splitterFile);
 		file.setContent(files[0].getBytes());
-		file.setCreatedBy("ID created BY");
+		file.setUpdatedBy(getId());;
 
 		begin();
 		File fileActivity = fileDao.save(file);
@@ -118,7 +117,7 @@ public class ActivityService extends BaseService {
 				files[1].getOriginalFilename().lastIndexOf(".") + 1, files[1].getOriginalFilename().length());
 		file.setExtensionName(splitterPaymentFile);
 		file.setContent(files[1].getBytes());
-		file.setCreatedBy("ID created BY");
+		file.setUpdatedBy(getId());
 
 		File paymentFileActivity = fileDao.save(paymentFile);
 		activity.setFile(paymentFileActivity);

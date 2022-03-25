@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.PositionDao;
 import com.lawencon.community.dto.position.DeletePositionDtoRes;
 import com.lawencon.community.dto.position.GetAllPositionDtoRes;
@@ -23,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class PositionService extends BaseService {
+public class PositionService extends BaseCommunityService {
 	
 	private final PositionDao positionDao;
 	
@@ -31,7 +30,7 @@ public class PositionService extends BaseService {
 		Position position = new Position();
 		position.setPositionCode(data.getPositionCode());
 		position.setPositionName(data.getPositionName());
-		position.setCreatedBy("Id Created By");
+		position.setCreatedBy(getId());
 		
 		begin();
 		position = positionDao.save(position);
@@ -50,7 +49,7 @@ public class PositionService extends BaseService {
 	public UpdatePositionDtoRes update(UpdatePositionDtoReq data) throws Exception {
 		Position position = positionDao.getById(data.getId());
 		position.setPositionName(data.getPositionName());
-		position.setUpdatedBy("Id Updated By");
+		position.setUpdatedBy(getId());
 		position.setVersion(data.getVersion());
 		position.setIsActive(data.getIsActive());
 		

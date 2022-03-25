@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.ActivityDao;
 import com.lawencon.community.dao.OrderDao;
 import com.lawencon.community.dao.OrderDetailDao;
@@ -26,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class OrderDetailService extends BaseService {
+public class OrderDetailService extends BaseCommunityService {
 
 	private final OrderDetailDao orderDetailDao;
 	private final OrderDao orderDao;
@@ -43,16 +42,20 @@ public class OrderDetailService extends BaseService {
 
 		Activity activity = activityDao.getById(data.getActivityId());
 		orderDetail.setActivity(activity);
+		
+		orderDetail.setCreatedBy(getId());
 
 		begin();
 		OrderDetail orderDetailInsert = orderDetailDao.save(orderDetail);
+		commit();
+		
 		InsertOrderDetailDtoDataRes orderDetailId = new InsertOrderDetailDtoDataRes();
 		orderDetailId.setId(orderDetailInsert.getId());
 
 		InsertOrderDetailDtoRes result = new InsertOrderDetailDtoRes();
 		result.setData(orderDetailId);
 		result.setMsg("Insert Successfully");
-		commit();
+		
 		return result;
 	}
 

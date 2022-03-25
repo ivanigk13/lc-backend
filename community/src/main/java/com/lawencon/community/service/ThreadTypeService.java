@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.ThreadTypeDao;
 import com.lawencon.community.dto.threadtype.DeleteThreadTypeDtoRes;
 import com.lawencon.community.dto.threadtype.GetAllThreadTypeDtoRes;
@@ -23,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class ThreadTypeService extends BaseService {
+public class ThreadTypeService extends BaseCommunityService {
 	
 	private final ThreadTypeDao threadTypeDao;
 	
@@ -31,7 +30,7 @@ public class ThreadTypeService extends BaseService {
 		ThreadType threadType = new ThreadType();
 		threadType.setThreadTypeCode(data.getThreadTypeCode());
 		threadType.setThreadTypeName(data.getThreadTypeCode());
-		threadType.setCreatedBy("Created By");
+		threadType.setCreatedBy(getId());
 		
 		begin();
 		threadType = threadTypeDao.save(threadType);
@@ -50,7 +49,7 @@ public class ThreadTypeService extends BaseService {
 	public UpdateThreadTypeDtoRes update(UpdateThreadTypeDtoReq data) throws Exception {
 		ThreadType threadType = threadTypeDao.getById(data.getId());
 		threadType.setThreadTypeName(data.getThreadTypeName());
-		threadType.setUpdatedBy("Updated By");
+		threadType.setUpdatedBy(getId());
 		threadType.setVersion(data.getVersion());
 		threadType.setIsActive(data.getIsActive());
 		

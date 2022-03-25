@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.IndustryDao;
 import com.lawencon.community.dto.industry.DeleteIndustryDtoRes;
 import com.lawencon.community.dto.industry.GetAllIndustryDtoRes;
@@ -23,58 +22,62 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class IndustryService extends BaseService{
+public class IndustryService extends BaseCommunityService {
 
 	private final IndustryDao industryDao;
 	
 	public InsertIndustryDtoRes insert(InsertIndustryDtoReq data) throws Exception {
-		Industry Industry = new Industry();
-		Industry.setIndustryName(data.getIndustryName());
-		Industry.setIndustryCode(data.getIndustryCode());
+		Industry industry = new Industry();
+		industry.setIndustryName(data.getIndustryName());
+		industry.setIndustryCode(data.getIndustryCode());
+		industry.setCreatedBy(getId());
 		
 		begin();
-		Industry IndustryInsert = industryDao.save(Industry);
-		InsertIndustryDtoDataRes IndustryId = new InsertIndustryDtoDataRes();
-		IndustryId.setId(IndustryInsert.getId());
+		Industry industryInsert = industryDao.save(industry);
+		commit();
+		
+		InsertIndustryDtoDataRes industryId = new InsertIndustryDtoDataRes();
+		industryId.setId(industryInsert.getId());
 		
 		InsertIndustryDtoRes result = new InsertIndustryDtoRes();
-		result.setData(IndustryId);
+		result.setData(industryId);
 		result.setMsg("Insert Successfully");
-		commit();
+		
 		return result;
 	}
 	
 	public UpdateIndustryDtoRes update(UpdateIndustryDtoReq data) throws Exception{
-		Industry Industry = industryDao.getById(data.getId());
-		Industry.setIndustryName(data.getIndustryName());
-		Industry.setVersion(data.getVersion());
-		Industry.setIsActive(data.getIsActive());
+		Industry industry = industryDao.getById(data.getId());
+		industry.setIndustryName(data.getIndustryName());
+		industry.setUpdatedBy(getId());
+		industry.setVersion(data.getVersion());
+		industry.setIsActive(data.getIsActive());
 		
 		begin();
-		Industry IndustryUpdate = industryDao.save(Industry);
+		Industry industryUpdate = industryDao.save(industry);
 		commit();
 		
-		UpdateIndustryDtoDataRes IndustryVersion = new UpdateIndustryDtoDataRes();
-		IndustryVersion.setVersion(IndustryUpdate.getVersion());
+		UpdateIndustryDtoDataRes industryVersion = new UpdateIndustryDtoDataRes();
+		industryVersion.setVersion(industryUpdate.getVersion());
 		
 		UpdateIndustryDtoRes result = new UpdateIndustryDtoRes();
-		result.setData(IndustryVersion);
+		result.setData(industryVersion);
 		result.setMsg("Update Successfully");
 		return result;
 	}
 	
 	public GetAllIndustryDtoRes getAll() throws Exception{
-		List<Industry> Industrys = industryDao.getAll();
+		List<Industry> industrys = industryDao.getAll();
 		List<GetIndustryDtoDataRes> data = new ArrayList<>();
 		
-		Industrys.forEach(list -> {
-			GetIndustryDtoDataRes Industry = new GetIndustryDtoDataRes();
-			Industry.setId(list.getId());
-			Industry.setIndustryName(list.getIndustryName());
-			Industry.setIndustryCode(list.getIndustryCode());
-			Industry.setVersion(list.getVersion());
-			Industry.setIsActive(list.getIsActive());
-			data.add(Industry);
+		industrys.forEach(list -> {
+			GetIndustryDtoDataRes industry = new GetIndustryDtoDataRes();
+			industry.setId(list.getId());
+			industry.setIndustryName(list.getIndustryName());
+			industry.setIndustryCode(list.getIndustryCode());
+			industry.setVersion(list.getVersion());
+			industry.setIsActive(list.getIsActive());
+			data.add(industry);
 		});
 		
 		GetAllIndustryDtoRes result = new GetAllIndustryDtoRes();
@@ -84,17 +87,17 @@ public class IndustryService extends BaseService{
 	}
 	
 	public GetByIdIndustryDtoRes getById(String id) throws Exception{
-		Industry Industry = industryDao.getById(id);
+		Industry industry = industryDao.getById(id);
 		
-		GetIndustryDtoDataRes IndustryData = new GetIndustryDtoDataRes();
-		IndustryData.setId(Industry.getId());
-		IndustryData.setIndustryName(Industry.getIndustryName());
-		IndustryData.setIndustryCode(Industry.getIndustryCode());
-		IndustryData.setVersion(Industry.getVersion());
-		IndustryData.setIsActive(Industry.getIsActive());
+		GetIndustryDtoDataRes industryData = new GetIndustryDtoDataRes();
+		industryData.setId(industry.getId());
+		industryData.setIndustryName(industry.getIndustryName());
+		industryData.setIndustryCode(industry.getIndustryCode());
+		industryData.setVersion(industry.getVersion());
+		industryData.setIsActive(industry.getIsActive());
 		
 		GetByIdIndustryDtoRes result = new GetByIdIndustryDtoRes();
-		result.setData(IndustryData);		
+		result.setData(industryData);		
 		
 		return result;		
 	}

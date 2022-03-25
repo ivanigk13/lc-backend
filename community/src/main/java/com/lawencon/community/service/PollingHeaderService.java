@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.PollingHeaderDao;
 import com.lawencon.community.dto.pollingheader.DeletePollingHeaderDtoRes;
 import com.lawencon.community.dto.pollingheader.GetAllPollingHeaderDtoRes;
@@ -21,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class PollingHeaderService extends BaseService {
+public class PollingHeaderService extends BaseCommunityService {
 
 	private final PollingHeaderDao pollingHeaderDao;
 	
@@ -30,7 +29,7 @@ public class PollingHeaderService extends BaseService {
 		Thread thread = new Thread();
 		thread.setId(data.getThreadId());
 		pollingHeader.setThread(thread);
-		pollingHeader.setCreatedBy("User Create");
+		pollingHeader.setCreatedBy(getId());
 		
 		begin();
 		pollingHeader = pollingHeaderDao.save(pollingHeader);

@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.TransactionStatusDao;
 import com.lawencon.community.dto.transactionstatus.DeleteTransactionStatusDtoRes;
 import com.lawencon.community.dto.transactionstatus.GetAllTransactionStatusDtoRes;
@@ -23,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class TransactionStatusService extends BaseService {
+public class TransactionStatusService extends BaseCommunityService {
 
 	private final TransactionStatusDao transactionStatusDao;
 
@@ -31,22 +30,26 @@ public class TransactionStatusService extends BaseService {
 		TransactionStatus transactionStatus = new TransactionStatus();
 		transactionStatus.setStatusName(data.getStatusName());
 		transactionStatus.setStatusCode(data.getStatusCode());
+		transactionStatus.setCreatedBy(getId());
 
 		begin();
 		TransactionStatus transactionStatusInsert = transactionStatusDao.save(transactionStatus);
+		commit();
+		
 		InsertTransactionStatusDtoDataRes transactionStatusId = new InsertTransactionStatusDtoDataRes();
 		transactionStatusId.setId(transactionStatusInsert.getId());
 
 		InsertTransactionStatusDtoRes result = new InsertTransactionStatusDtoRes();
 		result.setData(transactionStatusId);
 		result.setMsg("Insert Successfully");
-		commit();
+		
 		return result;
 	}
 
 	public UpdateTransactionStatusDtoRes update(UpdateTransactionStatusDtoReq data) throws Exception {
 		TransactionStatus transactionStatus = transactionStatusDao.getById(data.getId());
 		transactionStatus.setStatusName(data.getStatusName());
+		transactionStatus.setUpdatedBy(getId());
 		transactionStatus.setVersion(data.getVersion());
 		transactionStatus.setIsActive(data.getIsActive());
 

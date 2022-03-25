@@ -2,7 +2,6 @@ package com.lawencon.community.service;
 
 import org.springframework.stereotype.Service;
 
-import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.ThreadDao;
 import com.lawencon.community.dao.ThreadDetailDao;
 import com.lawencon.community.dto.threaddetail.GetByIdThreadDetailDtoRes;
@@ -17,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class ThreadDetailService extends BaseService{
+public class ThreadDetailService extends BaseCommunityService{
 	
 	private final ThreadDetailDao threadDetailDao;
 	private final ThreadDao threadDao;
@@ -28,17 +27,20 @@ public class ThreadDetailService extends BaseService{
 		Thread thread = threadDao.getById(data.getThreadId());
 		threadDetail.setThread(thread);
 		threadDetail.setComment(data.getComment());
+		threadDetail.setCreatedBy(getId());
 		
 
 		begin();
 		ThreadDetail threadDetailInsert = threadDetailDao.save(threadDetail);
+		commit();
+		
 		InsertThreadDetailDtoDataRes threadDetailId = new InsertThreadDetailDtoDataRes();
 		threadDetailId.setId(threadDetailInsert.getId());
 
 		InsertThreadDetailDtoRes result = new InsertThreadDetailDtoRes();
 		result.setData(threadDetailId);
 		result.setMsg("Insert Successfully");
-		commit();
+		
 		return result;
 	}
 

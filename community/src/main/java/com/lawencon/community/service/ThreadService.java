@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dao.ThreadDao;
 import com.lawencon.community.dao.ThreadTypeDao;
@@ -28,43 +27,51 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class ThreadService extends BaseService {
+public class ThreadService extends BaseCommunityService {
 
 	private final ThreadDao threadDao;
 	private final ThreadTypeDao threadTypeDao;
 	private final FileDao fileDao;
 
 	public InsertThreadDtoRes insert(String content, MultipartFile file) throws Exception {
-		InsertThreadDtoReq threadReq = new ObjectMapper().readValue(content, InsertThreadDtoReq.class);
-		Thread thread = new Thread();
-		ThreadType threadType = threadTypeDao.getById(threadReq.getThreadTypeId());
-		thread.setThreadType(threadType);
-		
-		if(file != null ) {
-			File fileThread = new File();
-			String splitter = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1, 
-					file.getOriginalFilename().length());
-			fileThread.setExtensionName(splitter);
-			fileThread.setContent(file.getBytes());
-			fileThread.setCreatedBy("CreatedBy");
+		try {
+			InsertThreadDtoReq threadReq = new ObjectMapper().readValue(content, InsertThreadDtoReq.class);
+			Thread thread = new Thread();
+			ThreadType threadType = threadTypeDao.getById(threadReq.getThreadTypeId());
+			thread.setThreadType(threadType);
 			
-			fileThread = fileDao.save(fileThread);
-			thread.setFile(fileThread);
+			if(file != null ) {
+				File fileThread = new File();
+				String splitter = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1, 
+						file.getOriginalFilename().length());
+				fileThread.setExtensionName(splitter);
+				fileThread.setContent(file.getBytes());
+				fileThread.setCreatedBy(getId());
+				
+				begin();
+				fileThread = fileDao.save(fileThread);
+				thread.setFile(fileThread);
+			}
+
+			thread.setTitle(threadReq.getTitle());
+			thread.setContent(threadReq.getContent());
+			thread.setCreatedBy(getId());
+
+			Thread threadInsert = threadDao.save(thread);
+			commit();
+			InsertThreadDtoDataRes threadId = new InsertThreadDtoDataRes();
+			threadId.setId(threadInsert.getId());
+
+			InsertThreadDtoRes result = new InsertThreadDtoRes();
+			result.setData(threadId);
+			result.setMsg("Insert Successfully");
+			
+			return result;
+		} catch(Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
 		}
-
-		thread.setTitle(threadReq.getTitle());
-		thread.setContent(threadReq.getContent());
-
-		begin();
-		Thread threadInsert = threadDao.save(thread);
-		InsertThreadDtoDataRes threadId = new InsertThreadDtoDataRes();
-		threadId.setId(threadInsert.getId());
-
-		InsertThreadDtoRes result = new InsertThreadDtoRes();
-		result.setData(threadId);
-		result.setMsg("Insert Successfully");
-		commit();
-		return result;
 	}
 
 
@@ -72,6 +79,7 @@ public class ThreadService extends BaseService {
 		Thread thread = threadDao.getById(data.getId());
 		thread.setTitle(data.getTitle());
 		thread.setContent(data.getContent());
+		thread.setUpdatedBy(getId());
 		thread.setVersion(data.getVersion());
 		thread.setIsActive(data.getIsActive());
 

@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.ActivityTypeDao;
 import com.lawencon.community.dto.activitytype.DeleteActivityTypeDtoRes;
 import com.lawencon.community.dto.activitytype.GetActivityTypeDtoDataRes;
@@ -23,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class ActivityTypeService extends BaseService {
+public class ActivityTypeService extends BaseCommunityService {
 
 	private final ActivityTypeDao activityTypeDao;
 
@@ -31,16 +30,19 @@ public class ActivityTypeService extends BaseService {
 		ActivityType activityType = new ActivityType();
 		activityType.setActivityTypeName(data.getActivityTypeName());
 		activityType.setActivityTypeCode(data.getActivityTypeCode());
+		activityType.setCreatedBy(getId());
 
 		begin();
 		ActivityType activityTypeInsert = activityTypeDao.save(activityType);
+		commit();
+		
 		InsertActivityTypeDtoDataRes activityTypeId = new InsertActivityTypeDtoDataRes();
 		activityTypeId.setId(activityTypeInsert.getId());
 
 		InsertActivityTypeDtoRes result = new InsertActivityTypeDtoRes();
 		result.setData(activityTypeId);
 		result.setMsg("Insert Successfully");
-		commit();
+		
 		return result;
 	}
 
@@ -49,6 +51,7 @@ public class ActivityTypeService extends BaseService {
 		activityType.setActivityTypeName(data.getActivityTypeName());
 		activityType.setVersion(data.getVersion());
 		activityType.setIsActive(data.getIsActive());
+		activityType.setUpdatedBy(getId());
 
 		begin();
 		ActivityType activityTypeUpdate = activityTypeDao.save(activityType);
