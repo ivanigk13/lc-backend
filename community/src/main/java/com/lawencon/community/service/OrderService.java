@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dao.OrderDao;
 import com.lawencon.community.dao.TransactionStatusDao;
@@ -28,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class OrderService extends BaseService {
+public class OrderService extends BaseCommunityService {
 
 	private final OrderDao orderDao;
 	private final TransactionStatusDao transactionStatusDao;
@@ -36,36 +35,46 @@ public class OrderService extends BaseService {
 	private final FileDao fileDao;
 
 	public InsertOrderDtoRes insert(String content, MultipartFile file) throws Exception {
-		InsertOrderDtoReq orderReq = new ObjectMapper().readValue(content, InsertOrderDtoReq.class);
-		Order order = new Order();
+		try {
+			InsertOrderDtoReq orderReq = new ObjectMapper().readValue(content, InsertOrderDtoReq.class);
+			Order order = new Order();
 
-		TransactionStatus transactionStatus = transactionStatusDao.getById(orderReq.getTransactionStatusId());
-		order.setTransactionStatus(transactionStatus);
+			TransactionStatus transactionStatus = transactionStatusDao.getById(orderReq.getTransactionStatusId());
+			order.setTransactionStatus(transactionStatus);
 
-		User user = userDao.getById(orderReq.getUserId());
-		order.setUser(user);
+			User user = userDao.getById(orderReq.getUserId());
+			order.setUser(user);
 
-		File fileThread = new File();
-		String splitter = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1, 
-				file.getOriginalFilename().length());
-		fileThread.setExtensionName(splitter);
-		fileThread.setContent(file.getBytes());
-		fileThread.setCreatedBy("CreatedBy");
+			File fileThread = new File();
+			String splitter = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1, 
+					file.getOriginalFilename().length());
+			fileThread.setExtensionName(splitter);
+			fileThread.setContent(file.getBytes());
+			fileThread.setCreatedBy(getId());
+			
+			begin();
+			fileThread = fileDao.save(fileThread);
+			order.setFile(fileThread);
+			order.setInvoice(orderReq.getInvoice());
+			order.setCreatedBy(getId());
+
+			Order orderInsert = orderDao.save(order);
+			commit();
+			
+			InsertOrderDtoDataRes orderId = new InsertOrderDtoDataRes();
+			orderId.setId(orderInsert.getId());
+
+			InsertOrderDtoRes result = new InsertOrderDtoRes();
+			result.setData(orderId);
+			result.setMsg("Insert Successfully");
+			
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
 		
-		begin();
-		fileThread = fileDao.save(fileThread);
-		order.setFile(fileThread);
-		order.setInvoice(orderReq.getInvoice());
-
-		Order orderInsert = orderDao.save(order);
-		InsertOrderDtoDataRes orderId = new InsertOrderDtoDataRes();
-		orderId.setId(orderInsert.getId());
-
-		InsertOrderDtoRes result = new InsertOrderDtoRes();
-		result.setData(orderId);
-		result.setMsg("Insert Successfully");
-		commit();
-		return result;
 	}
 	
 	public GetAllOrderDtoRes getAll() throws Exception {

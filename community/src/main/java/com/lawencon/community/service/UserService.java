@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.UserDao;
 import com.lawencon.community.dto.user.DeleteUserDtoRes;
 import com.lawencon.community.dto.user.GetAllUserDtoRes;
@@ -27,9 +26,10 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class UserService extends BaseService implements UserDetailsService{
+public class UserService extends BaseCommunityService implements UserDetailsService{
 	
 	private final UserDao userDao;
+	private final String idCreate = "1";
 	
 	public InsertUserDtoRes insert(InsertUserDtoReq data) throws Exception {
 		User user = new User();
@@ -38,7 +38,7 @@ public class UserService extends BaseService implements UserDetailsService{
 		user.setRole(role);
 		user.setEmail(data.getEmail());
 		user.setPassword(data.getPassword());
-		user.setCreatedBy("Created By");
+		user.setCreatedBy(idCreate);
 		
 		begin();
 		user = userDao.save(user);
@@ -59,7 +59,7 @@ public class UserService extends BaseService implements UserDetailsService{
 		Role role = new Role();
 		user.setRole(role);
 		user.setPassword(data.getPassword());
-		user.setUpdatedBy("Update By");
+		user.setUpdatedBy(getId());
 		user.setVersion(data.getVersion());
 		user.setIsActive(data.getIsActive());
 		

@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.RoleDao;
 import com.lawencon.community.dto.role.DeleteRoleDtoRes;
 import com.lawencon.community.dto.role.GetAllRoleDtoRes;
@@ -23,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class RoleService extends BaseService {
+public class RoleService extends BaseCommunityService {
 	
 	private final RoleDao roleDao;
 	
@@ -31,7 +30,7 @@ public class RoleService extends BaseService {
 		Role role = new Role();
 		role.setRoleCode(data.getRoleCode());
 		role.setRoleName(data.getRoleName());
-		role.setCreatedBy("Created By");
+		role.setCreatedBy(getId());
 		
 		begin();
 		role = roleDao.save(role);
@@ -52,7 +51,7 @@ public class RoleService extends BaseService {
 		role.setRoleName(data.getRoleName());
 		role.setVersion(data.getVersion());
 		role.setIsActive(data.getIsActive());
-		role.setUpdatedBy("Role Updated By");
+		role.setUpdatedBy(getId());
 		
 		begin();
 		role = roleDao.save(role);

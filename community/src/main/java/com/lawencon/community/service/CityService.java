@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.CityDao;
 import com.lawencon.community.dao.ProvinceDao;
 import com.lawencon.community.dto.city.DeleteCityDtoRes;
@@ -25,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class CityService extends BaseService {
+public class CityService extends BaseCommunityService {
 
 	private final CityDao cityDao;
 	private final ProvinceDao provinceDao;
@@ -36,22 +35,26 @@ public class CityService extends BaseService {
 		city.setProvince(province);
 		city.setCityName(data.getCityName());
 		city.setCityCode(data.getCityCode());
+		city.setCreatedBy(getId());
 
 		begin();
 		City cityInsert = cityDao.save(city);
+		commit();
+		
 		InsertCityDtoDataRes cityId = new InsertCityDtoDataRes();
 		cityId.setId(cityInsert.getId());
 
 		InsertCityDtoRes result = new InsertCityDtoRes();
 		result.setData(cityId);
 		result.setMsg("Insert Successfully");
-		commit();
+		
 		return result;
 	}
 
 	public UpdateCityDtoRes update(UpdateCityDtoReq data) throws Exception {
 		City city = cityDao.getById(data.getId());
 		city.setCityName(data.getCityName());
+		city.setUpdatedBy(getId());
 		city.setVersion(data.getVersion());
 		city.setIsActive(data.getIsActive());
 

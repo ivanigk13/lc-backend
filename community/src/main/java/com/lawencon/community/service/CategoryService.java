@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.CategoryDao;
 import com.lawencon.community.dto.category.DeleteCategoryDtoRes;
 import com.lawencon.community.dto.category.GetAllCategoryDtoRes;
@@ -23,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class CategoryService extends BaseService {
+public class CategoryService extends BaseCommunityService {
 
 	private final CategoryDao categoryDao;
 
@@ -31,22 +30,26 @@ public class CategoryService extends BaseService {
 		Category category = new Category();
 		category.setCategoryName(data.getCategoryName());
 		category.setCategoryCode(data.getCategoryCode());
+		category.setCreatedBy(getId());
 
 		begin();
 		Category categoryInsert = categoryDao.save(category);
+		commit();
+		
 		InsertCategoryDtoDataRes categoryId = new InsertCategoryDtoDataRes();
 		categoryId.setId(categoryInsert.getId());
 
 		InsertCategoryDtoRes result = new InsertCategoryDtoRes();
 		result.setData(categoryId);
 		result.setMsg("Insert Successfully");
-		commit();
+		
 		return result;
 	}
 
 	public UpdateCategoryDtoRes update(UpdateCategoryDtoReq data) throws Exception {
 		Category category = categoryDao.getById(data.getId());
 		category.setCategoryName(data.getCategoryName());
+		category.setUpdatedBy(getId());
 		category.setVersion(data.getVersion());
 		category.setIsActive(data.getIsActive());
 

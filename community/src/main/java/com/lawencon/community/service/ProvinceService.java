@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.ProvinceDao;
 import com.lawencon.community.dto.province.GetAllProvinceDtoRes;
 import com.lawencon.community.dto.province.GetByIdProvinceDtoRes;
@@ -16,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class ProvinceService extends BaseService {
+public class ProvinceService extends BaseCommunityService {
 
 	private final ProvinceDao provinceDao;
 	

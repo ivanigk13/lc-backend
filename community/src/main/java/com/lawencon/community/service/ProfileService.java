@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dao.ProfileDao;
 import com.lawencon.community.dto.profile.DeleteProfileDtoRes;
@@ -32,7 +31,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class ProfileService extends BaseService {
+public class ProfileService extends BaseCommunityService {
 	
 	private final ProfileDao profileDao;
 	private final FileDao fileDao;
@@ -57,7 +56,7 @@ public class ProfileService extends BaseService {
 					photo.getOriginalFilename().lastIndexOf(".") + 1, photo.getOriginalFilename().length());
 			file.setExtensionName(splitterFile);
 			file.setContent(photo.getBytes());
-			file.setCreatedBy("ID created BY");
+			file.setCreatedBy(getId());
 			
 			begin();
 			file = fileDao.save(file);
@@ -68,7 +67,7 @@ public class ProfileService extends BaseService {
 			profile.setFullName(profileReq.getFullName());
 			profile.setPhoneNumber(profileReq.getPhoneNumber());
 			profile.setPostalCode(profileReq.getPostalCode());
-			profile.setCreatedBy("Profile Created By");
+			profile.setCreatedBy(getId());
 			
 			profile = profileDao.save(profile);
 			commit();
@@ -106,7 +105,7 @@ public class ProfileService extends BaseService {
 					photo.getOriginalFilename().lastIndexOf(".") + 1, photo.getOriginalFilename().length());
 			file.setExtensionName(splitterFile);
 			file.setContent(photo.getBytes());
-			file.setCreatedBy("ID created BY");
+			file.setCreatedBy(getId());
 			
 			begin();
 			file = fileDao.save(file);
@@ -117,7 +116,7 @@ public class ProfileService extends BaseService {
 			profile.setFullName(data.getFullName());
 			profile.setPhoneNumber(data.getPhoneNumber());
 			profile.setPostalCode(data.getPostalCode());
-			profile.setUpdatedBy("Profile Updated By");
+			profile.setUpdatedBy(getId());
 			profile.setVersion(data.getVersion());
 			profile.setIsActive(data.getIsActive());
 			

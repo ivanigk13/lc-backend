@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.ThreadBookmarkDao;
 import com.lawencon.community.dao.ThreadDao;
 import com.lawencon.community.dao.UserDao;
@@ -24,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class ThreadBookmarkService extends BaseService {
+public class ThreadBookmarkService extends BaseCommunityService {
 
 	private final ThreadBookmarkDao threadBookmarkDao;
 	private final ThreadDao threadDao;
@@ -38,16 +37,20 @@ public class ThreadBookmarkService extends BaseService {
 
 		User user = userDao.getById(data.getUserId());
 		threadBookmark.setUser(user);
+		threadBookmark.setCreatedBy(getId());
+		
 
 		begin();
 		ThreadBookmark threadBookmarkInsert = threadBookmarkDao.save(threadBookmark);
+		commit();
+		
 		InsertThreadBookmarkDtoDataRes threadBookmarkId = new InsertThreadBookmarkDtoDataRes();
 		threadBookmarkId.setId(threadBookmarkInsert.getId());
 
 		InsertThreadBookmarkDtoRes result = new InsertThreadBookmarkDtoRes();
 		result.setData(threadBookmarkId);
 		result.setMsg("Insert Successfully");
-		commit();
+		
 		return result;
 	}
 
