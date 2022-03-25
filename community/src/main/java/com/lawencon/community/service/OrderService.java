@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dao.OrderDao;
@@ -33,20 +35,28 @@ public class OrderService extends BaseService {
 	private final UserDao userDao;
 	private final FileDao fileDao;
 
-	public InsertOrderDtoRes insert(InsertOrderDtoReq data) throws Exception {
+	public InsertOrderDtoRes insert(String content, MultipartFile file) throws Exception {
+		InsertOrderDtoReq orderReq = new ObjectMapper().readValue(content, InsertOrderDtoReq.class);
 		Order order = new Order();
 
-		TransactionStatus transactionStatus = transactionStatusDao.getById(data.getTransactionStatusId());
+		TransactionStatus transactionStatus = transactionStatusDao.getById(orderReq.getTransactionStatusId());
 		order.setTransactionStatus(transactionStatus);
 
-		User user = userDao.getById(data.getUserId());
+		User user = userDao.getById(orderReq.getUserId());
 		order.setUser(user);
 
-		File file = fileDao.getById(data.getFileId());
-		order.setFile(file);
-		order.setInvoice(data.getInvoice());
-
+		File fileThread = new File();
+		String splitter = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1, 
+				file.getOriginalFilename().length());
+		fileThread.setExtensionName(splitter);
+		fileThread.setContent(file.getBytes());
+		fileThread.setCreatedBy("CreatedBy");
+		
 		begin();
+		fileThread = fileDao.save(fileThread);
+		order.setFile(fileThread);
+		order.setInvoice(orderReq.getInvoice());
+
 		Order orderInsert = orderDao.save(order);
 		InsertOrderDtoDataRes orderId = new InsertOrderDtoDataRes();
 		orderId.setId(orderInsert.getId());
@@ -57,7 +67,7 @@ public class OrderService extends BaseService {
 		commit();
 		return result;
 	}
-
+	
 	public GetAllOrderDtoRes getAll() throws Exception {
 		List<Order> orders = orderDao.getAll();
 		List<GetOrderDtoDataRes> data = new ArrayList<>();
