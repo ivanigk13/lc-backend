@@ -29,8 +29,8 @@ public class ThreadBookmarkController {
 	private final ThreadBookmarkService threadBookmarkService;
 	
 	@GetMapping
-	public ResponseEntity<GetAllThreadBookmarkDtoRes> getAll() throws Exception{
-		GetAllThreadBookmarkDtoRes threadBookmark = threadBookmarkService.getAll();
+	public ResponseEntity<GetAllThreadBookmarkDtoRes> getAll(Integer start, Integer max) throws Exception{
+		GetAllThreadBookmarkDtoRes threadBookmark = threadBookmarkService.getAll(start, max);
 		return new ResponseEntity<GetAllThreadBookmarkDtoRes>(threadBookmark, HttpStatus.OK);		
 	}
 	

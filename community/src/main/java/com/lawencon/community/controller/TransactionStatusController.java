@@ -50,8 +50,8 @@ public class TransactionStatusController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<GetAllTransactionStatusDtoRes> getAll() throws Exception{
-		GetAllTransactionStatusDtoRes transactionStatus = transactionStatusService.getAll();
+	public ResponseEntity<GetAllTransactionStatusDtoRes> getAll(Integer start, Integer max) throws Exception{
+		GetAllTransactionStatusDtoRes transactionStatus = transactionStatusService.getAll(start, max);
 		return new ResponseEntity<GetAllTransactionStatusDtoRes>(transactionStatus, HttpStatus.OK);		
 	}
 	

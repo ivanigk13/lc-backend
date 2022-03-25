@@ -32,8 +32,8 @@ public class SubscribeController {
 	private final SubscribeService subscribeService;
 	
 	@GetMapping
-	public ResponseEntity<GetAllSubscribeDtoRes> getAll() throws Exception{
-		GetAllSubscribeDtoRes subscribe = subscribeService.getAll();
+	public ResponseEntity<GetAllSubscribeDtoRes> getAll(Integer start, Integer max) throws Exception{
+		GetAllSubscribeDtoRes subscribe = subscribeService.getAll(start, max);
 		return new ResponseEntity<GetAllSubscribeDtoRes>(subscribe, HttpStatus.OK);		
 	}
 	

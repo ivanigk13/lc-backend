@@ -32,8 +32,8 @@ public class UserController {
 	private final UserService userService;
 	
 	@GetMapping
-	public ResponseEntity<GetAllUserDtoRes> getAll() throws Exception{
-		GetAllUserDtoRes result = userService.getAll();
+	public ResponseEntity<GetAllUserDtoRes> getAll(Integer start, Integer max) throws Exception{
+		GetAllUserDtoRes result = userService.getAll(start, max);
 		return new ResponseEntity<GetAllUserDtoRes>(result, HttpStatus.OK);
 	}
 	

@@ -30,8 +30,8 @@ public class ThreadController {
 	private final ThreadService threadService;
 	
 	@GetMapping
-	public ResponseEntity<GetAllThreadDtoRes> getAll() throws Exception{
-		GetAllThreadDtoRes thread = threadService.getAll();
+	public ResponseEntity<GetAllThreadDtoRes> getAll(Integer start, Integer max) throws Exception{
+		GetAllThreadDtoRes thread = threadService.getAll(start, max);
 		return new ResponseEntity<GetAllThreadDtoRes>(thread, HttpStatus.OK);		
 	}
 	
