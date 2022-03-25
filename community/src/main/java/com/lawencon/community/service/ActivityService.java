@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lawencon.base.BaseService;
 import com.lawencon.community.dao.ActivityDao;
 import com.lawencon.community.dao.FileDao;
@@ -34,13 +35,14 @@ public class ActivityService extends BaseService {
 	private final ActivityDao activityDao;
 	private final FileDao fileDao;
 
-	public InsertActivityDtoRes insert(InsertActivityDtoReq data, MultipartFile[] files) throws Exception {
+	public InsertActivityDtoRes insert(String data, MultipartFile[] files) throws Exception {
 		try {
+			InsertActivityDtoReq req = new ObjectMapper().readValue(data, InsertActivityDtoReq.class);
 			Activity activity = new Activity();
-			activity.setActivityName(data.getActivityName());
+			activity.setActivityName(req.getActivityName());
 
 			ActivityType activityType = new ActivityType();
-			activityType.setId(data.getActivityTypeId());
+			activityType.setId(req.getActivityTypeId());
 			activity.setActivityType(activityType);
 
 			File file = new File();
@@ -55,11 +57,11 @@ public class ActivityService extends BaseService {
 			activity.setFile(fileActivity);
 
 			Category category = new Category();
-			category.setId(data.getCategoryId());
+			category.setId(req.getCategoryId());
 			activity.setCategory(category);
 
 			TransactionStatus transactionStatus = new TransactionStatus();
-			transactionStatus.setId(data.getTransactionStatusId());
+			transactionStatus.setId(req.getTransactionStatusId());
 			activity.setTransactionStatus(transactionStatus);
 
 			File paymentFile = new File();
@@ -72,10 +74,10 @@ public class ActivityService extends BaseService {
 			File paymentFileActivity = fileDao.save(paymentFile);
 			activity.setFile(paymentFileActivity);
 
-			activity.setDateStart(data.getDateStart());
-			activity.setDateEnd(data.getDateEnd());
-			activity.setTimeStart(data.getTimeStart());
-			activity.setTimeEnd(data.getTimeEnd());
+			activity.setDateStart(req.getDateStart());
+			activity.setDateEnd(req.getDateEnd());
+			activity.setTimeStart(req.getTimeStart());
+			activity.setTimeEnd(req.getTimeEnd());
 
 			Activity insertActivity = activityDao.save(activity);
 			commit();
@@ -95,9 +97,10 @@ public class ActivityService extends BaseService {
 		}
 	}
 
-	public UpdateActivityDtoRes update(UpdateActivityDtoReq data, MultipartFile[] files) throws Exception {
-		Activity activity = activityDao.getById(data.getId());
-		activity.setActivityName(data.getActivityName());
+	public UpdateActivityDtoRes update(String data, MultipartFile[] files) throws Exception {
+		UpdateActivityDtoReq req = new ObjectMapper().readValue(data, UpdateActivityDtoReq.class);
+		Activity activity = activityDao.getById(req.getId());
+		activity.setActivityName(req.getActivityName());
 
 		File file = new File();
 		String splitterFile = files[0].getOriginalFilename().substring(
@@ -120,14 +123,14 @@ public class ActivityService extends BaseService {
 		File paymentFileActivity = fileDao.save(paymentFile);
 		activity.setFile(paymentFileActivity);
 
-		activity.setDateStart(data.getDateStart());
-		activity.setDateEnd(data.getDateEnd());
-		activity.setTimeStart(data.getTimeStart());
-		activity.setTimeEnd(data.getTimeEnd());
-		activity.setPrice(data.getPrice());
-		activity.setLocation(data.getLocation());
-		activity.setVersion(data.getVersion());
-		activity.setIsActive(data.getIsActive());
+		activity.setDateStart(req.getDateStart());
+		activity.setDateEnd(req.getDateEnd());
+		activity.setTimeStart(req.getTimeStart());
+		activity.setTimeEnd(req.getTimeEnd());
+		activity.setPrice(req.getPrice());
+		activity.setLocation(req.getLocation());
+		activity.setVersion(req.getVersion());
+		activity.setIsActive(req.getIsActive());
 
 		Activity activityUpdate = activityDao.save(activity);
 		commit();

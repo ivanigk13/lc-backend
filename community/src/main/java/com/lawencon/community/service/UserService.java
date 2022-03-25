@@ -3,6 +3,9 @@ package com.lawencon.community.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseService;
@@ -24,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class UserService extends BaseService {
+public class UserService extends BaseService implements UserDetailsService{
 	
 	private final UserDao userDao;
 	
@@ -124,5 +127,14 @@ public class UserService extends BaseService {
 		userRes.setMsg("Delete Successfully");
 		
 		return userRes;
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		if(username==null) {
+			throw new UsernameNotFoundException("invalid email and password");
+		}
+		User user = userDao.getByEmail(username);
+		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
 	}
  }
