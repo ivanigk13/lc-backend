@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -50,8 +51,8 @@ public class CategoryController {
 	}
 	
 	@GetMapping()
-	public ResponseEntity<GetAllCategoryDtoRes> getAll() throws Exception{
-		GetAllCategoryDtoRes category = categoryService.getAll();
+	public ResponseEntity<GetAllCategoryDtoRes> getAll(@RequestParam("start") Integer start, @RequestParam("max") Integer max) throws Exception{
+		GetAllCategoryDtoRes category = categoryService.getAll(start, max);
 		return new ResponseEntity<GetAllCategoryDtoRes>(category, HttpStatus.OK);		
 	}
 	

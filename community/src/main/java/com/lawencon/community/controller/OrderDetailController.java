@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,8 +42,8 @@ public class OrderDetailController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<GetAllOrderDetailDtoRes> getAll() throws Exception{
-		GetAllOrderDetailDtoRes orderDetail = orderDetailService.getAll();
+	public ResponseEntity<GetAllOrderDetailDtoRes> getAll(@RequestParam("start") Integer start, @RequestParam("max") Integer max) throws Exception{
+		GetAllOrderDetailDtoRes orderDetail = orderDetailService.getAll(start, max);
 		return new ResponseEntity<GetAllOrderDetailDtoRes>(orderDetail, HttpStatus.OK);		
 	}
 	
