@@ -66,8 +66,11 @@ public class ActivityTypeService extends BaseCommunityService {
 		return result;
 	}
 
-	public GetAllActivityTypeDtoRes getAll() throws Exception {
-		List<ActivityType> activityTypes = activityTypeDao.getAll();
+	public GetAllActivityTypeDtoRes getAll(Integer start, Integer max) throws Exception {
+		List<ActivityType> activityTypes;	
+		if(start == null) activityTypes = activityTypeDao.getAll();
+		else activityTypes = activityTypeDao.getAll();
+		
 		List<GetActivityTypeDtoDataRes> data = new ArrayList<>();
 
 		activityTypes.forEach(list -> {

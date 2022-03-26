@@ -71,8 +71,11 @@ public class CityService extends BaseCommunityService {
 		return result;
 	}
 
-	public GetAllCityDtoRes getAll() throws Exception {
-		List<City> cities = cityDao.getAll();
+	public GetAllCityDtoRes getAll(Integer start, Integer max) throws Exception {
+		List<City> cities;		
+		if(start == null) cities = cityDao.getAll();
+		else cities = cityDao.getAll();
+		
 		List<GetCityDtoDataRes> data = new ArrayList<>();
 
 		cities.forEach(list -> {

@@ -48,8 +48,10 @@ public class ProfileService extends BaseCommunityService {
 			profile.setIndustry(industry);
 			Position position = new Position();
 			position.setId(profileReq.getPositionId());
+			profile.setPosition(position);		
 			City city = new City();
 			city.setId(profileReq.getCityId());
+			profile.setCity(city);
 			
 			File file = new File();
 			String splitterFile = photo.getOriginalFilename().substring(
@@ -64,6 +66,7 @@ public class ProfileService extends BaseCommunityService {
 			profile.setFile(file);
 			SocialMedia socialMedia = new SocialMedia();
 			socialMedia.setId(profileReq.getSocialMediaId());
+			profile.setSocialMedia(socialMedia);
 			profile.setFullName(profileReq.getFullName());
 			profile.setPhoneNumber(profileReq.getPhoneNumber());
 			profile.setPostalCode(profileReq.getPostalCode());
@@ -89,16 +92,19 @@ public class ProfileService extends BaseCommunityService {
 		
 	}
 
-	public UpdateProfileDtoRes update(UpdateProfileDtoReq data, MultipartFile photo) throws Exception {
+	public UpdateProfileDtoRes update(String data, MultipartFile photo) throws Exception {
 		try {
-			Profile profile = profileDao.getById(data.getId());
+			UpdateProfileDtoReq profileReq = new ObjectMapper().readValue(data, UpdateProfileDtoReq.class);
+			Profile profile = profileDao.getById(profileReq.getId());
 			Industry industry = new Industry();
-			industry.setId(data.getIndustryId());
+			industry.setId(profileReq.getIndustryId());
 			profile.setIndustry(industry);
 			Position position = new Position();
-			position.setId(data.getPositionId());
+			position.setId(profileReq.getPositionId());
+			profile.setPosition(position);
 			City city = new City();
-			city.setId(data.getCityId());
+			city.setId(profileReq.getCityId());
+			profile.setCity(city);
 			
 			File file = new File();
 			String splitterFile = photo.getOriginalFilename().substring(
@@ -112,13 +118,14 @@ public class ProfileService extends BaseCommunityService {
 			
 			profile.setFile(file);
 			SocialMedia socialMedia = new SocialMedia();
-			socialMedia.setId(data.getSocialMediaId());
-			profile.setFullName(data.getFullName());
-			profile.setPhoneNumber(data.getPhoneNumber());
-			profile.setPostalCode(data.getPostalCode());
+			socialMedia.setId(profileReq.getSocialMediaId());
+			profile.setSocialMedia(socialMedia);
+			profile.setFullName(profileReq.getFullName());
+			profile.setPhoneNumber(profileReq.getPhoneNumber());
+			profile.setPostalCode(profileReq.getPostalCode());
 			profile.setUpdatedBy(getId());
-			profile.setVersion(data.getVersion());
-			profile.setIsActive(data.getIsActive());
+			profile.setVersion(profileReq.getVersion());
+			profile.setIsActive(profileReq.getIsActive());
 			
 			profile = profileDao.save(profile);
 			commit();

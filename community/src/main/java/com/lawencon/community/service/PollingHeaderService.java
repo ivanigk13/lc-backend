@@ -59,8 +59,10 @@ public class PollingHeaderService extends BaseCommunityService {
 		return pollingHeaderRes;
 	}
 	
-	public GetAllPollingHeaderDtoRes getAll() throws Exception {
-		List<PollingHeader> pollingHeaders = pollingHeaderDao.getAll();
+	public GetAllPollingHeaderDtoRes getAll(Integer start, Integer max) throws Exception {
+		List<PollingHeader> pollingHeaders;	
+		if(start == null) pollingHeaders = pollingHeaderDao.getAll();
+		else pollingHeaders = pollingHeaderDao.getAll(start, max);
 		
 		List<GetPollingHeaderDtoDataRes> data = new ArrayList<GetPollingHeaderDtoDataRes>();
 		
