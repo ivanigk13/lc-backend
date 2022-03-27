@@ -77,8 +77,11 @@ public class OrderService extends BaseCommunityService {
 		
 	}
 	
-	public GetAllOrderDtoRes getAll() throws Exception {
-		List<Order> orders = orderDao.getAll();
+	public GetAllOrderDtoRes getAll(Integer start, Integer max) throws Exception {
+		List<Order> orders;	
+		if(start == null) orders = orderDao.getAll();
+		else orders = orderDao.getAll();
+		
 		List<GetOrderDtoDataRes> data = new ArrayList<>();
 
 		orders.forEach(list -> {

@@ -88,8 +88,33 @@ public class PollingDetailService extends BaseCommunityService {
 		return pollingDetailRes;
 	}
 	
-	public GetAllPollingDetailDtoRes getAll() throws Exception {
-		List<PollingDetail> pollingDetails = pollingDetailDao.getAll();
+	public GetAllPollingDetailDtoRes getAll(Integer start, Integer max) throws Exception {
+		List<PollingDetail> pollingDetails;	
+		if(start == null) pollingDetails = pollingDetailDao.getAll();
+		else pollingDetails = pollingDetailDao.getAll(start, max);
+		
+		List<GetPollingDetailDtoDataRes> data = new ArrayList<GetPollingDetailDtoDataRes>();
+		
+		pollingDetails.forEach(pollingDetail -> {
+			GetPollingDetailDtoDataRes pollingDetailDataRes = new GetPollingDetailDtoDataRes();
+			pollingDetailDataRes.setId(pollingDetail.getId());
+			pollingDetailDataRes.setPollingHeaderId(pollingDetail.getPollingHeader().getId());
+			pollingDetailDataRes.setPollingName(pollingDetail.getPollingName());
+			pollingDetailDataRes.setPollingCounter(pollingDetail.getPollingCounter());
+			pollingDetailDataRes.setVersion(pollingDetail.getVersion());
+			pollingDetailDataRes.setIsActive(pollingDetail.getIsActive());
+			
+			data.add(pollingDetailDataRes);
+		});
+		
+		GetAllPollingDetailDtoRes pollingDetailRes = new GetAllPollingDetailDtoRes();
+		pollingDetailRes.setData(data);
+		
+		return pollingDetailRes;
+	}
+	
+	public GetAllPollingDetailDtoRes getAllByPollingHeaderId(String pollingHeaderId) throws Exception {
+		List<PollingDetail> pollingDetails = pollingDetailDao.getAllByPollingHeaderId(pollingHeaderId);
 		
 		List<GetPollingDetailDtoDataRes> data = new ArrayList<GetPollingDetailDtoDataRes>();
 		

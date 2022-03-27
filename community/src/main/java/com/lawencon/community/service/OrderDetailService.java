@@ -59,11 +59,14 @@ public class OrderDetailService extends BaseCommunityService {
 		return result;
 	}
 
-	public GetAllOrderDetailDtoRes getAll() throws Exception {
-		List<OrderDetail> OrderDetails = orderDetailDao.getAll();
+	public GetAllOrderDetailDtoRes getAll(Integer start, Integer max) throws Exception {
+		List<OrderDetail> orderDetails;		
+		if(start == null) orderDetails = orderDetailDao.getAll();
+		else orderDetails = orderDetailDao.getAll();
+		
 		List<GetOrderDetailDtoDataRes> data = new ArrayList<>();
 
-		OrderDetails.forEach(list -> {
+		orderDetails.forEach(list -> {
 			GetOrderDetailDtoDataRes orderDetail = new GetOrderDetailDtoDataRes();
 			orderDetail.setId(list.getId());
 			orderDetail.setActivityId(list.getActivity().getId());

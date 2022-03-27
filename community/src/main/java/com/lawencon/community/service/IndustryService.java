@@ -66,11 +66,13 @@ public class IndustryService extends BaseCommunityService {
 		return result;
 	}
 	
-	public GetAllIndustryDtoRes getAll() throws Exception{
-		List<Industry> industrys = industryDao.getAll();
+	public GetAllIndustryDtoRes getAll(Integer start, Integer max) throws Exception{
+		List<Industry> industries;	
+		if(start == null) industries = industryDao.getAll();
+		else industries = industryDao.getAll();
 		List<GetIndustryDtoDataRes> data = new ArrayList<>();
 		
-		industrys.forEach(list -> {
+		industries.forEach(list -> {
 			GetIndustryDtoDataRes industry = new GetIndustryDtoDataRes();
 			industry.setId(list.getId());
 			industry.setIndustryName(list.getIndustryName());
