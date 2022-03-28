@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.lawencon.base.AbstractJpaDao;
-import com.lawencon.community.constant.TransactionStatus;
+import com.lawencon.community.constant.TransactionStatusConstant;
 import com.lawencon.community.model.File;
 import com.lawencon.community.model.Order;
 import com.lawencon.community.model.User;
@@ -22,7 +22,7 @@ public class OrderDao extends AbstractJpaDao<Order>{
 		sb.append("WHERE ts.status_code = :code ");
 		sb.append("ORDER BY o.id ASC");
 		List<?> results = createNativeQuery(sb.toString())
-								.setParameter("code", TransactionStatus.PENDING.getStatusCode())
+								.setParameter("code", TransactionStatusConstant.PENDING.getStatusCode())
 								.getResultList();
 		List<Order> orders = new ArrayList<Order>();
 		for (Object result : results) {
@@ -95,7 +95,7 @@ public class OrderDao extends AbstractJpaDao<Order>{
 		sb.append("ORDER BY o.id ASC");
 		List<?> results = createNativeQuery(sb.toString())
 								.setParameter("id", id)
-								.setParameter("code", TransactionStatus.APPROVED.getStatusCode())
+								.setParameter("code", TransactionStatusConstant.APPROVED.getStatusCode())
 								.getResultList();
 		List<Order> orders = new ArrayList<Order>();
 		for (Object result : results) {

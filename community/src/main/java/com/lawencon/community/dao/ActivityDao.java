@@ -9,11 +9,13 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.lawencon.base.AbstractJpaDao;
-import com.lawencon.community.constant.TransactionStatus;
+import com.lawencon.community.constant.ActivityTypeConstant;
+import com.lawencon.community.constant.TransactionStatusConstant;
 import com.lawencon.community.model.Activity;
 import com.lawencon.community.model.ActivityType;
 import com.lawencon.community.model.Category;
 import com.lawencon.community.model.File;
+import com.lawencon.community.model.TransactionStatus;
 
 @Repository
 public class ActivityDao extends AbstractJpaDao<Activity>{
@@ -50,7 +52,7 @@ public class ActivityDao extends AbstractJpaDao<Activity>{
 			activityType.setActivityTypeName(obj[3].toString());
 			activity.setActivityType(activityType);
 			
-			com.lawencon.community.model.TransactionStatus transactionStatus = new com.lawencon.community.model.TransactionStatus();
+			TransactionStatus transactionStatus = new TransactionStatus();
 			transactionStatus.setId(obj[4].toString());
 			transactionStatus.setStatusName(obj[5].toString());
 			activity.setTransactionStatus(transactionStatus);
@@ -83,7 +85,7 @@ public class ActivityDao extends AbstractJpaDao<Activity>{
 		builder.append("WHERE ts.status_code = :status_code ");
 		builder.append("ORDER BY a.id");
 		List<?> results = createNativeQuery(builder.toString())
-							.setParameter("status_code", TransactionStatus.PENDING.getStatusCode())
+							.setParameter("status_code", TransactionStatusConstant.PENDING.getStatusCode())
 							.getResultList();
 		List<Activity> activities = new ArrayList<Activity>();
 		for (Object result : results) {
@@ -95,7 +97,7 @@ public class ActivityDao extends AbstractJpaDao<Activity>{
 			activityType.setActivityTypeName(obj[1].toString());
 			activity.setActivityType(activityType);
 			
-			com.lawencon.community.model.TransactionStatus transactionStatus = new com.lawencon.community.model.TransactionStatus();
+			TransactionStatus transactionStatus = new TransactionStatus();
 			transactionStatus.setId(obj[2].toString());
 			transactionStatus.setStatusName(obj[3].toString());
 			activity.setTransactionStatus(transactionStatus);
@@ -130,8 +132,8 @@ public class ActivityDao extends AbstractJpaDao<Activity>{
 		builder.append("WHERE ts.status_code = :status_code AND at.activity_type_code = :type_code ");
 		builder.append("ORDER BY a.id");
 		List<?> results = createNativeQuery(builder.toString())
-							.setParameter("status_code", TransactionStatus.APPROVED.getStatusCode())
-							.setParameter("type_code", com.lawencon.community.constant.ActivityType.EVENT)
+							.setParameter("status_code", TransactionStatusConstant.APPROVED.getStatusCode())
+							.setParameter("type_code", ActivityTypeConstant.EVENT)
 							.getResultList();
 		List<Activity> activities = new ArrayList<Activity>();
 		for (Object result : results) {
@@ -151,7 +153,7 @@ public class ActivityDao extends AbstractJpaDao<Activity>{
 			activityType.setActivityTypeName(obj[3].toString());
 			activity.setActivityType(activityType);
 			
-			com.lawencon.community.model.TransactionStatus transactionStatus = new com.lawencon.community.model.TransactionStatus();
+			TransactionStatus transactionStatus = new TransactionStatus();
 			transactionStatus.setId(obj[4].toString());
 			transactionStatus.setStatusName(obj[5].toString());
 			activity.setTransactionStatus(transactionStatus);
@@ -186,8 +188,8 @@ public class ActivityDao extends AbstractJpaDao<Activity>{
 		builder.append("WHERE ts.status_code = :status_code AND at.activity_type_code = :type_code ");
 		builder.append("ORDER BY a.id");
 		List<?> results = createNativeQuery(builder.toString())
-							.setParameter("status_code", TransactionStatus.APPROVED.getStatusCode())
-							.setParameter("type_code", com.lawencon.community.constant.ActivityType.COURSE)
+							.setParameter("status_code", TransactionStatusConstant.APPROVED.getStatusCode())
+							.setParameter("type_code", ActivityTypeConstant.COURSE)
 							.getResultList();
 		List<Activity> activities = new ArrayList<Activity>();
 		for (Object result : results) {
@@ -207,7 +209,7 @@ public class ActivityDao extends AbstractJpaDao<Activity>{
 			activityType.setActivityTypeName(obj[3].toString());
 			activity.setActivityType(activityType);
 			
-			com.lawencon.community.model.TransactionStatus transactionStatus = new com.lawencon.community.model.TransactionStatus();
+			TransactionStatus transactionStatus = new TransactionStatus();
 			transactionStatus.setId(obj[4].toString());
 			transactionStatus.setStatusName(obj[5].toString());
 			activity.setTransactionStatus(transactionStatus);
