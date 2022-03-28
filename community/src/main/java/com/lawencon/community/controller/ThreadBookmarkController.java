@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,7 +30,9 @@ public class ThreadBookmarkController {
 	private final ThreadBookmarkService threadBookmarkService;
 	
 	@GetMapping
-	public ResponseEntity<GetAllThreadBookmarkDtoRes> getAll(Integer start, Integer max) throws Exception{
+	public ResponseEntity<GetAllThreadBookmarkDtoRes> getAll(
+							@RequestParam("start") Integer start,
+							@RequestParam("max") Integer max) throws Exception{
 		GetAllThreadBookmarkDtoRes threadBookmark = threadBookmarkService.getAll(start, max);
 		return new ResponseEntity<GetAllThreadBookmarkDtoRes>(threadBookmark, HttpStatus.OK);		
 	}
