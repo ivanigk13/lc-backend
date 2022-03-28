@@ -36,7 +36,7 @@ public class ProvinceService extends BaseCommunityService {
 
 	public GetAllProvinceDtoRes getAll(Integer start, Integer max) throws Exception {
 		List<Province> provinces;
-		if(start ==null) provinces = provinceDao.getAll();
+		if(start == null) provinces = provinceDao.getAll();
 		else provinces = provinceDao.getAll(start, max);
 		
 		List<GetProvinceDtoDataRes> data = new ArrayList<GetProvinceDtoDataRes>();
