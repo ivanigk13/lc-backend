@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DataBindingException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,8 +31,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter{
 	private JwtBuilderComponent builderComponent;
 	private UserDao userDao;
 	
-	public AuthenticationFilter(AuthenticationManager authenticationManager, @Autowired JwtBuilderComponent builderComponent,
-			@Autowired UserDao userDao) {
+	public AuthenticationFilter(AuthenticationManager authenticationManager, JwtBuilderComponent builderComponent, UserDao userDao) {
 		this.authenticationManager = authenticationManager;
 		this.builderComponent = builderComponent;
 		this.userDao = userDao;
@@ -51,7 +49,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter{
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}		
+		}
 		return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDtoReq.getEmail(), loginDtoReq.getPassword()));
 	}
 	
@@ -65,6 +63,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter{
 				LoginDtoRes loginDtoRes = new LoginDtoRes();
 				loginDtoRes.setToken(token);
 				loginDtoRes.setId(user.getId());
+				loginDtoRes.setEmail(user.getEmail());
 				loginDtoRes.setRoleCode(user.getRole().getRoleCode());
 				String loginStr = new ObjectMapper().writeValueAsString(loginDtoRes);
 				response.setContentType(MediaType.APPLICATION_JSON_VALUE);
@@ -79,7 +78,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter{
 	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException failed) throws IOException, ServletException {
 		AuthenticationDtoRes authenticationDtoRes = new AuthenticationDtoRes();
-		authenticationDtoRes.setMsg("gagal login");
+		authenticationDtoRes.setMsg("Login Unsuccessfully!");
 		String loginStr = new ObjectMapper().writeValueAsString(authenticationDtoRes);
 		response.setStatus(HttpStatus.UNAUTHORIZED.value());
 		response.getWriter().append(loginStr);
