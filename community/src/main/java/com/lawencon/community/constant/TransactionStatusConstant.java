@@ -1,11 +1,11 @@
 package com.lawencon.community.constant;
 
-public enum TransactionStatus {
+public enum TransactionStatusConstant {
 	PENDING("ST01"), APPROVED("ST02"), REJECTED("ST03");
 	
 	private String statusCode;
 	
-	TransactionStatus(String statusCode) {
+	TransactionStatusConstant(String statusCode) {
 		this.statusCode = statusCode;
 	}
 

@@ -1,11 +1,11 @@
 package com.lawencon.community.constant;
 
-public enum ActivityType {
+public enum ActivityTypeConstant {
 	EVENT("AT01"), COURSE("AT02");
 	
 	private String activityTypeCode;
 	
-	ActivityType(String activityTypeCode) {
+	ActivityTypeConstant(String activityTypeCode) {
 		this.activityTypeCode = activityTypeCode;
 	}
 
