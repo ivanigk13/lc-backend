@@ -2,7 +2,6 @@ package com.lawencon.community.model;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import com.lawencon.base.BaseEntity;
@@ -17,11 +16,11 @@ public class Order extends BaseEntity{
 
 	private static final long serialVersionUID = 254974765201098981L;
 
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "transaction_status_id")
 	private TransactionStatus transactionStatus;
 	
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "user_id")
 	private User user;
 	

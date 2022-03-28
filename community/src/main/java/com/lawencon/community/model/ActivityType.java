@@ -13,11 +13,11 @@ import lombok.EqualsAndHashCode;
 @Table(uniqueConstraints = {
 	@UniqueConstraint(
 		name = "activity_type_bk",
-		columnNames = {"activity_type_code"}
+		columnNames = {"activityTypeCode"}
 	),
 	@UniqueConstraint(
 		name = "activity_type_ck",
-		columnNames = {"activity_type_code", "activity_type_name"}
+		columnNames = {"activityTypeCode", "activityTypeName"}
 	)
 })
 

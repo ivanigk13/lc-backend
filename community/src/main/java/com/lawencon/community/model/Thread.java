@@ -3,7 +3,6 @@ package com.lawencon.community.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import com.lawencon.base.BaseEntity;
@@ -18,7 +17,7 @@ public class Thread extends BaseEntity{
 
 	private static final long serialVersionUID = 8106823297265145443L;
 
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "thread_type_id")
 	private ThreadType threadType;
 	

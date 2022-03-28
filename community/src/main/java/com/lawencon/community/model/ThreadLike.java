@@ -3,7 +3,7 @@ package com.lawencon.community.model;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import com.lawencon.base.BaseEntity;
 
@@ -17,11 +17,11 @@ public class ThreadLike extends BaseEntity{
 	
 	private static final long serialVersionUID = -2255592248427233360L;
 
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "thread_id")
 	private Thread thread;
 	
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "user_id")
 	private User user;
 	
