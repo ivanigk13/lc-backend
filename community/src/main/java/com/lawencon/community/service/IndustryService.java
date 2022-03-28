@@ -69,7 +69,7 @@ public class IndustryService extends BaseCommunityService {
 	public GetAllIndustryDtoRes getAll(Integer start, Integer max) throws Exception{
 		List<Industry> industries;	
 		if(start == null) industries = industryDao.getAll();
-		else industries = industryDao.getAll();
+		else industries = industryDao.getAll(start, max);
 		List<GetIndustryDtoDataRes> data = new ArrayList<>();
 		
 		industries.forEach(list -> {

@@ -80,7 +80,7 @@ public class OrderService extends BaseCommunityService {
 	public GetAllOrderDtoRes getAll(Integer start, Integer max) throws Exception {
 		List<Order> orders;	
 		if(start == null) orders = orderDao.getAll();
-		else orders = orderDao.getAll();
+		else orders = orderDao.getAll(start, max);
 		
 		List<GetOrderDtoDataRes> data = new ArrayList<>();
 

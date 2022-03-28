@@ -69,7 +69,7 @@ public class CategoryService extends BaseCommunityService {
 	public GetAllCategoryDtoRes getAll(Integer start, Integer max) throws Exception {
 		List<Category> categories;	
 		if(start == null) categories = categoryDao.getAll();
-		else categories = categoryDao.getAll();
+		else categories = categoryDao.getAll(start, max);
 		
 		List<GetCategoryDtoDataRes> data = new ArrayList<>();
 

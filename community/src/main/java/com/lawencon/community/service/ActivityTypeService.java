@@ -69,7 +69,7 @@ public class ActivityTypeService extends BaseCommunityService {
 	public GetAllActivityTypeDtoRes getAll(Integer start, Integer max) throws Exception {
 		List<ActivityType> activityTypes;	
 		if(start == null) activityTypes = activityTypeDao.getAll();
-		else activityTypes = activityTypeDao.getAll();
+		else activityTypes = activityTypeDao.getAll(start, max);
 		
 		List<GetActivityTypeDtoDataRes> data = new ArrayList<>();
 
