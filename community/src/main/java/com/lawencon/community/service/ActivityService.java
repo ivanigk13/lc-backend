@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lawencon.community.dao.ActivityDao;
 import com.lawencon.community.dao.FileDao;
+import com.lawencon.community.dao.TransactionStatusDao;
 import com.lawencon.community.dto.activity.DeleteActivityDtoRes;
 import com.lawencon.community.dto.activity.GetActivityDtoDataRes;
 import com.lawencon.community.dto.activity.GetAllActivityDtoRes;
@@ -32,6 +33,7 @@ import lombok.RequiredArgsConstructor;
 public class ActivityService extends BaseCommunityService {
 
 	private final ActivityDao activityDao;
+	private final TransactionStatusDao transactionStatusDao;
 	private final FileDao fileDao;
 
 	public InsertActivityDtoRes insert(String data, MultipartFile[] files) throws Exception {
@@ -60,7 +62,7 @@ public class ActivityService extends BaseCommunityService {
 			activity.setCategory(category);
 
 			TransactionStatus transactionStatus = new TransactionStatus();
-			transactionStatus.setId(req.getTransactionStatusId());
+			transactionStatus.setId(transactionStatusDao.getStatusPendingId());
 			activity.setTransactionStatus(transactionStatus);
 
 			File paymentFile = new File();

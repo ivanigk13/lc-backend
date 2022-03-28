@@ -39,7 +39,7 @@ public class OrderService extends BaseCommunityService {
 			InsertOrderDtoReq orderReq = new ObjectMapper().readValue(content, InsertOrderDtoReq.class);
 			Order order = new Order();
 
-			TransactionStatus transactionStatus = transactionStatusDao.getById(orderReq.getTransactionStatusId());
+			TransactionStatus transactionStatus = transactionStatusDao.getById(transactionStatusDao.getStatusPendingId());
 			order.setTransactionStatus(transactionStatus);
 
 			User user = userDao.getById(orderReq.getUserId());
