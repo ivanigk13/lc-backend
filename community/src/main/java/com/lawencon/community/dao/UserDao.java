@@ -11,9 +11,9 @@ public class UserDao extends AbstractJpaDao<User>{
 
 	public User getByEmail(String email) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT u.id, u.role_id, r.role_code, u.email, u.version, u.is_active ");
-		sb.append("FROM user as u ");
-		sb.append("INNER JOIN role as r ");
+		sb.append("SELECT u.id, u.role_id, r.role_code, u.email, u.version, u.is_active, u.password ");
+		sb.append("FROM users as u ");
+		sb.append("INNER JOIN roles as r ON u.role_id = r.id ");
 		sb.append("WHERE u.email = :email");
 		Object result = createNativeQuery(sb.toString()).setParameter("email", email).getSingleResult();
 		Object[] obj = (Object[]) result;
@@ -26,6 +26,7 @@ public class UserDao extends AbstractJpaDao<User>{
 		user.setRole(role);
 		
 		user.setEmail(obj[3].toString());
+		user.setPassword(obj[6].toString());
 		user.setVersion(Integer.valueOf(obj[4].toString()));
 		user.setIsActive(Boolean.valueOf(obj[5].toString()));
 		
