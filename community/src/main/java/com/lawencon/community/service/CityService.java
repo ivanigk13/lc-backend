@@ -81,6 +81,7 @@ public class CityService extends BaseCommunityService {
 		cities.forEach(list -> {
 			GetCityDtoDataRes city = new GetCityDtoDataRes();
 			city.setId(list.getId());
+			city.setProvinceId(list.getProvince().getId());
 			city.setCityName(list.getCityName());
 			city.setCityCode(list.getCityCode());
 			city.setVersion(list.getVersion());
@@ -99,6 +100,7 @@ public class CityService extends BaseCommunityService {
 
 		GetCityDtoDataRes cityData = new GetCityDtoDataRes();
 		cityData.setId(city.getId());
+		cityData.setProvinceId(city.getProvince().getId());
 		cityData.setCityName(city.getCityName());
 		cityData.setCityCode(city.getCityCode());
 		cityData.setVersion(city.getVersion());
