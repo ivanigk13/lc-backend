@@ -20,7 +20,7 @@ public abstract class BaseEntity implements Serializable {
 	@Id
 	@Column(name = "id", length = 36)
 	@GeneratedValue(generator = "uuid2")
-	@GenericGenerator(name = "uuid2", strategy = "uudi2")
+	@GenericGenerator(name = "uuid2", strategy = "uuid2")
 	private String id;
 
 	@Column(name = "created_by")
