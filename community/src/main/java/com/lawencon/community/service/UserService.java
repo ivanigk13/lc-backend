@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.community.dao.RoleDao;
 import com.lawencon.community.dao.UserDao;
 import com.lawencon.community.dto.user.DeleteUserDtoRes;
 import com.lawencon.community.dto.user.GetAllUserDtoRes;
@@ -30,13 +31,14 @@ import lombok.RequiredArgsConstructor;
 public class UserService extends BaseCommunityService implements UserDetailsService{
 	
 	private final UserDao userDao;
+	private final RoleDao roleDao; 
 	private final PasswordEncoder encoder;
 	private final String idCreate = "1";
 	
 	public InsertUserDtoRes insert(InsertUserDtoReq data) throws Exception {
 		User user = new User();
 		Role role = new Role();
-		role.setId(data.getRoleId());
+		role.setId(roleDao.getRoleMemberId());
 		user.setRole(role);
 		user.setEmail(data.getEmail());
 		user.setPassword(encoder.encode(data.getPassword()));
