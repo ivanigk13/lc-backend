@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProvinceController {
 	
-	private ProvinceService provinceService;
+	private final ProvinceService provinceService;
 	
 	@GetMapping
 	public ResponseEntity<GetAllProvinceDtoRes> getAll(@RequestParam("start") Integer start, @RequestParam("max") Integer max) throws Exception {
