@@ -12,7 +12,7 @@ import com.lawencon.community.model.City;
 public class CityDao extends AbstractJpaDao<City>{
 
 	public List<City> getAllByProvinceId(String provinceId) {
-		String sql = "SELECT id, city_code, city_name WHERE province_id = :id ORDER BY id ASC";
+		String sql = "SELECT id, city_code, city_name FROM city WHERE province_id = :id ORDER BY id ASC";
 		List<?> results = createNativeQuery(sql).setParameter("id", provinceId).getResultList();
 		List<City> cities = new ArrayList<>();
 		results.forEach(result->{
