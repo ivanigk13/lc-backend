@@ -11,9 +11,9 @@ public class RoleDao extends AbstractJpaDao<Role>{
 	
 	public String getRoleMemberId() {
 		String sql = "SELECT id FROM roles WHERE role_code = :code";
-		Object result = createNativeQuery(sql).setParameter("code", RoleConstant.MEMBER.getRoleCode());
-		Object[] obj = (Object[]) result;
-		String id = obj[0].toString();
+		Object result = createNativeQuery(sql).setParameter("code", RoleConstant.MEMBER.getRoleCode()).getSingleResult();
+		Object obj = (Object) result;
+		String id = obj.toString();
 		return id;
 	}
 }
