@@ -1,7 +1,7 @@
 package com.lawencon.community.dto.activity;
 
 import java.math.BigDecimal;
-import java.time.LocalTime;
+import java.sql.Time;
 import java.util.Date;
 
 import lombok.Data;
@@ -17,8 +17,8 @@ public class GetActivityDtoDataRes {
 	private String categoryId;
 	private Date dateStart;
 	private Date dateEnd;
-	private LocalTime timeStart;
-	private LocalTime timeEnd;
+	private Time timeStart;
+	private Time timeEnd;
 	private BigDecimal price;
 	private String location;
 	private String createdBy;
