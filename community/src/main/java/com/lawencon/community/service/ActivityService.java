@@ -68,17 +68,20 @@ public class ActivityService extends BaseCommunityService {
 			File paymentFile = new File();
 			String splitterPaymentFile = files[1].getOriginalFilename().substring(
 					files[1].getOriginalFilename().lastIndexOf(".") + 1, files[1].getOriginalFilename().length());
-			file.setExtensionName(splitterPaymentFile);
-			file.setContent(files[1].getBytes());
-			file.setCreatedBy(getId());
+			paymentFile.setExtensionName(splitterPaymentFile);
+			paymentFile.setContent(files[1].getBytes());
+			paymentFile.setCreatedBy(getId());
 
 			File paymentFileActivity = fileDao.save(paymentFile);
-			activity.setFile(paymentFileActivity);
-
+			activity.setPaymentFile(paymentFileActivity);
+;
 			activity.setDateStart(req.getDateStart());
 			activity.setDateEnd(req.getDateEnd());
-//			activity.setTimeStart(req.getTimeStart());
-//			activity.setTimeEnd(req.getTimeEnd());
+			activity.setTimeStart(req.getTimeStart());
+			activity.setTimeEnd(req.getTimeEnd());
+			activity.setPrice(req.getPrice());
+			activity.setLocation(req.getLocation());
+			activity.setCreatedBy(getId());
 
 			Activity insertActivity = activityDao.save(activity);
 			commit();
@@ -117,12 +120,12 @@ public class ActivityService extends BaseCommunityService {
 		File paymentFile = new File();
 		String splitterPaymentFile = files[1].getOriginalFilename().substring(
 				files[1].getOriginalFilename().lastIndexOf(".") + 1, files[1].getOriginalFilename().length());
-		file.setExtensionName(splitterPaymentFile);
-		file.setContent(files[1].getBytes());
-		file.setUpdatedBy(getId());
+		paymentFile.setExtensionName(splitterPaymentFile);
+		paymentFile.setContent(files[1].getBytes());
+		paymentFile.setUpdatedBy(getId());
 
 		File paymentFileActivity = fileDao.save(paymentFile);
-		activity.setFile(paymentFileActivity);
+		activity.setPaymentFile(paymentFileActivity);
 
 		activity.setDateStart(req.getDateStart());
 		activity.setDateEnd(req.getDateEnd());
@@ -132,9 +135,9 @@ public class ActivityService extends BaseCommunityService {
 		activity.setLocation(req.getLocation());
 		activity.setVersion(req.getVersion());
 		activity.setIsActive(req.getIsActive());
+		activity.setUpdatedBy(getId());
 
 		Activity activityUpdate = activityDao.save(activity);
-		commit();
 
 		UpdateActivityDtoDataRes activityVersion = new UpdateActivityDtoDataRes();
 		activityVersion.setVersion(activityUpdate.getVersion());
@@ -157,6 +160,7 @@ public class ActivityService extends BaseCommunityService {
 			activityData.setId(list.getId());
 			activityData.setActivityName(list.getActivityName());
 			activityData.setActivityTypeId(list.getActivityType().getId());
+			activityData.setCategoryId(list.getCategory().getId());
 			activityData.setFileId(list.getFile().getId());
 			activityData.setPaymentFileId(list.getPaymentFile().getId());
 			activityData.setDateStart(list.getDateStart());
@@ -182,6 +186,7 @@ public class ActivityService extends BaseCommunityService {
 		activityData.setId(activity.getId());
 		activityData.setActivityName(activity.getActivityName());
 		activityData.setActivityTypeId(activity.getActivityType().getId());
+		activityData.setCategoryId(activity.getCategory().getId());
 		activityData.setFileId(activity.getFile().getId());
 		activityData.setPaymentFileId(activity.getPaymentFile().getId());
 		activityData.setDateStart(activity.getDateStart());
