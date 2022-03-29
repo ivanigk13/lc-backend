@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.community.dto.threadtype.DeleteThreadTypeDtoRes;
@@ -47,13 +47,13 @@ public class ThreadTypeController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<InsertThreadTypeDtoRes> insert(@RequestPart @Valid InsertThreadTypeDtoReq data) throws Exception{
+	public ResponseEntity<InsertThreadTypeDtoRes> insert(@RequestBody @Valid InsertThreadTypeDtoReq data) throws Exception{
 		InsertThreadTypeDtoRes threadType = threadTypeService.insert(data);
 		return new ResponseEntity<InsertThreadTypeDtoRes>(threadType, HttpStatus.CREATED);		
 	}
 	
 	@PutMapping
-	public ResponseEntity<UpdateThreadTypeDtoRes> update(@RequestPart @Valid UpdateThreadTypeDtoReq data) throws Exception{
+	public ResponseEntity<UpdateThreadTypeDtoRes> update(@RequestBody @Valid UpdateThreadTypeDtoReq data) throws Exception{
 		UpdateThreadTypeDtoRes threadType = threadTypeService.update(data);
 		return new ResponseEntity<UpdateThreadTypeDtoRes>(threadType, HttpStatus.OK);		
 	}
