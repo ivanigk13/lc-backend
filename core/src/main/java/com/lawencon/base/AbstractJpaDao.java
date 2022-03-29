@@ -1,7 +1,6 @@
 package com.lawencon.base;
 
 import java.util.List;
-import java.util.UUID;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -49,7 +48,7 @@ public class AbstractJpaDao<T extends BaseEntity> {
 
 	public boolean deleteById(final Object entityId) throws Exception {
 		T entity = null;
-		if (entityId != null && entityId instanceof UUID) {
+		if (entityId != null && entityId instanceof String) {
 			entity = getById((String) entityId);
 		}
 
