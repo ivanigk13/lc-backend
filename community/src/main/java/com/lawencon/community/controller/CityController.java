@@ -51,7 +51,9 @@ public class CityController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<GetAllCityDtoRes> getAll(@RequestParam("start") Integer start, @RequestParam("max") Integer max) throws Exception{
+	public ResponseEntity<GetAllCityDtoRes> getAll(
+							@RequestParam(value = "start", required = false) Integer start,
+							@RequestParam(value = "max", required = false) Integer max) throws Exception{
 		GetAllCityDtoRes city = cityService.getAll(start, max);
 		return new ResponseEntity<GetAllCityDtoRes>(city, HttpStatus.OK);		
 	}

@@ -34,8 +34,8 @@ public class UserController {
 	
 	@GetMapping
 	public ResponseEntity<GetAllUserDtoRes> getAll(
-							@RequestParam("start") Integer start,
-							@RequestParam("max") Integer max) throws Exception{
+							@RequestParam(value = "start", required = false) Integer start,
+							@RequestParam(value = "max", required = false) Integer max) throws Exception{
 		GetAllUserDtoRes result = userService.getAll(start, max);
 		return new ResponseEntity<GetAllUserDtoRes>(result, HttpStatus.OK);
 	}

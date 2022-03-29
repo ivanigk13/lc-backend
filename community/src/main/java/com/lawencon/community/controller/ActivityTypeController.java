@@ -51,7 +51,9 @@ public class ActivityTypeController {
 	}
 	
 	@GetMapping()
-	public ResponseEntity<GetAllActivityTypeDtoRes> getAll(@RequestParam("start") Integer start, @RequestParam("max") Integer max) throws Exception{
+	public ResponseEntity<GetAllActivityTypeDtoRes> getAll(
+							@RequestParam(value = "start", required = false) Integer start,
+							@RequestParam(value = "max", required = false) Integer max) throws Exception{
 		GetAllActivityTypeDtoRes activityType = activityTypeService.getAll(start, max);
 		return new ResponseEntity<GetAllActivityTypeDtoRes>(activityType, HttpStatus.OK);		
 	}

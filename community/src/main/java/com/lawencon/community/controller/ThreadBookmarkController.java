@@ -31,8 +31,8 @@ public class ThreadBookmarkController {
 	
 	@GetMapping
 	public ResponseEntity<GetAllThreadBookmarkDtoRes> getAll(
-							@RequestParam("start") Integer start,
-							@RequestParam("max") Integer max) throws Exception{
+							@RequestParam(value = "start", required = false) Integer start,
+							@RequestParam(value = "max", required = false) Integer max) throws Exception{
 		GetAllThreadBookmarkDtoRes threadBookmark = threadBookmarkService.getAll(start, max);
 		return new ResponseEntity<GetAllThreadBookmarkDtoRes>(threadBookmark, HttpStatus.OK);		
 	}

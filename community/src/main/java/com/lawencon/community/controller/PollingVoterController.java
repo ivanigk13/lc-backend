@@ -33,7 +33,9 @@ public class PollingVoterController {
 	private final PollingVoterService pollingVoterService;
 	
 	@GetMapping
-	public ResponseEntity<GetAllPollingVoterDtoRes> getAll(@RequestParam("start") Integer start, @RequestParam("max") Integer max) throws Exception {
+	public ResponseEntity<GetAllPollingVoterDtoRes> getAll(
+							@RequestParam(value = "start", required = false) Integer start,
+							@RequestParam(value = "max", required = false) Integer max) throws Exception{
 		GetAllPollingVoterDtoRes result = pollingVoterService.getAll(start, max);
 		return new ResponseEntity<GetAllPollingVoterDtoRes>(result, HttpStatus.OK);
 	}

@@ -34,8 +34,8 @@ public class ThreadTypeController {
 	
 	@GetMapping
 	public ResponseEntity<GetAllThreadTypeDtoRes> getAll(
-							@RequestParam("start") Integer start,
-							@RequestParam("max") Integer max) throws Exception{
+							@RequestParam(value = "start", required = false) Integer start,
+							@RequestParam(value = "max", required = false) Integer max) throws Exception{
 		GetAllThreadTypeDtoRes threadType = threadTypeService.getAll(start, max);
 		return new ResponseEntity<GetAllThreadTypeDtoRes>(threadType, HttpStatus.OK);		
 	}

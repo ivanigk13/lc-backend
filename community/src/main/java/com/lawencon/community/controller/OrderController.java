@@ -42,7 +42,9 @@ public class OrderController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<GetAllOrderDtoRes> getAll(@RequestParam("start") Integer start, @RequestParam("max") Integer max) throws Exception{
+	public ResponseEntity<GetAllOrderDtoRes> getAll(
+							@RequestParam(value = "start", required = false) Integer start,
+							@RequestParam(value = "max", required = false) Integer max) throws Exception{
 		GetAllOrderDtoRes order = orderService.getAll(start, max);
 		return new ResponseEntity<GetAllOrderDtoRes>(order, HttpStatus.OK);		
 	}

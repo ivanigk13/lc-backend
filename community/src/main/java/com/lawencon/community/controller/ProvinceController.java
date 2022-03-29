@@ -22,7 +22,9 @@ public class ProvinceController {
 	private final ProvinceService provinceService;
 	
 	@GetMapping
-	public ResponseEntity<GetAllProvinceDtoRes> getAll(@RequestParam("start") Integer start, @RequestParam("max") Integer max) throws Exception {
+	public ResponseEntity<GetAllProvinceDtoRes> getAll(
+							@RequestParam(value = "start", required = false) Integer start,
+							@RequestParam(value = "max", required = false) Integer max) throws Exception{
 		GetAllProvinceDtoRes result = provinceService.getAll(start, max);
 		return new ResponseEntity<GetAllProvinceDtoRes>(result, HttpStatus.OK);
 	}

@@ -30,7 +30,9 @@ public class PollingHeaderController {
 	private final PollingHeaderService pollingHeaderService;
 
 	@GetMapping
-	public ResponseEntity<GetAllPollingHeaderDtoRes> getAll(@RequestParam("start") Integer start, @RequestParam("max") Integer max) throws Exception {
+	public ResponseEntity<GetAllPollingHeaderDtoRes> getAll(
+							@RequestParam(value = "start", required = false) Integer start,
+							@RequestParam(value = "max", required = false) Integer max) throws Exception{
 		GetAllPollingHeaderDtoRes result = pollingHeaderService.getAll(start, max);
 		return new ResponseEntity<GetAllPollingHeaderDtoRes>(result, HttpStatus.OK);
 	}

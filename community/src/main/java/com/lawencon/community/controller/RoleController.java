@@ -34,8 +34,8 @@ public class RoleController {
 
 	@GetMapping
 	public ResponseEntity<GetAllRoleDtoRes> getAll(
-							@RequestParam("start") Integer start,
-							@RequestParam("max") Integer max) throws Exception{
+							@RequestParam(value = "start", required = false) Integer start,
+							@RequestParam(value = "max", required = false) Integer max) throws Exception{
 		GetAllRoleDtoRes result = roleService.getAll(start,max);
 		return new ResponseEntity<GetAllRoleDtoRes>(result, HttpStatus.OK);
 	}

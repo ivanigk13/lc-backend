@@ -34,8 +34,8 @@ public class SubscribeController {
 	
 	@GetMapping
 	public ResponseEntity<GetAllSubscribeDtoRes> getAll(
-							@RequestParam("start") Integer start,
-							@RequestParam("max") Integer max) throws Exception{
+							@RequestParam(value = "start", required = false) Integer start,
+							@RequestParam(value = "max", required = false) Integer max) throws Exception{
 		GetAllSubscribeDtoRes subscribe = subscribeService.getAll(start, max);
 		return new ResponseEntity<GetAllSubscribeDtoRes>(subscribe, HttpStatus.OK);		
 	}

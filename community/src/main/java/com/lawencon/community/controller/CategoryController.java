@@ -51,7 +51,9 @@ public class CategoryController {
 	}
 	
 	@GetMapping()
-	public ResponseEntity<GetAllCategoryDtoRes> getAll(@RequestParam("start") Integer start, @RequestParam("max") Integer max) throws Exception{
+	public ResponseEntity<GetAllCategoryDtoRes> getAll(
+							@RequestParam(value = "start", required = false) Integer start,
+							@RequestParam(value = "max", required = false) Integer max) throws Exception{
 		GetAllCategoryDtoRes category = categoryService.getAll(start, max);
 		return new ResponseEntity<GetAllCategoryDtoRes>(category, HttpStatus.OK);		
 	}

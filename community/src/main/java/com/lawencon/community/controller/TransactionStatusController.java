@@ -32,6 +32,20 @@ public class TransactionStatusController {
 	
 	private final TransactionStatusService transactionStatusService;
 	
+	@GetMapping
+	public ResponseEntity<GetAllTransactionStatusDtoRes> getAll(
+							@RequestParam(value = "start", required = false) Integer start,
+							@RequestParam(value = "max", required = false) Integer max) throws Exception{
+		GetAllTransactionStatusDtoRes transactionStatus = transactionStatusService.getAll(start, max);
+		return new ResponseEntity<GetAllTransactionStatusDtoRes>(transactionStatus, HttpStatus.OK);		
+	}
+	
+	@GetMapping("{id}")
+	public ResponseEntity<GetByIdTransactionStatusDtoRes> getById(@PathVariable("id") String id) throws Exception{
+		GetByIdTransactionStatusDtoRes transactionStatus = transactionStatusService.getById(id);
+		return new ResponseEntity<GetByIdTransactionStatusDtoRes>(transactionStatus, HttpStatus.OK);		
+	}
+	
 	@PostMapping
 	public ResponseEntity<InsertTransactionStatusDtoRes> insert(@RequestPart @Valid InsertTransactionStatusDtoReq data) throws Exception{
 		InsertTransactionStatusDtoRes transactionStatus = transactionStatusService.insert(data);
@@ -42,20 +56,6 @@ public class TransactionStatusController {
 	public ResponseEntity<UpdateTransactionStatusDtoRes> update(@RequestPart @Valid UpdateTransactionStatusDtoReq data) throws Exception{
 		UpdateTransactionStatusDtoRes transactionStatus = transactionStatusService.update(data);
 		return new ResponseEntity<UpdateTransactionStatusDtoRes>(transactionStatus, HttpStatus.OK);		
-	}
-	
-	@GetMapping("{id}")
-	public ResponseEntity<GetByIdTransactionStatusDtoRes> getById(@PathVariable("id") String id) throws Exception{
-		GetByIdTransactionStatusDtoRes transactionStatus = transactionStatusService.getById(id);
-		return new ResponseEntity<GetByIdTransactionStatusDtoRes>(transactionStatus, HttpStatus.OK);		
-	}
-	
-	@GetMapping
-	public ResponseEntity<GetAllTransactionStatusDtoRes> getAll(
-							@RequestParam("start") Integer start,
-							@RequestParam("max") Integer max) throws Exception{
-		GetAllTransactionStatusDtoRes transactionStatus = transactionStatusService.getAll(start, max);
-		return new ResponseEntity<GetAllTransactionStatusDtoRes>(transactionStatus, HttpStatus.OK);		
 	}
 	
 	@DeleteMapping("{id}")

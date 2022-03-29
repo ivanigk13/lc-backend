@@ -51,7 +51,9 @@ public class IndustryController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<GetAllIndustryDtoRes> getAll(@RequestParam("start") Integer start, @RequestParam("max") Integer max) throws Exception{
+	public ResponseEntity<GetAllIndustryDtoRes> getAll(
+							@RequestParam(value = "start", required = false) Integer start,
+							@RequestParam(value = "max", required = false) Integer max) throws Exception{
 		GetAllIndustryDtoRes industry = industryService.getAll(start, max);
 		return new ResponseEntity<GetAllIndustryDtoRes>(industry, HttpStatus.OK);		
 	}

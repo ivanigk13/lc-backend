@@ -30,7 +30,9 @@ public class ProfileController {
 	private final ProfileService profileService;
 	
 	@GetMapping
-	public ResponseEntity<GetAllProfileDtoRes> getAll(@RequestParam("start") Integer start, @RequestParam("max") Integer max) throws Exception {
+	public ResponseEntity<GetAllProfileDtoRes> getAll(
+							@RequestParam(value = "start", required = false) Integer start,
+							@RequestParam(value = "max", required = false) Integer max) throws Exception{
 		GetAllProfileDtoRes result = profileService.getAll(start, max);
 		return new ResponseEntity<GetAllProfileDtoRes>(result, HttpStatus.OK);
 	}
