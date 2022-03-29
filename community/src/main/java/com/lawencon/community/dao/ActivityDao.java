@@ -2,7 +2,7 @@ package com.lawencon.community.dao;
 
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.time.LocalTime;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,8 +64,8 @@ public class ActivityDao extends AbstractJpaDao<Activity>{
 			activity.setActivityName(obj[7].toString());
 			activity.setDateStart((Date)obj[8]);
 			activity.setDateEnd((Date)obj[9]);
-			activity.setTimeStart((LocalTime)obj[10]);
-			activity.setTimeEnd((LocalTime)obj[11]);
+			activity.setTimeStart((Time)obj[10]);
+			activity.setTimeEnd((Time)obj[11]);
 			activity.setPrice(BigDecimal.valueOf(Long.valueOf(obj[12].toString())));
 			activity.setLocation(obj[13].toString());
 			activity.setVersion(Integer.valueOf(obj[14].toString()));
@@ -109,8 +109,8 @@ public class ActivityDao extends AbstractJpaDao<Activity>{
 			activity.setActivityName(obj[5].toString());
 			activity.setDateStart((Date)obj[6]);
 			activity.setDateEnd((Date)obj[7]);
-			activity.setTimeStart((LocalTime)obj[8]);
-			activity.setTimeEnd((LocalTime)obj[9]);
+			activity.setTimeStart((Time)obj[8]);
+			activity.setTimeEnd((Time)obj[9]);
 			activity.setPrice(BigDecimal.valueOf(Long.valueOf(obj[10].toString())));
 			activity.setLocation(obj[11].toString());
 			activity.setVersion(Integer.valueOf(obj[12].toString()));
@@ -165,8 +165,8 @@ public class ActivityDao extends AbstractJpaDao<Activity>{
 			activity.setActivityName(obj[7].toString());
 			activity.setDateStart((Date)obj[8]);
 			activity.setDateEnd((Date)obj[9]);
-			activity.setTimeStart((LocalTime)obj[10]);
-			activity.setTimeEnd((LocalTime)obj[11]);
+			activity.setTimeStart((Time)obj[10]);
+			activity.setTimeEnd((Time)obj[11]);
 			activity.setPrice(BigDecimal.valueOf(Long.valueOf(obj[12].toString())));
 			activity.setLocation(obj[13].toString());
 			activity.setVersion(Integer.valueOf(obj[14].toString()));
@@ -221,8 +221,8 @@ public class ActivityDao extends AbstractJpaDao<Activity>{
 			activity.setActivityName(obj[7].toString());
 			activity.setDateStart((Date)obj[8]);
 			activity.setDateEnd((Date)obj[9]);
-			activity.setTimeStart((LocalTime)obj[10]);
-			activity.setTimeEnd((LocalTime)obj[11]);
+			activity.setTimeStart((Time)obj[10]);
+			activity.setTimeEnd((Time)obj[11]);
 			activity.setPrice(BigDecimal.valueOf(Long.valueOf(obj[12].toString())));
 			activity.setLocation(obj[13].toString());
 			activity.setVersion(Integer.valueOf(obj[14].toString()));
