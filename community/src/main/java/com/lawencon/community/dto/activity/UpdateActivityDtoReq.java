@@ -1,7 +1,7 @@
 package com.lawencon.community.dto.activity;
 
 import java.math.BigDecimal;
-import java.time.LocalTime;
+import java.sql.Time;
 import java.util.Date;
 
 import javax.validation.constraints.NotEmpty;
@@ -34,13 +34,11 @@ public class UpdateActivityDtoReq {
 	@NotNull(message = "Date End must be filled")
 	private Date dateEnd;
 	
-	@JsonFormat(pattern = "HH:mm")
 	@NotNull(message = "Time Start must be filled")
-	private LocalTime timeStart;
+	private Time timeStart;
 	
-	@JsonFormat(pattern = "HH:mm")
 	@NotNull(message = "Time End must be filled")
-	private LocalTime timeEnd;
+	private Time timeEnd;
 	
 	@NotNull(message = "price must be filled" )
 	private BigDecimal price;

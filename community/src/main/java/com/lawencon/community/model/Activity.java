@@ -1,7 +1,7 @@
 package com.lawencon.community.model;
 
 import java.math.BigDecimal;
-import java.time.LocalTime;
+import java.sql.Time;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -43,8 +43,8 @@ public class Activity extends BaseEntity{
 	private String activityName;
 	private Date dateStart;
 	private Date dateEnd;
-	private LocalTime timeStart;
-	private LocalTime timeEnd;
+	private Time timeStart;
+	private Time timeEnd;
 	private BigDecimal price;
 	private String location;
 }
