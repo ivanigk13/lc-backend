@@ -11,9 +11,9 @@ public class TransactionStatusDao extends AbstractJpaDao<TransactionStatus>{
 
 	public String getStatusPendingId() {
 		String sql = "SELECT id FROM transaction_status WHERE status_code = :code";
-		Object result = createNativeQuery(sql).setParameter("code", TransactionStatusConstant.PENDING.getStatusCode());
-		Object[] obj = (Object[]) result;
-		String id = obj[0].toString();
+		Object result = createNativeQuery(sql).setParameter("code", TransactionStatusConstant.PENDING.getStatusCode()).getSingleResult();
+		Object obj = (Object) result;
+		String id = obj.toString();
 		return id;
 	}
 }

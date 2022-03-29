@@ -1,5 +1,7 @@
 package com.lawencon.community.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -42,7 +44,7 @@ public class ProfileController {
 	} 
 	
 	@PostMapping
-	public ResponseEntity<InsertProfileDtoRes> insert(@RequestPart(name="data") String data, @RequestPart(required = true) MultipartFile file) throws Exception {
+	public ResponseEntity<InsertProfileDtoRes> insert(@RequestPart(name="data") @Valid String data, @RequestPart(required = true) MultipartFile file) throws Exception {
 		InsertProfileDtoRes result = profileService.insert(data, file);
 		return new ResponseEntity<InsertProfileDtoRes>(result, HttpStatus.CREATED);
 	}

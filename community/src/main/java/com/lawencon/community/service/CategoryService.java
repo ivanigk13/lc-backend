@@ -106,13 +106,24 @@ public class CategoryService extends BaseCommunityService {
 	}
 	
 	public DeleteCategoryDtoRes deleteById(String id) throws Exception {
-		begin();
-		categoryDao.deleteById(id);
-		commit();
-		
-		DeleteCategoryDtoRes categoryRes = new DeleteCategoryDtoRes();
-		categoryRes.setMsg("Delete Successfully");
-		
-		return categoryRes;
+		try {			
+			begin();
+			boolean isDeleted = categoryDao.deleteById(id);
+			commit();
+			
+			DeleteCategoryDtoRes categoryRes = new DeleteCategoryDtoRes();
+			if(isDeleted) {
+				categoryRes.setMsg("Delete Successfully");
+			} else {
+				categoryRes.setMsg("Delete Unsuccessfully");
+			}
+			
+			return categoryRes;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
 	}
 }

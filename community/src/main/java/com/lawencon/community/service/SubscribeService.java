@@ -106,13 +106,24 @@ public class SubscribeService extends BaseCommunityService{
 	}
 	
 	public DeleteSubscribeDtoRes deleteById(String id) throws Exception {
-		begin();
-		subscribeDao.deleteById(id);
-		commit();
-		
-		DeleteSubscribeDtoRes subscribeRes = new DeleteSubscribeDtoRes();
-		subscribeRes.setMsg("Delete Successfully");
-		
-		return subscribeRes;
+		try {			
+			begin();
+			boolean isDeleted = subscribeDao.deleteById(id);
+			commit();
+			
+			DeleteSubscribeDtoRes subscribeRes = new DeleteSubscribeDtoRes();
+			if(isDeleted) {
+				subscribeRes.setMsg("Delete Successfully");
+			} else {
+				subscribeRes.setMsg("Delete Unsuccessfully");
+			}
+			
+			return subscribeRes;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
 	}
 }

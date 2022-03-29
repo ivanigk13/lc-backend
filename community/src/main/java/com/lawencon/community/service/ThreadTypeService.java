@@ -107,13 +107,24 @@ public class ThreadTypeService extends BaseCommunityService {
 	}
 	
 	public DeleteThreadTypeDtoRes deleteById(String id) throws Exception {
-		begin();
-		threadTypeDao.deleteById(id);
-		commit();
-		
-		DeleteThreadTypeDtoRes threadTypeRes = new DeleteThreadTypeDtoRes();
-		threadTypeRes.setMsg("Delete Successfully");
-		
-		return threadTypeRes;
+		try {			
+			begin();
+			boolean isDeleted = threadTypeDao.deleteById(id);
+			commit();
+			
+			DeleteThreadTypeDtoRes threadTypeRes = new DeleteThreadTypeDtoRes();
+			if(isDeleted) {
+				threadTypeRes.setMsg("Delete Successfully");
+			} else {
+				threadTypeRes.setMsg("Delete Unsuccessfully");
+			}
+			
+			return threadTypeRes;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
 	}
 }

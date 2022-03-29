@@ -78,6 +78,7 @@ public class TransactionStatusService extends BaseCommunityService {
 			transactionStatus.setId(list.getId());
 			transactionStatus.setStatusName(list.getStatusName());
 			transactionStatus.setStatusCode(list.getStatusCode());
+			transactionStatus.setCreatedBy(list.getCreatedBy());
 			transactionStatus.setVersion(list.getVersion());
 			transactionStatus.setIsActive(list.getIsActive());
 			data.add(transactionStatus);
@@ -90,14 +91,15 @@ public class TransactionStatusService extends BaseCommunityService {
 	}
 
 	public GetByIdTransactionStatusDtoRes getById(String id) throws Exception {
-		TransactionStatus TransactionStatus = transactionStatusDao.getById(id);
+		TransactionStatus transactionStatus = transactionStatusDao.getById(id);
 
 		GetTransactionStatusDtoDataRes transactionStatusData = new GetTransactionStatusDtoDataRes();
-		transactionStatusData.setId(TransactionStatus.getId());
-		transactionStatusData.setStatusName(TransactionStatus.getStatusName());
-		transactionStatusData.setStatusCode(TransactionStatus.getStatusCode());
-		transactionStatusData.setVersion(TransactionStatus.getVersion());
-		transactionStatusData.setIsActive(TransactionStatus.getIsActive());
+		transactionStatusData.setId(transactionStatus.getId());
+		transactionStatusData.setStatusName(transactionStatus.getStatusName());
+		transactionStatusData.setStatusCode(transactionStatus.getStatusCode());
+		transactionStatusData.setCreatedBy(transactionStatus.getCreatedBy());
+		transactionStatusData.setVersion(transactionStatus.getVersion());
+		transactionStatusData.setIsActive(transactionStatus.getIsActive());
 
 		GetByIdTransactionStatusDtoRes result = new GetByIdTransactionStatusDtoRes();
 		result.setData(transactionStatusData);
@@ -106,13 +108,24 @@ public class TransactionStatusService extends BaseCommunityService {
 	}
 	
 	public DeleteTransactionStatusDtoRes deleteById(String id) throws Exception {
-		begin();
-		transactionStatusDao.deleteById(id);
-		commit();
-		
-		DeleteTransactionStatusDtoRes transactionStatusRes = new DeleteTransactionStatusDtoRes();
-		transactionStatusRes.setMsg("Delete Successfully");
-		
-		return transactionStatusRes;
+		try {			
+			begin();
+			boolean isDeleted = transactionStatusDao.deleteById(id);
+			commit();
+			
+			DeleteTransactionStatusDtoRes transactionStatusRes = new DeleteTransactionStatusDtoRes();
+			if(isDeleted) {
+				transactionStatusRes.setMsg("Delete Successfully");
+			} else {
+				transactionStatusRes.setMsg("Delete Unsuccessfully");
+			}
+			
+			return transactionStatusRes;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
 	}
 }
