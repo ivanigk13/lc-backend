@@ -13,6 +13,7 @@ public class GetProfileDtoDataRes {
 	private String fileId;
 	private String socialMediaId;
 	private String fullName;
+	private String companyName;
 	private String phoneNumber;
 	private String postalCode;
 	private Integer version;

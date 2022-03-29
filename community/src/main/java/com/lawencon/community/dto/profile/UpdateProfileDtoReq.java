@@ -11,8 +11,13 @@ public class UpdateProfileDtoReq {
 
 	@NotNull(message = "Profile Id must be filled")
 	private String id;
+	
+	@NotNull(message = "Industry Id must be filled")
 	private String industryId;
+	
+	@NotNull(message = "Position Id must be filled")
 	private String positionId;
+	
 	private String cityId;
 	private String fileId;
 	private String socialMediaId;
@@ -20,6 +25,10 @@ public class UpdateProfileDtoReq {
 	@NotEmpty(message = "Full Name must be filled")
 	@Size(min = 1, max = 50, message = "full name min length is 1 and max length is 50")
 	private String fullName;
+	
+	@NotEmpty(message = "Company Name must be filed")
+	@Size(min = 1, max = 50, message = "Company Name min lenght is 1 and max lenght is 50")
+	private String companyName;
 	
 	private String phoneNumber;
 	private String postalCode;

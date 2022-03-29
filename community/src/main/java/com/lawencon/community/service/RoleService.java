@@ -109,14 +109,25 @@ public class RoleService extends BaseCommunityService {
 	
 
 	public DeleteRoleDtoRes deleteById(String id) throws Exception {
-		begin();
-		roleDao.deleteById(id);
-		commit();
-		
-		DeleteRoleDtoRes roleRes = new DeleteRoleDtoRes();
-		roleRes.setMsg("Delete Successfully");
-		
-		return roleRes;
+		try {			
+			begin();
+			boolean isDeleted = roleDao.deleteById(id);
+			commit();
+			
+			DeleteRoleDtoRes roleRes = new DeleteRoleDtoRes();
+			if(isDeleted) {
+				roleRes.setMsg("Delete Successfully");
+			} else {
+				roleRes.setMsg("Delete Unsuccessfully");
+			}
+			
+			return roleRes;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
 	} 
 
 }

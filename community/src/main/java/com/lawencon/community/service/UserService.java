@@ -126,14 +126,25 @@ public class UserService extends BaseCommunityService implements UserDetailsServ
 	}
 	
 	public DeleteUserDtoRes deleteById(String id) throws Exception {
-		begin();
-		userDao.deleteById(id);
-		commit();
-		
-		DeleteUserDtoRes userRes = new DeleteUserDtoRes();
-		userRes.setMsg("Delete Successfully");
-		
-		return userRes;
+		try {			
+			begin();
+			boolean isDeleted = userDao.deleteById(id);
+			commit();
+			
+			DeleteUserDtoRes userRes = new DeleteUserDtoRes();
+			if(isDeleted) {
+				userRes.setMsg("Delete Successfully");
+			} else {
+				userRes.setMsg("Delete Unsuccessfully");
+			}
+			
+			return userRes;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
 	}
 
 	@Override

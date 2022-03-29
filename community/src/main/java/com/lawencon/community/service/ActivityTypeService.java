@@ -106,14 +106,25 @@ public class ActivityTypeService extends BaseCommunityService {
 	}
 	
 	public DeleteActivityTypeDtoRes deleteById(String id) throws Exception {
-		begin();
-		activityTypeDao.deleteById(id);
-		commit();
-		
-		DeleteActivityTypeDtoRes activityTypeRes = new DeleteActivityTypeDtoRes();
-		activityTypeRes.setMsg("Delete Successfully");
-		
-		return activityTypeRes;
+		try {			
+			begin();
+			boolean isDeleted = activityTypeDao.deleteById(id);
+			commit();
+			
+			DeleteActivityTypeDtoRes activityTypeRes = new DeleteActivityTypeDtoRes();
+			if(isDeleted) {
+				activityTypeRes.setMsg("Delete Successfully");
+			} else {
+				activityTypeRes.setMsg("Delete Unsuccessfully");
+			}
+			
+			return activityTypeRes;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
 	}
 
 }

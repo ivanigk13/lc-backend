@@ -113,13 +113,24 @@ public class CityService extends BaseCommunityService {
 	}
 	
 	public DeleteCityDtoRes deleteById(String id) throws Exception {
-		begin();
-		cityDao.deleteById(id);
-		commit();
-		
-		DeleteCityDtoRes cityRes = new DeleteCityDtoRes();
-		cityRes.setMsg("Delete Successfully");
-		
-		return cityRes;
+		try {			
+			begin();
+			boolean isDeleted = cityDao.deleteById(id);
+			commit();
+			
+			DeleteCityDtoRes cityRes = new DeleteCityDtoRes();
+			if(isDeleted) {
+				cityRes.setMsg("Delete Successfully");
+			} else {
+				cityRes.setMsg("Delete Unsuccessfully");
+			}
+			
+			return cityRes;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
 	}
 }

@@ -8,6 +8,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 @Data
@@ -29,15 +31,19 @@ public class InsertActivityDtoReq {
 	@NotNull(message = "Transaction Status Id must be filled")
 	private String transactionStatusId;
 	
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@NotNull(message = "Date Start must be filled")
 	private Date dateStart;
 	
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@NotNull(message = "Date End must be filled")
 	private Date dateEnd;
 	
+	@JsonFormat(pattern = "HH:mm")
 	@NotNull(message = "Time Start must be filled")
 	private LocalTime timeStart;
 	
+	@JsonFormat(pattern = "HH:mm")
 	@NotNull(message = "Time End must be filled")
 	private LocalTime timeEnd;
 	

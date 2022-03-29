@@ -64,10 +64,14 @@ public class ProfileService extends BaseCommunityService {
 			file = fileDao.save(file);
 			
 			profile.setFile(file);
-			SocialMedia socialMedia = new SocialMedia();
-			socialMedia.setId(profileReq.getSocialMediaId());
-			profile.setSocialMedia(socialMedia);
+			
+			if(profileReq.getSocialMediaId() != null) {
+				SocialMedia socialMedia = new SocialMedia();
+				socialMedia.setId(profileReq.getSocialMediaId());
+				profile.setSocialMedia(socialMedia);
+			}
 			profile.setFullName(profileReq.getFullName());
+			profile.setCompanyName(profileReq.getCompanyName());
 			profile.setPhoneNumber(profileReq.getPhoneNumber());
 			profile.setPostalCode(profileReq.getPostalCode());
 			profile.setCreatedBy(getId());
@@ -121,6 +125,7 @@ public class ProfileService extends BaseCommunityService {
 			socialMedia.setId(profileReq.getSocialMediaId());
 			profile.setSocialMedia(socialMedia);
 			profile.setFullName(profileReq.getFullName());
+			profile.setCompanyName(profileReq.getCompanyName());
 			profile.setPhoneNumber(profileReq.getPhoneNumber());
 			profile.setPostalCode(profileReq.getPostalCode());
 			profile.setUpdatedBy(getId());
@@ -156,8 +161,12 @@ public class ProfileService extends BaseCommunityService {
 		profileDataRes.setPositionId(profile.getPosition().getId());
 		profileDataRes.setCityId(profile.getCity().getId());
 		profileDataRes.setFileId(profile.getFile().getId());
-		profileDataRes.setSocialMediaId(profile.getSocialMedia().getId());
+		
+		if(profile.getSocialMedia() != null ) {
+			profileDataRes.setSocialMediaId(profile.getSocialMedia().getId());
+		}
 		profileDataRes.setFullName(profile.getFullName());
+		profileDataRes.setCompanyName(profile.getCompanyName());
 		profileDataRes.setPhoneNumber(profile.getPhoneNumber());
 		profileDataRes.setPositionId(profile.getPostalCode());
 		profileDataRes.setVersion(profile.getVersion());
@@ -184,8 +193,11 @@ public class ProfileService extends BaseCommunityService {
 			profileDataRes.setPositionId(profile.getPosition().getId());
 			profileDataRes.setCityId(profile.getCity().getId());
 			profileDataRes.setFileId(profile.getFile().getId());
-			profileDataRes.setSocialMediaId(profile.getSocialMedia().getId());
+			if(profile.getSocialMedia() != null) {
+				profileDataRes.setSocialMediaId(profile.getSocialMedia().getId());
+			}
 			profileDataRes.setFullName(profile.getFullName());
+			profileDataRes.setCompanyName(profile.getCompanyName());
 			profileDataRes.setPhoneNumber(profile.getPhoneNumber());
 			profileDataRes.setPositionId(profile.getPostalCode());
 			profileDataRes.setVersion(profile.getVersion());
@@ -202,14 +214,25 @@ public class ProfileService extends BaseCommunityService {
 
 	public DeleteProfileDtoRes deleteById(String id) throws Exception {
 		
-		begin();
-		profileDao.deleteById(id);
-		commit();
-		
-		DeleteProfileDtoRes profileRes = new DeleteProfileDtoRes();
-		profileRes.setMsg("Delete Successfully");
-		
-		return profileRes;
+		try {			
+			begin();
+			boolean isDeleted = profileDao.deleteById(id);
+			commit();
+			
+			DeleteProfileDtoRes profileRes = new DeleteProfileDtoRes();
+			if(isDeleted) {
+				profileRes.setMsg("Delete Successfully");
+			} else {
+				profileRes.setMsg("Delete Unsuccessfully");
+			}
+			
+			return profileRes;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
 	}  
 
 }

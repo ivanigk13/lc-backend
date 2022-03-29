@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.community.dto.category.DeleteCategoryDtoRes;
@@ -33,13 +33,13 @@ public class CategoryController {
 	private final CategoryService categoryService;
 	
 	@PostMapping
-	public ResponseEntity<InsertCategoryDtoRes> insert(@RequestPart @Valid InsertCategoryDtoReq data) throws Exception{
+	public ResponseEntity<InsertCategoryDtoRes> insert(@RequestBody @Valid InsertCategoryDtoReq data) throws Exception{
 		InsertCategoryDtoRes category = categoryService.insert(data);
 		return new ResponseEntity<InsertCategoryDtoRes>(category, HttpStatus.CREATED);		
 	}
 	
 	@PutMapping
-	public ResponseEntity<UpdateCategoryDtoRes> update(@RequestPart @Valid UpdateCategoryDtoReq data) throws Exception{
+	public ResponseEntity<UpdateCategoryDtoRes> update(@RequestBody @Valid UpdateCategoryDtoReq data) throws Exception{
 		UpdateCategoryDtoRes category = categoryService.update(data);
 		return new ResponseEntity<UpdateCategoryDtoRes>(category, HttpStatus.OK);		
 	}

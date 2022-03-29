@@ -94,14 +94,25 @@ public class ThreadBookmarkService extends BaseCommunityService {
 	}
 	
 	public DeleteThreadBookmarkDtoRes deleteById(String id) throws Exception {
-		begin();
-		threadBookmarkDao.deleteById(id);
-		commit();
-		
-		DeleteThreadBookmarkDtoRes threadBookmarkRes = new DeleteThreadBookmarkDtoRes();
-		threadBookmarkRes.setMsg("Delete Successfully");
-		
-		return threadBookmarkRes;
+		try {			
+			begin();
+			boolean isDeleted = threadBookmarkDao.deleteById(id);
+			commit();
+			
+			DeleteThreadBookmarkDtoRes threadBookmarkRes = new DeleteThreadBookmarkDtoRes();
+			if(isDeleted) {
+				threadBookmarkRes.setMsg("Delete Successfully");
+			} else {
+				threadBookmarkRes.setMsg("Delete Unsuccessfully");
+			}
+			
+			return threadBookmarkRes;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
 	}
 
 }
