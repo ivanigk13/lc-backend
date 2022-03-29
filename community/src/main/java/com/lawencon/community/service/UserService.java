@@ -39,6 +39,7 @@ public class UserService extends BaseCommunityService implements UserDetailsServ
 		User user = new User();
 		Role role = new Role();
 		role.setId(roleDao.getRoleMemberId());
+//		role.setId(roleDao.getRoleAdminId());
 		user.setRole(role);
 		user.setEmail(data.getEmail());
 		user.setPassword(encoder.encode(data.getPassword()));
