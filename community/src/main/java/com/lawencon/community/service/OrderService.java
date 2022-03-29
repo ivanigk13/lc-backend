@@ -120,13 +120,24 @@ public class OrderService extends BaseCommunityService {
 	}
 	
 	public DeleteOrderDtoRes deleteById(String id) throws Exception {
-		begin();
-		orderDao.deleteById(id);
-		commit();
-		
-		DeleteOrderDtoRes orderRes = new DeleteOrderDtoRes();
-		orderRes.setMsg("Delete Successfully");
-		
-		return orderRes;
+		try {			
+			begin();
+			boolean isDeleted = orderDao.deleteById(id);
+			commit();
+			
+			DeleteOrderDtoRes orderRes = new DeleteOrderDtoRes();
+			if(isDeleted) {
+				orderRes.setMsg("Delete Successfully");
+			} else {
+				orderRes.setMsg("Delete Unsuccessfully");
+			}
+			
+			return orderRes;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
 	}
 }

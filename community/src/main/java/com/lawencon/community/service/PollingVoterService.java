@@ -130,13 +130,24 @@ public class PollingVoterService extends BaseCommunityService {
 	}
 
 	public DeletePollingVoterDtoRes deleteById(String id) throws Exception {
-		begin();
-		pollingVoterDao.deleteById(id);
-		commit();
-
-		DeletePollingVoterDtoRes pollingVoterRes = new DeletePollingVoterDtoRes();
-		pollingVoterRes.setMsg("Delete Successfully");
-
-		return pollingVoterRes;
+		try {			
+			begin();
+			boolean isDeleted = pollingVoterDao.deleteById(id);
+			commit();
+			
+			DeletePollingVoterDtoRes pollingVoterRes = new DeletePollingVoterDtoRes();
+			if(isDeleted) {
+				pollingVoterRes.setMsg("Delete Successfully");
+			} else {
+				pollingVoterRes.setMsg("Delete Unsuccessfully");
+			}
+			
+			return pollingVoterRes;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
 	}
 }

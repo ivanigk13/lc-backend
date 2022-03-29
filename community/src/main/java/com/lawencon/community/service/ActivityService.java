@@ -77,8 +77,8 @@ public class ActivityService extends BaseCommunityService {
 
 			activity.setDateStart(req.getDateStart());
 			activity.setDateEnd(req.getDateEnd());
-			activity.setTimeStart(req.getTimeStart());
-			activity.setTimeEnd(req.getTimeEnd());
+//			activity.setTimeStart(req.getTimeStart());
+//			activity.setTimeEnd(req.getTimeEnd());
 
 			Activity insertActivity = activityDao.save(activity);
 			commit();
@@ -199,14 +199,24 @@ public class ActivityService extends BaseCommunityService {
 	}
 	
 	public DeleteActivityDtoRes deleteById(String id) throws Exception {
-		begin();
-		activityDao.deleteById(id);
-		commit();
-		
-		DeleteActivityDtoRes activityRes = new DeleteActivityDtoRes();
-		activityRes.setMsg("Delete Successfully");
-		
-		return activityRes;
+		try {			
+			begin();
+			boolean isDeleted = activityDao.deleteById(id);
+			commit();
+			
+			DeleteActivityDtoRes activityRes = new DeleteActivityDtoRes();
+			if(isDeleted) {
+				activityRes.setMsg("Delete Successfully");
+			} else {
+				activityRes.setMsg("Delete Unsuccessfully");
+			}
+			
+			return activityRes;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
 	}
-
 }

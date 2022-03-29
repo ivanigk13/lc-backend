@@ -105,13 +105,24 @@ public class IndustryService extends BaseCommunityService {
 	}
 	
 	public DeleteIndustryDtoRes deleteById(String id) throws Exception {
-		begin();
-		industryDao.deleteById(id);
-		commit();
-		
-		DeleteIndustryDtoRes industryRes = new DeleteIndustryDtoRes();
-		industryRes.setMsg("Delete Successfully");
-		
-		return industryRes;
+		try {			
+			begin();
+			boolean isDeleted = industryDao.deleteById(id);
+			commit();
+			
+			DeleteIndustryDtoRes industryRes = new DeleteIndustryDtoRes();
+			if(isDeleted) {
+				industryRes.setMsg("Delete Successfully");
+			} else {
+				industryRes.setMsg("Delete Unsuccessfully");
+			}
+			
+			return industryRes;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
 	}
 }

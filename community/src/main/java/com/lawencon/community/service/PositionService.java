@@ -108,14 +108,25 @@ public class PositionService extends BaseCommunityService {
 
 	public DeletePositionDtoRes deleteById(String id) throws Exception {
 		
-		begin();
-		positionDao.deleteById(id);
-		commit();
-		
-		DeletePositionDtoRes positionRes = new DeletePositionDtoRes();
-		positionRes.setMsg("Delete Successfully");
-		
-		return positionRes;
+		try {			
+			begin();
+			boolean isDeleted = positionDao.deleteById(id);
+			commit();
+			
+			DeletePositionDtoRes positionRes = new DeletePositionDtoRes();
+			if(isDeleted) {
+				positionRes.setMsg("Delete Successfully");
+			} else {
+				positionRes.setMsg("Delete Unsuccessfully");
+			}
+			
+			return positionRes;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
 	}  
 
 }
