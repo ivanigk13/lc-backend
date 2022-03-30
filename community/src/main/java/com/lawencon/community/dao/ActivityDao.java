@@ -133,7 +133,7 @@ public class ActivityDao extends AbstractJpaDao<Activity>{
 		builder.append("ORDER BY a.id");
 		List<?> results = createNativeQuery(builder.toString())
 							.setParameter("status_code", TransactionStatusConstant.APPROVED.getStatusCode())
-							.setParameter("type_code", ActivityTypeConstant.EVENT)
+							.setParameter("type_code", ActivityTypeConstant.EVENT.getActivityTypeCode())
 							.getResultList();
 		List<Activity> activities = new ArrayList<Activity>();
 		for (Object result : results) {
@@ -189,7 +189,7 @@ public class ActivityDao extends AbstractJpaDao<Activity>{
 		builder.append("ORDER BY a.id");
 		List<?> results = createNativeQuery(builder.toString())
 							.setParameter("status_code", TransactionStatusConstant.APPROVED.getStatusCode())
-							.setParameter("type_code", ActivityTypeConstant.COURSE)
+							.setParameter("type_code", ActivityTypeConstant.COURSE.getActivityTypeCode())
 							.getResultList();
 		List<Activity> activities = new ArrayList<Activity>();
 		for (Object result : results) {
