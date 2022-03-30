@@ -19,7 +19,6 @@ public class InsertProfileDtoReq {
 	private String positionId;
 	
 	private String cityId;
-	private String fileId;
 	private String socialMediaId;
 	
 	@NotEmpty(message = "Full Name must be filled")
