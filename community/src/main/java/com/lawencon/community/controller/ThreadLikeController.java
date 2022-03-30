@@ -7,8 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.community.dto.threadlike.GetByIdThreadLikeDtoRes;
@@ -32,7 +32,7 @@ public class ThreadLikeController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<InsertThreadLikeDtoRes> insert(@RequestPart @Valid InsertThreadLikeDtoReq data) throws Exception{
+	public ResponseEntity<InsertThreadLikeDtoRes> insert(@RequestBody @Valid InsertThreadLikeDtoReq data) throws Exception{
 		InsertThreadLikeDtoRes threadLike = threadLikeService.insert(data);
 		return new ResponseEntity<InsertThreadLikeDtoRes>(threadLike, HttpStatus.CREATED);		
 	}
