@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,8 @@ import com.lawencon.community.dto.pollingheader.GetAllPollingHeaderDtoRes;
 import com.lawencon.community.dto.pollingheader.GetByIdPollingHeaderDtoRes;
 import com.lawencon.community.dto.pollingheader.InsertPollingHeaderDtoReq;
 import com.lawencon.community.dto.pollingheader.InsertPollingHeaderDtoRes;
+import com.lawencon.community.dto.pollingheader.UpdatePollingHeaderDtoReq;
+import com.lawencon.community.dto.pollingheader.UpdatePollingHeaderDtoRes;
 import com.lawencon.community.service.PollingHeaderService;
 
 import lombok.RequiredArgsConstructor;
@@ -44,10 +47,16 @@ public class PollingHeaderController {
 	}
 
 	@PostMapping
-	public ResponseEntity<InsertPollingHeaderDtoRes> insert(@RequestBody @Valid InsertPollingHeaderDtoReq pollingDetail)
+	public ResponseEntity<InsertPollingHeaderDtoRes> insert(@RequestBody @Valid InsertPollingHeaderDtoReq pollingHeader)
 			throws Exception {
-		InsertPollingHeaderDtoRes result = pollingHeaderService.insert(pollingDetail);
+		InsertPollingHeaderDtoRes result = pollingHeaderService.insert(pollingHeader);
 		return new ResponseEntity<InsertPollingHeaderDtoRes>(result, HttpStatus.CREATED);
+	}
+	
+	@PutMapping
+	public ResponseEntity<UpdatePollingHeaderDtoRes> update(@RequestBody @Valid UpdatePollingHeaderDtoReq pollingHeader) throws Exception {
+		UpdatePollingHeaderDtoRes result = pollingHeaderService.update(pollingHeader);
+		return new ResponseEntity<UpdatePollingHeaderDtoRes>(result, HttpStatus.OK);
 	}
 
 	@DeleteMapping("{id}")

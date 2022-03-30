@@ -19,4 +19,6 @@ public class PollingHeader extends BaseEntity{
 	@OneToOne
 	@JoinColumn(name = "thread_id")
 	private Thread thread;
+	
+	private String title;
 }

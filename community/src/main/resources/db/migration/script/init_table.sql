@@ -310,6 +310,7 @@ ALTER TABLE thread_like ADD CONSTRAINT like_ck
 CREATE TABLE polling_header(
 	id varchar(36) DEFAULT uuid_generate_v4 (),
 	thread_id varchar(36) NOT NULL,
+	title varchar(100) NOT NULL,
 	created_by varchar(36),
 	created_at timestamp WITHOUT time zone DEFAULT CURRENT_TIMESTAMP,
 	updated_by varchar(36),

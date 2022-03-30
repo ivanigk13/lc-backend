@@ -10,9 +10,9 @@ public class ThreadLikeDao extends AbstractJpaDao<ThreadLike>{
 
 	public Integer getLikeCounterByThreadId(String threadId) {
 		String sql = "SELECT COUNT(like_counter) FROM thread_like WHERE thread_id = :id";
-		Object result = createNativeQuery(sql).setParameter("id", threadId).getResultList();
-		Object[] obj = (Object[]) result;
-		Integer counter = Integer.valueOf(obj[0].toString());
+		Object result = createNativeQuery(sql).setParameter("id", threadId).getSingleResult();
+		Object obj = (Object) result;
+		Integer counter = Integer.valueOf(obj.toString());
 		return counter;
 	}
 }
