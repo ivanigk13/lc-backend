@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.lawencon.community.dto.activity.DeleteActivityDtoRes;
 import com.lawencon.community.dto.activity.GetAllActivityDtoRes;
+import com.lawencon.community.dto.activity.GetAllByUserIdActivityRes;
 import com.lawencon.community.dto.activity.GetByIdActivityDtoRes;
 import com.lawencon.community.dto.activity.InsertActivityDtoRes;
 import com.lawencon.community.dto.activity.UpdateActivityDtoRes;
@@ -51,10 +52,34 @@ public class ActivityController {
 		return new ResponseEntity<GetByIdActivityDtoRes>(activity, HttpStatus.OK);		
 	}
 	
+	@GetMapping("user/{id}")
+	public ResponseEntity<GetAllByUserIdActivityRes> getAllByUserIdActivity(@PathVariable("id") String id) throws Exception{
+		GetAllByUserIdActivityRes activity = activityService.getAllByUserIdActivity(id);
+		return new ResponseEntity<GetAllByUserIdActivityRes>(activity, HttpStatus.OK);		
+	}
+	
 	@GetMapping
 	public ResponseEntity<GetAllActivityDtoRes> getAll(@RequestParam("start") Integer start, @RequestParam("max") Integer max) throws Exception{
 		GetAllActivityDtoRes activity = activityService.getAll(start, max);
 		return new ResponseEntity<GetAllActivityDtoRes>(activity, HttpStatus.OK);		
+	}
+	
+	@GetMapping("pending")
+	public ResponseEntity<GetAllByUserIdActivityRes> getPendingActivity() throws Exception{
+		GetAllByUserIdActivityRes activity = activityService.getPendingActivity();
+		return new ResponseEntity<GetAllByUserIdActivityRes>(activity, HttpStatus.OK);		
+	}
+	
+	@GetMapping("approved-event")
+	public ResponseEntity<GetAllByUserIdActivityRes> getApprovedEvent() throws Exception{
+		GetAllByUserIdActivityRes activity = activityService.getApprovedEventActivity();
+		return new ResponseEntity<GetAllByUserIdActivityRes>(activity, HttpStatus.OK);		
+	}
+	
+	@GetMapping("approved-course")
+	public ResponseEntity<GetAllByUserIdActivityRes> getApprovedCourse() throws Exception{
+		GetAllByUserIdActivityRes activity = activityService.getApprovedCourseActivity();
+		return new ResponseEntity<GetAllByUserIdActivityRes>(activity, HttpStatus.OK);		
 	}
 	
 	@DeleteMapping("{id}")
