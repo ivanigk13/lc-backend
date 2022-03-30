@@ -446,7 +446,7 @@ CREATE TABLE subscribe(
 ALTER TABLE subscribe ADD CONSTRAINT subscribe_pk
 	PRIMARY KEY(id);
 
-CREATE TABLE "order"(
+CREATE TABLE orders(
 	id varchar(36) DEFAULT uuid_generate_v4 (),
 	transaction_status_id varchar(36) NOT NULL,
 	user_id varchar(36) NOT NULL,
@@ -460,13 +460,13 @@ CREATE TABLE "order"(
 	is_active boolean DEFAULT true
 );
 
-ALTER TABLE "order" ADD CONSTRAINT order_pk
+ALTER TABLE orders ADD CONSTRAINT order_pk
 	PRIMARY KEY(id);
-ALTER TABLE "order" ADD CONSTRAINT user_fk
+ALTER TABLE orders ADD CONSTRAINT user_fk
 	FOREIGN KEY(user_id) REFERENCES users(id);
-ALTER TABLE "order" ADD CONSTRAINT transaction_status_fk
+ALTER TABLE orders ADD CONSTRAINT transaction_status_fk
 	FOREIGN KEY(transaction_status_id) REFERENCES transaction_status(id);
-ALTER TABLE "order" ADD CONSTRAINT file_fk
+ALTER TABLE orders ADD CONSTRAINT file_fk
 	FOREIGN KEY(file_id) REFERENCES file(id);
 
 CREATE TABLE order_detail(
@@ -485,7 +485,7 @@ CREATE TABLE order_detail(
 ALTER TABLE order_detail ADD CONSTRAINT order_detail_pk
 	PRIMARY KEY(id);
 ALTER TABLE order_detail ADD CONSTRAINT order_fk
-	FOREIGN KEY(order_id) REFERENCES "order"(id);
+	FOREIGN KEY(order_id) REFERENCES orders(id);
 ALTER TABLE order_detail ADD CONSTRAINT subscribe_fk
 	FOREIGN KEY(subscribe_id) REFERENCES subscribe(id);
 ALTER TABLE order_detail ADD CONSTRAINT activity_fk

@@ -12,6 +12,10 @@ INSERT INTO industry (industry_code, industry_name, created_by) VALUES
 	('IDT03', 'Information Technology and Service', (SELECT id FROM users WHERE email = 'admin@mail.com')),
 	('IDT04', 'Financial Services', (SELECT id FROM users WHERE email = 'admin@mail.com')),
 	('IDT05', 'Logistic and Supply Chain', (SELECT id FROM users WHERE email = 'admin@mail.com'));
+	
+INSERT INTO position (position_code, position_name, created_by) VALUES
+	('PROG', 'Programming', (SELECT id FROM users WHERE email = 'admin@mail.com')),
+	('BD', 'Bussiness Development', (SELECT id FROM users WHERE email = 'admin@mail.com'));
 			
 INSERT INTO activity_type (activity_type_code, activity_type_name, created_by) VALUES
 	('AT01', 'Event', (SELECT id FROM users WHERE email = 'admin@mail.com')),
@@ -579,4 +583,6 @@ INSERT INTO city (city_code, province_id, city_name, created_by) VALUES
 ('9212',	(SELECT id FROM province WHERE province_code = '92'),	'KAB. PEGUNUNGAN ARFAK', 			(SELECT id FROM users WHERE email = 'admin@mail.com')),
 ('9271',	(SELECT id FROM province WHERE province_code = '92'),	'KOTA SORONG', 						(SELECT id FROM users WHERE email = 'admin@mail.com'));
 
-
+INSERT INTO category (category_code, category_name, created_by) VALUES 
+	('CAT01', 'HR Administration', (SELECT id FROM users WHERE email = 'admin@mail.com')),
+	('CAT02', 'Planning & Recruitment', (SELECT id FROM users WHERE email = 'admin@mail.com'));
