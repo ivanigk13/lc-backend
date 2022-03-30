@@ -13,6 +13,8 @@ import com.lawencon.community.dao.TransactionStatusDao;
 import com.lawencon.community.dto.activity.DeleteActivityDtoRes;
 import com.lawencon.community.dto.activity.GetActivityDtoDataRes;
 import com.lawencon.community.dto.activity.GetAllActivityDtoRes;
+import com.lawencon.community.dto.activity.GetAllByUserIdActivityDataRes;
+import com.lawencon.community.dto.activity.GetAllByUserIdActivityRes;
 import com.lawencon.community.dto.activity.GetByIdActivityDtoRes;
 import com.lawencon.community.dto.activity.InsertActivityDtoDataRes;
 import com.lawencon.community.dto.activity.InsertActivityDtoReq;
@@ -195,12 +197,137 @@ public class ActivityService extends BaseCommunityService {
 		activityData.setTimeEnd(activity.getTimeEnd());
 		activityData.setPrice(activity.getPrice());
 		activityData.setLocation(activity.getLocation());
-		activityData.setCreatedBy(activity.getCreatedBy());
 		activityData.setVersion(activity.getVersion());
 
 		GetByIdActivityDtoRes result = new GetByIdActivityDtoRes();
 		result.setData(activityData);
 		return result;
+	}
+	
+	public GetAllByUserIdActivityRes getAllByUserIdActivity(String userId) throws Exception {
+		List<Activity> activities = activityDao.getAllByUserIdActivity(userId);
+		
+		List<GetAllByUserIdActivityDataRes> data = new ArrayList<>();
+		
+		activities.forEach(activity -> {
+			GetAllByUserIdActivityDataRes activityData = new GetAllByUserIdActivityDataRes();
+			activityData.setId(activity.getId());
+			activityData.setFileId(activity.getFile().getId());
+			activityData.setCategoryName(activity.getCategory().getCategoryName());
+			activityData.setActivityTypeName(activity.getActivityType().getActivityTypeName());
+			activityData.setTransactionStatusId(activity.getTransactionStatus().getId());
+			activityData.setTransactionStatusName(activity.getTransactionStatus().getStatusName());
+			activityData.setPaymentFileId(activity.getPaymentFile().getId());
+			activityData.setActivityName(activity.getActivityName());
+			activityData.setDateStart(activity.getDateStart());
+			activityData.setDateEnd(activity.getDateEnd());
+			activityData.setTimeStart(activity.getTimeStart());
+			activityData.setTimeEnd(activity.getTimeEnd());
+			activityData.setPrice(activity.getPrice());
+			activityData.setLocation(activity.getLocation());
+			activityData.setVersion(activity.getVersion());
+			
+			data.add(activityData);
+		});
+		
+		GetAllByUserIdActivityRes activityRes = new GetAllByUserIdActivityRes();
+		activityRes.setData(data);
+		
+		return activityRes;
+	}
+	
+	public GetAllByUserIdActivityRes getPendingActivity() throws Exception {
+		List<Activity> activities = activityDao.getPendingActivity();
+		
+		List<GetAllByUserIdActivityDataRes> data = new ArrayList<>();
+		
+		activities.forEach(activity -> {
+			GetAllByUserIdActivityDataRes activityData = new GetAllByUserIdActivityDataRes();
+			activityData.setId(activity.getId());
+			activityData.setActivityTypeName(activity.getActivityType().getActivityTypeName());
+			activityData.setTransactionStatusId(activity.getTransactionStatus().getId());
+			activityData.setTransactionStatusName(activity.getTransactionStatus().getStatusName());
+			activityData.setPaymentFileId(activity.getPaymentFile().getId());
+			activityData.setActivityName(activity.getActivityName());
+			activityData.setDateStart(activity.getDateStart());
+			activityData.setDateEnd(activity.getDateEnd());
+			activityData.setTimeStart(activity.getTimeStart());
+			activityData.setTimeEnd(activity.getTimeEnd());
+			activityData.setPrice(activity.getPrice());
+			activityData.setLocation(activity.getLocation());
+			activityData.setVersion(activity.getVersion());
+			
+			data.add(activityData);
+		});
+		
+		GetAllByUserIdActivityRes activityRes = new GetAllByUserIdActivityRes();
+		activityRes.setData(data);
+		
+		return activityRes;
+	}
+	
+	public GetAllByUserIdActivityRes getApprovedEventActivity() {
+		List<Activity> activities = activityDao.getApprovedEventActivity();
+		
+		List<GetAllByUserIdActivityDataRes> data = new ArrayList<>();
+		
+		activities.forEach(activity -> {
+			GetAllByUserIdActivityDataRes activityData = new GetAllByUserIdActivityDataRes();
+			activityData.setId(activity.getId());
+			activityData.setFileId(activity.getFile().getId());
+			activityData.setCategoryName(activity.getCategory().getCategoryName());
+			activityData.setActivityTypeName(activity.getActivityType().getActivityTypeName());
+			activityData.setTransactionStatusId(activity.getTransactionStatus().getId());
+			activityData.setTransactionStatusName(activity.getTransactionStatus().getStatusName());
+			activityData.setPaymentFileId(activity.getPaymentFile().getId());
+			activityData.setActivityName(activity.getActivityName());
+			activityData.setDateStart(activity.getDateStart());
+			activityData.setDateEnd(activity.getDateEnd());
+			activityData.setTimeStart(activity.getTimeStart());
+			activityData.setTimeEnd(activity.getTimeEnd());
+			activityData.setPrice(activity.getPrice());
+			activityData.setLocation(activity.getLocation());
+			activityData.setVersion(activity.getVersion());
+			
+			data.add(activityData);
+		});
+		
+		GetAllByUserIdActivityRes activityRes = new GetAllByUserIdActivityRes();
+		activityRes.setData(data);
+		
+		return activityRes;
+	}
+	
+	public GetAllByUserIdActivityRes getApprovedCourseActivity() {
+		List<Activity> activities = activityDao.getApprovedCourseActivity();
+		
+		List<GetAllByUserIdActivityDataRes> data = new ArrayList<>();
+		
+		activities.forEach(activity -> {
+			GetAllByUserIdActivityDataRes activityData = new GetAllByUserIdActivityDataRes();
+			activityData.setId(activity.getId());
+			activityData.setFileId(activity.getFile().getId());
+			activityData.setCategoryName(activity.getCategory().getCategoryName());
+			activityData.setActivityTypeName(activity.getActivityType().getActivityTypeName());
+			activityData.setTransactionStatusId(activity.getTransactionStatus().getId());
+			activityData.setTransactionStatusName(activity.getTransactionStatus().getStatusName());
+			activityData.setPaymentFileId(activity.getPaymentFile().getId());
+			activityData.setActivityName(activity.getActivityName());
+			activityData.setDateStart(activity.getDateStart());
+			activityData.setDateEnd(activity.getDateEnd());
+			activityData.setTimeStart(activity.getTimeStart());
+			activityData.setTimeEnd(activity.getTimeEnd());
+			activityData.setPrice(activity.getPrice());
+			activityData.setLocation(activity.getLocation());
+			activityData.setVersion(activity.getVersion());
+			
+			data.add(activityData);
+		});
+		
+		GetAllByUserIdActivityRes activityRes = new GetAllByUserIdActivityRes();
+		activityRes.setData(data);
+		
+		return activityRes;
 	}
 	
 	public DeleteActivityDtoRes deleteById(String id) throws Exception {
