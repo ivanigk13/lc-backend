@@ -76,7 +76,6 @@ public class ActivityService extends BaseCommunityService {
 
 			File paymentFileActivity = fileDao.save(paymentFile);
 			activity.setPaymentFile(paymentFileActivity);
-;
 			activity.setDateStart(req.getDateStart());
 			activity.setDateEnd(req.getDateEnd());
 			activity.setTimeStart(req.getTimeStart());

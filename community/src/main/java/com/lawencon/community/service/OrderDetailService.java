@@ -17,7 +17,7 @@ import com.lawencon.community.dto.orderdetail.InsertOrderDetailDtoDataRes;
 import com.lawencon.community.dto.orderdetail.InsertOrderDetailDtoReq;
 import com.lawencon.community.dto.orderdetail.InsertOrderDetailDtoRes;
 import com.lawencon.community.model.Activity;
-import com.lawencon.community.model.Order;
+import com.lawencon.community.model.Orders;
 import com.lawencon.community.model.OrderDetail;
 import com.lawencon.community.model.Subscribe;
 
@@ -34,7 +34,7 @@ public class OrderDetailService extends BaseCommunityService {
 
 	public InsertOrderDetailDtoRes insert(InsertOrderDetailDtoReq data) throws Exception {
 		OrderDetail orderDetail = new OrderDetail();
-		Order order = orderDao.getById(data.getOrderId());
+		Orders order = orderDao.getById(data.getOrderId());
 		orderDetail.setOrder(order);
 
 		Subscribe subscribe = subscribeDao.getById(data.getSubscribeId());
