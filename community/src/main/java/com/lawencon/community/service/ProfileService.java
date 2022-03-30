@@ -121,9 +121,11 @@ public class ProfileService extends BaseCommunityService {
 			file = fileDao.save(file);
 			
 			profile.setFile(file);
-			SocialMedia socialMedia = new SocialMedia();
-			socialMedia.setId(profileReq.getSocialMediaId());
-			profile.setSocialMedia(socialMedia);
+			if(profileReq.getSocialMediaId() != null) {
+				SocialMedia socialMedia = new SocialMedia();
+				socialMedia.setId(profileReq.getSocialMediaId());
+				profile.setSocialMedia(socialMedia);
+			}
 			profile.setFullName(profileReq.getFullName());
 			profile.setCompanyName(profileReq.getCompanyName());
 			profile.setPhoneNumber(profileReq.getPhoneNumber());
@@ -168,7 +170,7 @@ public class ProfileService extends BaseCommunityService {
 		profileDataRes.setFullName(profile.getFullName());
 		profileDataRes.setCompanyName(profile.getCompanyName());
 		profileDataRes.setPhoneNumber(profile.getPhoneNumber());
-		profileDataRes.setPositionId(profile.getPostalCode());
+		profileDataRes.setPostalCode(profile.getPostalCode());
 		profileDataRes.setVersion(profile.getVersion());
 		profileDataRes.setIsActive(profile.getIsActive());
 		
@@ -199,7 +201,7 @@ public class ProfileService extends BaseCommunityService {
 			profileDataRes.setFullName(profile.getFullName());
 			profileDataRes.setCompanyName(profile.getCompanyName());
 			profileDataRes.setPhoneNumber(profile.getPhoneNumber());
-			profileDataRes.setPositionId(profile.getPostalCode());
+			profileDataRes.setPostalCode(profile.getPostalCode());
 			profileDataRes.setVersion(profile.getVersion());
 			profileDataRes.setIsActive(profile.getIsActive());
 			
