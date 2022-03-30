@@ -106,6 +106,9 @@ public class ThreadService extends BaseCommunityService {
 		threads.forEach(list -> {
 			GetThreadDtoDataRes thread = new GetThreadDtoDataRes();
 			thread.setId(list.getId());
+			thread.setThreadTypeId(list.getThreadType().getId());
+			thread.setThreadTypeName(list.getThreadType().getThreadTypeName());
+			thread.setFileId(list.getFile().getId());
 			thread.setTitle(list.getTitle());
 			thread.setContent(list.getContent());
 			thread.setVersion(list.getVersion());
@@ -124,6 +127,9 @@ public class ThreadService extends BaseCommunityService {
 
 		GetThreadDtoDataRes threadData = new GetThreadDtoDataRes();
 		threadData.setId(thread.getId());
+		threadData.setThreadTypeId(thread.getThreadType().getId());
+		threadData.setThreadTypeName(thread.getThreadType().getThreadTypeName());
+		threadData.setFileId(thread.getFile().getId());
 		threadData.setTitle(thread.getTitle());
 		threadData.setContent(thread.getContent());
 		threadData.setVersion(thread.getVersion());

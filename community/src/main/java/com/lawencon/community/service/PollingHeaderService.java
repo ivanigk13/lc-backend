@@ -13,6 +13,9 @@ import com.lawencon.community.dto.pollingheader.GetPollingHeaderDtoDataRes;
 import com.lawencon.community.dto.pollingheader.InsertPollingHeaderDtoDataRes;
 import com.lawencon.community.dto.pollingheader.InsertPollingHeaderDtoReq;
 import com.lawencon.community.dto.pollingheader.InsertPollingHeaderDtoRes;
+import com.lawencon.community.dto.pollingheader.UpdatePollingHeaderDtoDataRes;
+import com.lawencon.community.dto.pollingheader.UpdatePollingHeaderDtoReq;
+import com.lawencon.community.dto.pollingheader.UpdatePollingHeaderDtoRes;
 import com.lawencon.community.model.PollingHeader;
 import com.lawencon.community.model.Thread;
 
@@ -29,6 +32,7 @@ public class PollingHeaderService extends BaseCommunityService {
 		Thread thread = new Thread();
 		thread.setId(data.getThreadId());
 		pollingHeader.setThread(thread);
+		pollingHeader.setTitle(data.getTitle());
 		pollingHeader.setCreatedBy(getId());
 		
 		begin();
@@ -45,11 +49,31 @@ public class PollingHeaderService extends BaseCommunityService {
 		return pollingDetailRes;
 	}
 	
+	public UpdatePollingHeaderDtoRes update(UpdatePollingHeaderDtoReq data) throws Exception {
+		PollingHeader pollingHeader = pollingHeaderDao.getById(data.getId());
+		pollingHeader.setTitle(data.getTitle());
+		pollingHeader.setUpdatedBy(getId());
+		
+		begin();
+		pollingHeader = pollingHeaderDao.save(pollingHeader);
+		commit();
+		
+		UpdatePollingHeaderDtoDataRes dataRes = new UpdatePollingHeaderDtoDataRes();
+		dataRes.setVersion(pollingHeader.getVersion());
+		
+		UpdatePollingHeaderDtoRes pollingHeaderRes = new UpdatePollingHeaderDtoRes();
+		pollingHeaderRes.setMsg("Update Succesfully");
+		pollingHeaderRes.setData(dataRes);
+		
+		return pollingHeaderRes;
+	}
+	
 	public GetByIdPollingHeaderDtoRes getById(String id) throws Exception {
 		PollingHeader pollingHeader = pollingHeaderDao.getById(id);
 		GetPollingHeaderDtoDataRes pollingHeaderDataRes = new GetPollingHeaderDtoDataRes();
 		pollingHeaderDataRes.setId(pollingHeader.getId());
 		pollingHeaderDataRes.setThreadId(pollingHeader.getThread().getId());
+		pollingHeaderDataRes.setTitle(pollingHeader.getTitle());
 		pollingHeaderDataRes.setVersion(pollingHeader.getVersion());
 		pollingHeaderDataRes.setIsActive(pollingHeader.getIsActive());
 		
@@ -70,6 +94,7 @@ public class PollingHeaderService extends BaseCommunityService {
 			GetPollingHeaderDtoDataRes pollingHeaderDataRes = new GetPollingHeaderDtoDataRes();
 			pollingHeaderDataRes.setId(pollingHeader.getId());
 			pollingHeaderDataRes.setThreadId(pollingHeader.getThread().getId());
+			pollingHeaderDataRes.setTitle(pollingHeader.getTitle());
 			pollingHeaderDataRes.setVersion(pollingHeader.getVersion());
 			pollingHeaderDataRes.setIsActive(pollingHeader.getIsActive());
 			
