@@ -8,13 +8,13 @@ import org.springframework.stereotype.Repository;
 import com.lawencon.base.AbstractJpaDao;
 import com.lawencon.community.constant.TransactionStatusConstant;
 import com.lawencon.community.model.File;
-import com.lawencon.community.model.Order;
+import com.lawencon.community.model.Orders;
 import com.lawencon.community.model.User;
 
 @Repository
-public class OrderDao extends AbstractJpaDao<Order>{
+public class OrderDao extends AbstractJpaDao<Orders>{
 
-	public List<Order> getPendingOrder(){
+	public List<Orders> getPendingOrder(){
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT o.id, o.transaction_status_id, ts.status_name, o.user_id, o.file, o.invoice ");
 		sb.append("FROM order as o ");
@@ -24,10 +24,10 @@ public class OrderDao extends AbstractJpaDao<Order>{
 		List<?> results = createNativeQuery(sb.toString())
 								.setParameter("code", TransactionStatusConstant.PENDING.getStatusCode())
 								.getResultList();
-		List<Order> orders = new ArrayList<Order>();
+		List<Orders> orders = new ArrayList<Orders>();
 		for (Object result : results) {
 			Object[] obj = (Object[]) result;
-			Order order = new Order();
+			Orders order = new Orders();
 			order.setId(obj[0].toString());
 			
 			com.lawencon.community.model.TransactionStatus transactionStatus = new com.lawencon.community.model.TransactionStatus();
@@ -50,7 +50,7 @@ public class OrderDao extends AbstractJpaDao<Order>{
 		return orders;
 	}
 	
-	public List<Order> getOrderByUserId(String id){
+	public List<Orders> getOrderByUserId(String id){
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT o.id, o.transaction_status_id, ts.status_name, o.user_id, o.file, o.invoice ");
 		sb.append("FROM order as o ");
@@ -60,10 +60,10 @@ public class OrderDao extends AbstractJpaDao<Order>{
 		List<?> results = createNativeQuery(sb.toString())
 								.setParameter("id", id)
 								.getResultList();
-		List<Order> orders = new ArrayList<Order>();
+		List<Orders> orders = new ArrayList<Orders>();
 		for (Object result : results) {
 			Object[] obj = (Object[]) result;
-			Order order = new Order();
+			Orders order = new Orders();
 			order.setId(obj[0].toString());
 			
 			com.lawencon.community.model.TransactionStatus transactionStatus = new com.lawencon.community.model.TransactionStatus();
@@ -86,7 +86,7 @@ public class OrderDao extends AbstractJpaDao<Order>{
 		return orders;
 	}
 	
-	public List<Order> getApprovedOrderByUserId(String id){
+	public List<Orders> getApprovedOrderByUserId(String id){
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT o.id, o.transaction_status_id, ts.status_name, o.user_id, o.file, o.invoice ");
 		sb.append("FROM order as o ");
@@ -97,10 +97,10 @@ public class OrderDao extends AbstractJpaDao<Order>{
 								.setParameter("id", id)
 								.setParameter("code", TransactionStatusConstant.APPROVED.getStatusCode())
 								.getResultList();
-		List<Order> orders = new ArrayList<Order>();
+		List<Orders> orders = new ArrayList<Orders>();
 		for (Object result : results) {
 			Object[] obj = (Object[]) result;
-			Order order = new Order();
+			Orders order = new Orders();
 			order.setId(obj[0].toString());
 			
 			com.lawencon.community.model.TransactionStatus transactionStatus = new com.lawencon.community.model.TransactionStatus();

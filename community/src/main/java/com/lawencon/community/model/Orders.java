@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Order extends BaseEntity{
+public class Orders extends BaseEntity{
 
 	private static final long serialVersionUID = 254974765201098981L;
 

@@ -19,7 +19,7 @@ public class OrderDetail extends BaseEntity{
 
 	@ManyToOne
 	@JoinColumn(name = "order_id")
-	private Order order;
+	private Orders order;
 	
 	@OneToOne
 	@JoinColumn(name = "subscribe_id")

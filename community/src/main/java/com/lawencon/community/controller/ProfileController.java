@@ -46,7 +46,7 @@ public class ProfileController {
 	} 
 	
 	@PostMapping
-	public ResponseEntity<InsertProfileDtoRes> insert(@RequestPart(name="data") @Valid String data, @RequestPart(required = true) MultipartFile file) throws Exception {
+	public ResponseEntity<InsertProfileDtoRes> insert(@RequestPart(name="data") @Valid String data, @RequestPart(required = false) MultipartFile file) throws Exception {
 		InsertProfileDtoRes result = profileService.insert(data, file);
 		return new ResponseEntity<InsertProfileDtoRes>(result, HttpStatus.CREATED);
 	}

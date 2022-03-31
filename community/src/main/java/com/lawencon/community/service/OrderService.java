@@ -19,7 +19,7 @@ import com.lawencon.community.dto.order.InsertOrderDtoDataRes;
 import com.lawencon.community.dto.order.InsertOrderDtoReq;
 import com.lawencon.community.dto.order.InsertOrderDtoRes;
 import com.lawencon.community.model.File;
-import com.lawencon.community.model.Order;
+import com.lawencon.community.model.Orders;
 import com.lawencon.community.model.TransactionStatus;
 import com.lawencon.community.model.User;
 
@@ -37,7 +37,7 @@ public class OrderService extends BaseCommunityService {
 	public InsertOrderDtoRes insert(String content, MultipartFile file) throws Exception {
 		try {
 			InsertOrderDtoReq orderReq = new ObjectMapper().readValue(content, InsertOrderDtoReq.class);
-			Order order = new Order();
+			Orders order = new Orders();
 
 			TransactionStatus transactionStatus = transactionStatusDao.getById(transactionStatusDao.getStatusPendingId());
 			order.setTransactionStatus(transactionStatus);
@@ -58,7 +58,7 @@ public class OrderService extends BaseCommunityService {
 			order.setInvoice(orderReq.getInvoice());
 			order.setCreatedBy(getId());
 
-			Order orderInsert = orderDao.save(order);
+			Orders orderInsert = orderDao.save(order);
 			commit();
 			
 			InsertOrderDtoDataRes orderId = new InsertOrderDtoDataRes();
@@ -78,7 +78,7 @@ public class OrderService extends BaseCommunityService {
 	}
 	
 	public GetAllOrderDtoRes getAll(Integer start, Integer max) throws Exception {
-		List<Order> orders;	
+		List<Orders> orders;	
 		if(start == null) orders = orderDao.getAll();
 		else orders = orderDao.getAll(start, max);
 		
@@ -103,7 +103,7 @@ public class OrderService extends BaseCommunityService {
 	}
 
 	public GetByIdOrderDtoRes getById(String id) throws Exception {
-		Order order = orderDao.getById(id);
+		Orders order = orderDao.getById(id);
 
 		GetOrderDtoDataRes orderData = new GetOrderDtoDataRes();
 		orderData.setId(order.getId());
@@ -111,6 +111,7 @@ public class OrderService extends BaseCommunityService {
 		orderData.setFileId(order.getFile().getId());
 		orderData.setUserId(order.getUser().getId());
 		orderData.setInvoice(order.getInvoice());
+		orderData.setVersion(order.getVersion());
 		orderData.setIsActive(order.getIsActive());
 
 		GetByIdOrderDtoRes result = new GetByIdOrderDtoRes();

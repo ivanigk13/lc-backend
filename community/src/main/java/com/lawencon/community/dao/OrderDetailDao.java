@@ -4,7 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import com.lawencon.base.AbstractJpaDao;
 import com.lawencon.community.model.Activity;
-import com.lawencon.community.model.Order;
+import com.lawencon.community.model.Orders;
 import com.lawencon.community.model.OrderDetail;
 import com.lawencon.community.model.Subscribe;
 
@@ -30,7 +30,7 @@ public class OrderDetailDao extends AbstractJpaDao<OrderDetail>{
 			orderDetail.setActivity(activity);
 		}
 		
-		Order order = new Order();
+		Orders order = new Orders();
 		order.setId(obj[3].toString());
 		orderDetail.setOrder(order);
 		
