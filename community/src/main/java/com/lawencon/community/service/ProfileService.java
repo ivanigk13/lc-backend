@@ -36,47 +36,24 @@ public class ProfileService extends BaseCommunityService {
 	private final ProfileDao profileDao;
 	private final FileDao fileDao;
 	
-	public InsertProfileDtoRes insert(String data, MultipartFile photo) throws Exception {
+	public InsertProfileDtoRes insert(InsertProfileDtoReq profileReq) throws Exception {
 		try {
-			InsertProfileDtoReq profileReq = new ObjectMapper().readValue(data, InsertProfileDtoReq.class);
 			Profile profile = new Profile();
 			User user = new User();
 			user.setId(profileReq.getUserId());
 			profile.setUser(user);
+			profile.setFullName(profileReq.getFullName());
+			profile.setPhoneNumber(profileReq.getPhoneNumber());
+			profile.setCompanyName(profileReq.getCompanyName());
 			Industry industry = new Industry();
 			industry.setId(profileReq.getIndustryId());
 			profile.setIndustry(industry);
 			Position position = new Position();
 			position.setId(profileReq.getPositionId());
 			profile.setPosition(position);		
-			City city = new City();
-			city.setId(profileReq.getCityId());
-			profile.setCity(city);
-			
-			begin();
-			if (photo != null) {
-				File file = new File();
-				String splitterFile = photo.getOriginalFilename().substring(
-						photo.getOriginalFilename().lastIndexOf(".") + 1, photo.getOriginalFilename().length());
-				file.setExtensionName(splitterFile);
-				file.setContent(photo.getBytes());
-				file.setCreatedBy(getId());
-				
-				file = fileDao.save(file);
-				profile.setFile(file);
-			}
-			
-			if(profileReq.getSocialMediaId() != null) {
-				SocialMedia socialMedia = new SocialMedia();
-				socialMedia.setId(profileReq.getSocialMediaId());
-				profile.setSocialMedia(socialMedia);
-			}
-			profile.setFullName(profileReq.getFullName());
-			profile.setCompanyName(profileReq.getCompanyName());
-			profile.setPhoneNumber(profileReq.getPhoneNumber());
-			profile.setPostalCode(profileReq.getPostalCode());
 			profile.setCreatedBy(getId());
 			
+			begin();
 			profile = profileDao.save(profile);
 			commit();
 			
