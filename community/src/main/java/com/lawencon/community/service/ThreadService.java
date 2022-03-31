@@ -40,6 +40,7 @@ public class ThreadService extends BaseCommunityService {
 			ThreadType threadType = threadTypeDao.getById(threadReq.getThreadTypeId());
 			thread.setThreadType(threadType);
 			
+			begin();
 			if(file != null ) {
 				File fileThread = new File();
 				String splitter = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1, 
@@ -48,7 +49,6 @@ public class ThreadService extends BaseCommunityService {
 				fileThread.setContent(file.getBytes());
 				fileThread.setCreatedBy(getId());
 				
-				begin();
 				fileThread = fileDao.save(fileThread);
 				thread.setFile(fileThread);
 			}
@@ -59,6 +59,7 @@ public class ThreadService extends BaseCommunityService {
 
 			Thread threadInsert = threadDao.save(thread);
 			commit();
+			
 			InsertThreadDtoDataRes threadId = new InsertThreadDtoDataRes();
 			threadId.setId(threadInsert.getId());
 

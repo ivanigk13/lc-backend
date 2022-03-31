@@ -53,15 +53,15 @@ public class ProfileService extends BaseCommunityService {
 			city.setId(profileReq.getCityId());
 			profile.setCity(city);
 			
-			File file = new File();
+			begin();
 			if (photo != null) {
+				File file = new File();
 				String splitterFile = photo.getOriginalFilename().substring(
 						photo.getOriginalFilename().lastIndexOf(".") + 1, photo.getOriginalFilename().length());
 				file.setExtensionName(splitterFile);
 				file.setContent(photo.getBytes());
 				file.setCreatedBy(getId());
 				
-				begin();
 				file = fileDao.save(file);
 				profile.setFile(file);
 			}
@@ -163,9 +163,9 @@ public class ProfileService extends BaseCommunityService {
 		profileDataRes.setIndustryId(profile.getIndustry().getId());
 		profileDataRes.setPositionId(profile.getPosition().getId());
 		profileDataRes.setCityId(profile.getCity().getId());
-		profileDataRes.setFileId(profile.getFile().getId());
 		
 		if(profile.getSocialMedia() != null ) {
+			profileDataRes.setFileId(profile.getFile().getId());
 			profileDataRes.setSocialMediaId(profile.getSocialMedia().getId());
 		}
 		profileDataRes.setFullName(profile.getFullName());
@@ -195,10 +195,12 @@ public class ProfileService extends BaseCommunityService {
 			profileDataRes.setIndustryId(profile.getIndustry().getId());
 			profileDataRes.setPositionId(profile.getPosition().getId());
 			profileDataRes.setCityId(profile.getCity().getId());
-			profileDataRes.setFileId(profile.getFile().getId());
+			
 			if(profile.getSocialMedia() != null) {
+				profileDataRes.setFileId(profile.getFile().getId());
 				profileDataRes.setSocialMediaId(profile.getSocialMedia().getId());
 			}
+			
 			profileDataRes.setFullName(profile.getFullName());
 			profileDataRes.setCompanyName(profile.getCompanyName());
 			profileDataRes.setPhoneNumber(profile.getPhoneNumber());
