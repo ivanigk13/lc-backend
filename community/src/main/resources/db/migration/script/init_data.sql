@@ -15,7 +15,7 @@ INSERT INTO industry (industry_code, industry_name, created_by) VALUES
 	
 INSERT INTO position (position_code, position_name, created_by) VALUES
 	('POS01', 'Programming', (SELECT id FROM users WHERE email = 'admin@mail.com')),
-	('POS02', 'Bussiness Development', (SELECT id FROM users WHERE email = 'admin@mail.com'));
+	('POS02', 'Business Development', (SELECT id FROM users WHERE email = 'admin@mail.com'));
 			
 INSERT INTO activity_type (activity_type_code, activity_type_name, created_by) VALUES
 	('AT01', 'Event', (SELECT id FROM users WHERE email = 'admin@mail.com')),
@@ -586,3 +586,6 @@ INSERT INTO city (city_code, province_id, city_name, created_by) VALUES
 INSERT INTO category (category_code, category_name, created_by) VALUES 
 	('CAT01', 'HR Administration', (SELECT id FROM users WHERE email = 'admin@mail.com')),
 	('CAT02', 'Planning & Recruitment', (SELECT id FROM users WHERE email = 'admin@mail.com'));
+
+
+
