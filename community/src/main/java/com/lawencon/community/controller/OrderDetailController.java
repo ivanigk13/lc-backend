@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.community.dto.orderdetail.DeleteOrderDetailDtoRes;
@@ -30,7 +30,7 @@ public class OrderDetailController {
 	private final OrderDetailService orderDetailService;
 	
 	@PostMapping
-	public ResponseEntity<InsertOrderDetailDtoRes> insert(@RequestPart @Valid InsertOrderDetailDtoReq data) throws Exception{
+	public ResponseEntity<InsertOrderDetailDtoRes> insert(@RequestBody @Valid InsertOrderDetailDtoReq data) throws Exception{
 		InsertOrderDetailDtoRes orderDetail = orderDetailService.insert(data);
 		return new ResponseEntity<InsertOrderDetailDtoRes>(orderDetail, HttpStatus.CREATED);		
 	}
@@ -42,7 +42,7 @@ public class OrderDetailController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<GetAllOrderDetailDtoRes> getAll(@RequestParam("start") Integer start, @RequestParam("max") Integer max) throws Exception{
+	public ResponseEntity<GetAllOrderDetailDtoRes> getAll(@RequestParam(value = "start", required = false) Integer start, @RequestParam(value = "max", required = false) Integer max) throws Exception{
 		GetAllOrderDetailDtoRes orderDetail = orderDetailService.getAll(start, max);
 		return new ResponseEntity<GetAllOrderDetailDtoRes>(orderDetail, HttpStatus.OK);		
 	}
