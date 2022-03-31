@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.lawencon.community.dto.profile.DeleteProfileDtoRes;
 import com.lawencon.community.dto.profile.GetAllProfileDtoRes;
 import com.lawencon.community.dto.profile.GetByIdProfileDtoRes;
+import com.lawencon.community.dto.profile.InsertProfileDtoReq;
 import com.lawencon.community.dto.profile.InsertProfileDtoRes;
 import com.lawencon.community.dto.profile.UpdateProfileDtoRes;
 import com.lawencon.community.service.ProfileService;
@@ -46,8 +48,8 @@ public class ProfileController {
 	} 
 	
 	@PostMapping
-	public ResponseEntity<InsertProfileDtoRes> insert(@RequestPart(name="data") @Valid String data, @RequestPart(required = false) MultipartFile file) throws Exception {
-		InsertProfileDtoRes result = profileService.insert(data, file);
+	public ResponseEntity<InsertProfileDtoRes> insert(@RequestBody @Valid InsertProfileDtoReq data) throws Exception {
+		InsertProfileDtoRes result = profileService.insert(data);
 		return new ResponseEntity<InsertProfileDtoRes>(result, HttpStatus.CREATED);
 	}
 	
