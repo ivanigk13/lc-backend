@@ -54,16 +54,17 @@ public class ProfileService extends BaseCommunityService {
 			profile.setCity(city);
 			
 			File file = new File();
-			String splitterFile = photo.getOriginalFilename().substring(
-					photo.getOriginalFilename().lastIndexOf(".") + 1, photo.getOriginalFilename().length());
-			file.setExtensionName(splitterFile);
-			file.setContent(photo.getBytes());
-			file.setCreatedBy(getId());
-			
-			begin();
-			file = fileDao.save(file);
-			
-			profile.setFile(file);
+			if (photo != null) {
+				String splitterFile = photo.getOriginalFilename().substring(
+						photo.getOriginalFilename().lastIndexOf(".") + 1, photo.getOriginalFilename().length());
+				file.setExtensionName(splitterFile);
+				file.setContent(photo.getBytes());
+				file.setCreatedBy(getId());
+				
+				begin();
+				file = fileDao.save(file);
+				profile.setFile(file);
+			}
 			
 			if(profileReq.getSocialMediaId() != null) {
 				SocialMedia socialMedia = new SocialMedia();

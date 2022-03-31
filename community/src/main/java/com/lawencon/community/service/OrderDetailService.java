@@ -69,6 +69,7 @@ public class OrderDetailService extends BaseCommunityService {
 		orderDetails.forEach(list -> {
 			GetOrderDetailDtoDataRes orderDetail = new GetOrderDetailDtoDataRes();
 			orderDetail.setId(list.getId());
+			orderDetail.setOrderId(list.getOrder().getId());
 			orderDetail.setActivityId(list.getActivity().getId());
 			orderDetail.setSubscribeId(list.getSubscribe().getId());
 			orderDetail.setActivityId(list.getActivity().getId());
@@ -88,6 +89,7 @@ public class OrderDetailService extends BaseCommunityService {
 
 		GetOrderDetailDtoDataRes orderDetailData = new GetOrderDetailDtoDataRes();
 		orderDetailData.setId(orderDetail.getId());
+		orderDetailData.setOrderId(orderDetail.getOrder().getId());
 		orderDetailData.setActivityId(orderDetail.getActivity().getId());
 		orderDetailData.setSubscribeId(orderDetail.getSubscribe().getId());
 		orderDetailData.setActivityId(orderDetail.getActivity().getId());
