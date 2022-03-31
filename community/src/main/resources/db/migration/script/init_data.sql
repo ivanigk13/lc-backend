@@ -14,8 +14,8 @@ INSERT INTO industry (industry_code, industry_name, created_by) VALUES
 	('IDT05', 'Logistic and Supply Chain', (SELECT id FROM users WHERE email = 'admin@mail.com'));
 	
 INSERT INTO position (position_code, position_name, created_by) VALUES
-	('PROG', 'Programming', (SELECT id FROM users WHERE email = 'admin@mail.com')),
-	('BD', 'Bussiness Development', (SELECT id FROM users WHERE email = 'admin@mail.com'));
+	('POS01', 'Programming', (SELECT id FROM users WHERE email = 'admin@mail.com')),
+	('POS02', 'Bussiness Development', (SELECT id FROM users WHERE email = 'admin@mail.com'));
 			
 INSERT INTO activity_type (activity_type_code, activity_type_name, created_by) VALUES
 	('AT01', 'Event', (SELECT id FROM users WHERE email = 'admin@mail.com')),
