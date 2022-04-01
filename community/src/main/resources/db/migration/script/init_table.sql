@@ -306,6 +306,24 @@ ALTER TABLE thread_like ADD CONSTRAINT user_fk
 	FOREIGN KEY(user_id) REFERENCES users(id);
 ALTER TABLE thread_like ADD CONSTRAINT like_ck
 	UNIQUE(thread_id, user_id);
+	
+CREATE TABLE article(
+	id varchar(36) DEFAULT uuid_generate_v4 (),
+	file_id varchar(36),
+	title text NOT NULL,
+	"content" text NOT NULL,
+	created_by varchar(36),
+	created_at timestamp WITHOUT time zone DEFAULT CURRENT_TIMESTAMP,
+	updated_by varchar(36),
+	updated_at timestamp WITHOUT time zone,
+	"version" int DEFAULT 0,
+	is_active boolean DEFAULT true
+);
+
+ALTER TABLE article ADD CONSTRAINT article_pk
+	PRIMARY KEY(id);
+ALTER TABLE article ADD CONSTRAINT file_fk
+	FOREIGN KEY(file_id) REFERENCES file(id);
 
 CREATE TABLE polling_header(
 	id varchar(36) DEFAULT uuid_generate_v4 (),
