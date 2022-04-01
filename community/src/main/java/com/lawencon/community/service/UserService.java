@@ -2,6 +2,8 @@ package com.lawencon.community.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,6 +14,8 @@ import org.springframework.stereotype.Service;
 import com.lawencon.community.dao.RoleDao;
 import com.lawencon.community.dao.UserDao;
 import com.lawencon.community.dto.user.DeleteUserDtoRes;
+import com.lawencon.community.dto.user.ForgotPasswordReq;
+import com.lawencon.community.dto.user.ForgotPasswordRes;
 import com.lawencon.community.dto.user.GetAllUserDtoRes;
 import com.lawencon.community.dto.user.GetByIdUserDtoRes;
 import com.lawencon.community.dto.user.GetUserDtoDataRes;
@@ -33,6 +37,7 @@ public class UserService extends BaseCommunityService implements UserDetailsServ
 	private final UserDao userDao;
 	private final RoleDao roleDao; 
 	private final PasswordEncoder encoder;
+	private final EmailSenderService emailSenderService;
 	private final String idCreate = "1";
 	
 	public InsertUserDtoRes insert(InsertUserDtoReq data) throws Exception {
@@ -62,8 +67,9 @@ public class UserService extends BaseCommunityService implements UserDetailsServ
 	public UpdateUserDtoRes update(UpdateUserDtoReq data) throws Exception {
 		User user = userDao.getById(data.getId());
 		Role role = new Role();
+		role.setId(data.getRoleId());
 		user.setRole(role);
-		user.setPassword(data.getPassword());
+		user.setPassword(encoder.encode(data.getPassword()));
 		user.setUpdatedBy(getId());
 		user.setVersion(data.getVersion());
 		user.setIsActive(data.getIsActive());
@@ -90,6 +96,7 @@ public class UserService extends BaseCommunityService implements UserDetailsServ
 		userDataRes.setRoleName(user.getRole().getRoleName());
 		userDataRes.setEmail(user.getEmail());
 		userDataRes.setPassword(user.getPassword());
+		userDataRes.setCreatedAt(user.getCreatedAt());
 		userDataRes.setVersion(user.getVersion());
 		userDataRes.setIsActive(user.getIsActive());
 		
@@ -145,6 +152,32 @@ public class UserService extends BaseCommunityService implements UserDetailsServ
 			rollback();
 			throw new Exception(e);
 		}
+	}
+	
+	public ForgotPasswordRes forgotPassword(ForgotPasswordReq data) throws Exception, UsernameNotFoundException {
+		ExecutorService executorService = Executors.newFixedThreadPool(1);
+		User user = userDao.getByEmail(data.getEmail());
+		
+		ForgotPasswordRes forgotPasswordRes = new ForgotPasswordRes();
+		if(user != null) {
+			String passwordGenerate = generateCode(8);
+			String encodePass = encoder.encode(passwordGenerate);
+			user.setPassword(encodePass);
+			user.setUpdatedBy(user.getCreatedBy());
+			
+			begin();
+			User userSave = userDao.save(user);
+			commit();
+			
+			executorService.submit(() -> {
+				emailSenderService.sendMessage(userSave.getEmail(), "Thi is Your New Password for Login",  (passwordGenerate + "\n Please Change Your Password"));			
+			});
+			executorService.shutdown();
+			
+			forgotPasswordRes.setMsg("Check Your Email");
+		}
+		
+		return forgotPasswordRes;
 	}
 
 	@Override
