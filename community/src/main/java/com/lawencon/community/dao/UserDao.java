@@ -1,5 +1,7 @@
 package com.lawencon.community.dao;
 
+import java.sql.Timestamp;
+
 import org.springframework.stereotype.Repository;
 
 import com.lawencon.base.AbstractJpaDao;
@@ -11,7 +13,7 @@ public class UserDao extends AbstractJpaDao<User>{
 
 	public User getByEmail(String email) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT u.id, u.role_id, r.role_code, u.email, u.version, u.is_active, u.password ");
+		sb.append("SELECT u.id, u.role_id, r.role_code, u.email, u.version, u.is_active, u.password, u.created_at ");
 		sb.append("FROM users as u ");
 		sb.append("INNER JOIN roles as r ON u.role_id = r.id ");
 		sb.append("WHERE u.email = :email");
@@ -29,6 +31,7 @@ public class UserDao extends AbstractJpaDao<User>{
 		user.setPassword(obj[6].toString());
 		user.setVersion(Integer.valueOf(obj[4].toString()));
 		user.setIsActive(Boolean.valueOf(obj[5].toString()));
+		user.setCreatedAt(((Timestamp) obj[7]).toLocalDateTime());
 		
 		return user;
 	}

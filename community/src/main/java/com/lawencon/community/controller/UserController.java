@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.community.dto.user.DeleteUserDtoRes;
+import com.lawencon.community.dto.user.ForgotPasswordReq;
+import com.lawencon.community.dto.user.ForgotPasswordRes;
 import com.lawencon.community.dto.user.GetAllUserDtoRes;
 import com.lawencon.community.dto.user.GetByIdUserDtoRes;
 import com.lawencon.community.dto.user.InsertUserDtoReq;
@@ -62,5 +64,11 @@ public class UserController {
 	public ResponseEntity<DeleteUserDtoRes> delete(@PathVariable("id") String id) throws Exception{
 		DeleteUserDtoRes result = userService.deleteById(id);
 		return new ResponseEntity<DeleteUserDtoRes>(result, HttpStatus.OK);
+	}
+	
+	@PutMapping("forgot-password")
+	public ResponseEntity<ForgotPasswordRes> forgotPass(@RequestBody @Valid ForgotPasswordReq email) throws Exception{
+		ForgotPasswordRes result = userService.forgotPassword(email);
+		return new ResponseEntity<ForgotPasswordRes>(result, HttpStatus.OK);
 	}
 }
