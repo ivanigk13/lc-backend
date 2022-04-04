@@ -13,8 +13,6 @@ import com.lawencon.community.dao.TransactionStatusDao;
 import com.lawencon.community.dto.activity.DeleteActivityDtoRes;
 import com.lawencon.community.dto.activity.GetActivityDtoDataRes;
 import com.lawencon.community.dto.activity.GetAllActivityDtoRes;
-import com.lawencon.community.dto.activity.GetAllByUserIdActivityDataRes;
-import com.lawencon.community.dto.activity.GetAllByUserIdActivityRes;
 import com.lawencon.community.dto.activity.GetByIdActivityDtoRes;
 import com.lawencon.community.dto.activity.InsertActivityDtoDataRes;
 import com.lawencon.community.dto.activity.InsertActivityDtoReq;
@@ -160,8 +158,8 @@ public class ActivityService extends BaseCommunityService {
 			GetActivityDtoDataRes activityData = new GetActivityDtoDataRes();
 			activityData.setId(list.getId());
 			activityData.setActivityName(list.getActivityName());
-			activityData.setActivityTypeId(list.getActivityType().getId());
-			activityData.setCategoryId(list.getCategory().getId());
+			activityData.setActivityTypeName(list.getActivityType().getActivityTypeName());
+			activityData.setCategoryName(list.getCategory().getCategoryName());
 			activityData.setFileId(list.getFile().getId());
 			activityData.setPaymentFileId(list.getPaymentFile().getId());
 			activityData.setDateStart(list.getDateStart());
@@ -170,7 +168,6 @@ public class ActivityService extends BaseCommunityService {
 			activityData.setTimeEnd(list.getTimeEnd());
 			activityData.setPrice(list.getPrice());
 			activityData.setLocation(list.getLocation());
-			activityData.setCreatedBy(list.getCreatedBy());
 			activityData.setVersion(list.getVersion());
 			data.add(activityData);
 		});
@@ -186,8 +183,8 @@ public class ActivityService extends BaseCommunityService {
 		GetActivityDtoDataRes activityData = new GetActivityDtoDataRes();
 		activityData.setId(activity.getId());
 		activityData.setActivityName(activity.getActivityName());
-		activityData.setActivityTypeId(activity.getActivityType().getId());
-		activityData.setCategoryId(activity.getCategory().getId());
+		activityData.setActivityTypeName(activity.getActivityType().getActivityTypeName());
+		activityData.setCategoryName(activity.getCategory().getCategoryName());
 		activityData.setFileId(activity.getFile().getId());
 		activityData.setPaymentFileId(activity.getPaymentFile().getId());
 		activityData.setDateStart(activity.getDateStart());
@@ -203,13 +200,13 @@ public class ActivityService extends BaseCommunityService {
 		return result;
 	}
 	
-	public GetAllByUserIdActivityRes getAllByUserIdActivity(String userId) throws Exception {
+	public GetAllActivityDtoRes getAllByUserIdActivity(String userId) throws Exception {
 		List<Activity> activities = activityDao.getAllByUserIdActivity(userId);
 		
-		List<GetAllByUserIdActivityDataRes> data = new ArrayList<>();
+		List<GetActivityDtoDataRes> data = new ArrayList<>();
 		
 		activities.forEach(activity -> {
-			GetAllByUserIdActivityDataRes activityData = new GetAllByUserIdActivityDataRes();
+			GetActivityDtoDataRes activityData = new GetActivityDtoDataRes();
 			activityData.setId(activity.getId());
 			activityData.setFileId(activity.getFile().getId());
 			activityData.setCategoryName(activity.getCategory().getCategoryName());
@@ -229,19 +226,19 @@ public class ActivityService extends BaseCommunityService {
 			data.add(activityData);
 		});
 		
-		GetAllByUserIdActivityRes activityRes = new GetAllByUserIdActivityRes();
+		GetAllActivityDtoRes activityRes = new GetAllActivityDtoRes();
 		activityRes.setData(data);
 		
 		return activityRes;
 	}
 	
-	public GetAllByUserIdActivityRes getPendingActivity() throws Exception {
+	public GetAllActivityDtoRes getPendingActivity() throws Exception {
 		List<Activity> activities = activityDao.getPendingActivity();
 		
-		List<GetAllByUserIdActivityDataRes> data = new ArrayList<>();
+		List<GetActivityDtoDataRes> data = new ArrayList<>();
 		
 		activities.forEach(activity -> {
-			GetAllByUserIdActivityDataRes activityData = new GetAllByUserIdActivityDataRes();
+			GetActivityDtoDataRes activityData = new GetActivityDtoDataRes();
 			activityData.setId(activity.getId());
 			activityData.setActivityTypeName(activity.getActivityType().getActivityTypeName());
 			activityData.setTransactionStatusId(activity.getTransactionStatus().getId());
@@ -259,19 +256,19 @@ public class ActivityService extends BaseCommunityService {
 			data.add(activityData);
 		});
 		
-		GetAllByUserIdActivityRes activityRes = new GetAllByUserIdActivityRes();
+		GetAllActivityDtoRes activityRes = new GetAllActivityDtoRes();
 		activityRes.setData(data);
 		
 		return activityRes;
 	}
 	
-	public GetAllByUserIdActivityRes getApprovedEventActivity() {
+	public GetAllActivityDtoRes getApprovedEventActivity() {
 		List<Activity> activities = activityDao.getApprovedEventActivity();
 		
-		List<GetAllByUserIdActivityDataRes> data = new ArrayList<>();
+		List<GetActivityDtoDataRes> data = new ArrayList<>();
 		
 		activities.forEach(activity -> {
-			GetAllByUserIdActivityDataRes activityData = new GetAllByUserIdActivityDataRes();
+			GetActivityDtoDataRes activityData = new GetActivityDtoDataRes();
 			activityData.setId(activity.getId());
 			activityData.setFileId(activity.getFile().getId());
 			activityData.setCategoryName(activity.getCategory().getCategoryName());
@@ -291,19 +288,19 @@ public class ActivityService extends BaseCommunityService {
 			data.add(activityData);
 		});
 		
-		GetAllByUserIdActivityRes activityRes = new GetAllByUserIdActivityRes();
+		GetAllActivityDtoRes activityRes = new GetAllActivityDtoRes();
 		activityRes.setData(data);
 		
 		return activityRes;
 	}
 	
-	public GetAllByUserIdActivityRes getApprovedCourseActivity() {
+	public GetAllActivityDtoRes getApprovedCourseActivity() {
 		List<Activity> activities = activityDao.getApprovedCourseActivity();
 		
-		List<GetAllByUserIdActivityDataRes> data = new ArrayList<>();
+		List<GetActivityDtoDataRes> data = new ArrayList<>();
 		
 		activities.forEach(activity -> {
-			GetAllByUserIdActivityDataRes activityData = new GetAllByUserIdActivityDataRes();
+			GetActivityDtoDataRes activityData = new GetActivityDtoDataRes();
 			activityData.setId(activity.getId());
 			activityData.setFileId(activity.getFile().getId());
 			activityData.setCategoryName(activity.getCategory().getCategoryName());
@@ -323,7 +320,7 @@ public class ActivityService extends BaseCommunityService {
 			data.add(activityData);
 		});
 		
-		GetAllByUserIdActivityRes activityRes = new GetAllByUserIdActivityRes();
+		GetAllActivityDtoRes activityRes = new GetAllActivityDtoRes();
 		activityRes.setData(data);
 		
 		return activityRes;

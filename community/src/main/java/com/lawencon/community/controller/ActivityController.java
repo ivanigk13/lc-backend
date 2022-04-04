@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.lawencon.community.dto.activity.DeleteActivityDtoRes;
 import com.lawencon.community.dto.activity.GetAllActivityDtoRes;
-import com.lawencon.community.dto.activity.GetAllByUserIdActivityRes;
 import com.lawencon.community.dto.activity.GetByIdActivityDtoRes;
 import com.lawencon.community.dto.activity.InsertActivityDtoRes;
 import com.lawencon.community.dto.activity.UpdateActivityDtoRes;
@@ -53,33 +52,33 @@ public class ActivityController {
 	}
 	
 	@GetMapping("user/{id}")
-	public ResponseEntity<GetAllByUserIdActivityRes> getAllByUserIdActivity(@PathVariable("id") String id) throws Exception{
-		GetAllByUserIdActivityRes activity = activityService.getAllByUserIdActivity(id);
-		return new ResponseEntity<GetAllByUserIdActivityRes>(activity, HttpStatus.OK);		
+	public ResponseEntity<GetAllActivityDtoRes> getAllByUserIdActivity(@PathVariable("id") String id) throws Exception{
+		GetAllActivityDtoRes activity = activityService.getAllByUserIdActivity(id);
+		return new ResponseEntity<GetAllActivityDtoRes>(activity, HttpStatus.OK);		
 	}
 	
 	@GetMapping
-	public ResponseEntity<GetAllActivityDtoRes> getAll(@RequestParam("start") Integer start, @RequestParam("max") Integer max) throws Exception{
+	public ResponseEntity<GetAllActivityDtoRes> getAll(@RequestParam(value = "start", required = false) Integer start, @RequestParam(value = "max", required = false) Integer max) throws Exception{
 		GetAllActivityDtoRes activity = activityService.getAll(start, max);
 		return new ResponseEntity<GetAllActivityDtoRes>(activity, HttpStatus.OK);		
 	}
 	
 	@GetMapping("pending")
-	public ResponseEntity<GetAllByUserIdActivityRes> getPendingActivity() throws Exception{
-		GetAllByUserIdActivityRes activity = activityService.getPendingActivity();
-		return new ResponseEntity<GetAllByUserIdActivityRes>(activity, HttpStatus.OK);		
+	public ResponseEntity<GetAllActivityDtoRes> getPendingActivity() throws Exception{
+		GetAllActivityDtoRes activity = activityService.getPendingActivity();
+		return new ResponseEntity<GetAllActivityDtoRes>(activity, HttpStatus.OK);		
 	}
 	
 	@GetMapping("approved-event")
-	public ResponseEntity<GetAllByUserIdActivityRes> getApprovedEvent() throws Exception{
-		GetAllByUserIdActivityRes activity = activityService.getApprovedEventActivity();
-		return new ResponseEntity<GetAllByUserIdActivityRes>(activity, HttpStatus.OK);		
+	public ResponseEntity<GetAllActivityDtoRes> getApprovedEvent() throws Exception{
+		GetAllActivityDtoRes activity = activityService.getApprovedEventActivity();
+		return new ResponseEntity<GetAllActivityDtoRes>(activity, HttpStatus.OK);		
 	}
 	
 	@GetMapping("approved-course")
-	public ResponseEntity<GetAllByUserIdActivityRes> getApprovedCourse() throws Exception{
-		GetAllByUserIdActivityRes activity = activityService.getApprovedCourseActivity();
-		return new ResponseEntity<GetAllByUserIdActivityRes>(activity, HttpStatus.OK);		
+	public ResponseEntity<GetAllActivityDtoRes> getApprovedCourse() throws Exception{
+		GetAllActivityDtoRes activity = activityService.getApprovedCourseActivity();
+		return new ResponseEntity<GetAllActivityDtoRes>(activity, HttpStatus.OK);		
 	}
 	
 	@DeleteMapping("{id}")
