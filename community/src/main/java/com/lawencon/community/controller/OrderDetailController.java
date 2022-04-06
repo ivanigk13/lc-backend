@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lawencon.community.dto.orderdetail.DeleteOrderDetailDtoRes;
 import com.lawencon.community.dto.orderdetail.GetAllOrderDetailDtoRes;
 import com.lawencon.community.dto.orderdetail.GetByIdOrderDetailDtoRes;
+import com.lawencon.community.dto.orderdetail.GetByOrderIdDtoRes;
 import com.lawencon.community.dto.orderdetail.InsertOrderDetailDtoReq;
 import com.lawencon.community.dto.orderdetail.InsertOrderDetailDtoRes;
 import com.lawencon.community.service.OrderDetailService;
@@ -39,6 +40,12 @@ public class OrderDetailController {
 	public ResponseEntity<GetByIdOrderDetailDtoRes> getById(@PathVariable("id") String id) throws Exception{
 		GetByIdOrderDetailDtoRes orderDetail = orderDetailService.getById(id);
 		return new ResponseEntity<GetByIdOrderDetailDtoRes>(orderDetail, HttpStatus.OK);		
+	}
+	
+	@GetMapping("order/{id}")
+	public ResponseEntity<GetByOrderIdDtoRes> getByOrderId(@PathVariable("id") String id) throws Exception{
+		GetByOrderIdDtoRes orderDetail = orderDetailService.getByOrderId(id);
+		return new ResponseEntity<GetByOrderIdDtoRes>(orderDetail, HttpStatus.OK);		
 	}
 	
 	@GetMapping

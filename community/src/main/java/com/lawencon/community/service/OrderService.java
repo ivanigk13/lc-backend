@@ -7,8 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lawencon.community.dao.ActivityDao;
 import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dao.OrderDao;
+import com.lawencon.community.dao.OrderDetailDao;
+import com.lawencon.community.dao.SubscribeDao;
 import com.lawencon.community.dao.TransactionStatusDao;
 import com.lawencon.community.dao.UserDao;
 import com.lawencon.community.dto.order.DeleteOrderDtoRes;
@@ -19,8 +22,11 @@ import com.lawencon.community.dto.order.GetOrderDtoDataRes;
 import com.lawencon.community.dto.order.InsertOrderDtoDataRes;
 import com.lawencon.community.dto.order.InsertOrderDtoReq;
 import com.lawencon.community.dto.order.InsertOrderDtoRes;
+import com.lawencon.community.model.Activity;
 import com.lawencon.community.model.File;
+import com.lawencon.community.model.OrderDetail;
 import com.lawencon.community.model.Orders;
+import com.lawencon.community.model.Subscribe;
 import com.lawencon.community.model.TransactionStatus;
 import com.lawencon.community.model.User;
 
@@ -34,6 +40,9 @@ public class OrderService extends BaseCommunityService {
 	private final TransactionStatusDao transactionStatusDao;
 	private final UserDao userDao;
 	private final FileDao fileDao;
+	private final OrderDetailDao orderDetailDao;
+	private final ActivityDao activityDao;
+	private final SubscribeDao subscribeDao;
 
 	public InsertOrderDtoRes insert(String content, MultipartFile file) throws Exception {
 		try {
@@ -87,8 +96,22 @@ public class OrderService extends BaseCommunityService {
 		List<GetOrderDtoDataRes> data = new ArrayList<>();
 
 		orders.forEach(list -> {
-			GetOrderDtoDataRes order = new GetOrderDtoDataRes();
+			GetOrderDtoDataRes order = new GetOrderDtoDataRes();			
 			order.setId(list.getId());
+			
+			OrderDetail orderDetail = orderDetailDao.getOrderDetailByOrderId(order.getId());
+			
+			if(orderDetail.getActivity() != null) {
+				Activity activity = activityDao.getById(orderDetail.getActivity().getId());
+				order.setActivityName(activity.getActivityName());				
+			}
+			
+			if(orderDetail.getSubscribe() != null) {
+				String test = orderDetail.getSubscribe().getId();
+				Subscribe subscribe = subscribeDao.getById(test);
+				order.setDuration(subscribe.getDuration());
+			}
+			
 			order.setTransactionStatusId(list.getTransactionStatus().getId());
 			order.setFileId(list.getFile().getId());
 			order.setUserId(list.getUser().getId());
@@ -152,8 +175,25 @@ public class OrderService extends BaseCommunityService {
 			GetOrderDtoDataRes order = new GetOrderDtoDataRes();
 			order.setId(list.getId());
 			order.setTransactionStatusId(list.getTransactionStatus().getId());
+			
+			TransactionStatus transactionStatus = transactionStatusDao.getById(order.getTransactionStatusId());
+			order.setTransactionStatusName(transactionStatus.getStatusName());
+			
 			order.setFileId(list.getFile().getId());
 			order.setUserId(list.getUser().getId());
+			
+			OrderDetail orderDetail = orderDetailDao.getOrderDetailByOrderId(order.getId());
+			
+			if(orderDetail.getActivity() != null) {
+				Activity activity = activityDao.getById(orderDetail.getActivity().getId());
+				order.setActivityName(activity.getActivityName());				
+			}
+			
+			if(orderDetail.getSubscribe() != null) {
+				String test = orderDetail.getSubscribe().getId();
+				Subscribe subscribe = subscribeDao.getById(test);
+				order.setDuration(subscribe.getDuration());
+			}
 			order.setInvoice(list.getInvoice());
 			order.setVersion(list.getVersion());
 			order.setIsActive(list.getIsActive());

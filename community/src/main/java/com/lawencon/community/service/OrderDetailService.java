@@ -12,6 +12,7 @@ import com.lawencon.community.dao.SubscribeDao;
 import com.lawencon.community.dto.orderdetail.DeleteOrderDetailDtoRes;
 import com.lawencon.community.dto.orderdetail.GetAllOrderDetailDtoRes;
 import com.lawencon.community.dto.orderdetail.GetByIdOrderDetailDtoRes;
+import com.lawencon.community.dto.orderdetail.GetByOrderIdDtoRes;
 import com.lawencon.community.dto.orderdetail.GetOrderDetailDtoDataRes;
 import com.lawencon.community.dto.orderdetail.InsertOrderDetailDtoDataRes;
 import com.lawencon.community.dto.orderdetail.InsertOrderDetailDtoReq;
@@ -94,13 +95,39 @@ public class OrderDetailService extends BaseCommunityService {
 		GetOrderDetailDtoDataRes orderDetailData = new GetOrderDetailDtoDataRes();
 		orderDetailData.setId(orderDetail.getId());
 		orderDetailData.setOrderId(orderDetail.getOrder().getId());
-		orderDetailData.setActivityId(orderDetail.getActivity().getId());
-		orderDetailData.setSubscribeId(orderDetail.getSubscribe().getId());
-		orderDetailData.setActivityId(orderDetail.getActivity().getId());
+		
+		if(orderDetail.getActivity() != null) {
+			orderDetailData.setActivityId(orderDetail.getActivity().getId());			
+		}		
+		if(orderDetail.getSubscribe() != null) {
+			orderDetailData.setSubscribeId(orderDetail.getSubscribe().getId());			
+		}		
+		
 		orderDetailData.setVersion(orderDetail.getVersion());
 		orderDetailData.setIsActive(orderDetail.getIsActive());
 
 		GetByIdOrderDetailDtoRes result = new GetByIdOrderDetailDtoRes();
+		result.setData(orderDetailData);
+
+		return result;
+	}
+	
+	public GetByOrderIdDtoRes getByOrderId(String id) throws Exception {
+		OrderDetail orderDetail = orderDetailDao.getOrderDetailByOrderId(id);
+		
+		GetOrderDetailDtoDataRes orderDetailData = new GetOrderDetailDtoDataRes();
+		orderDetailData.setId(orderDetail.getId());
+		orderDetailData.setOrderId(orderDetail.getOrder().getId());
+		if(orderDetail.getActivity() != null) {
+			orderDetailData.setActivityId(orderDetail.getActivity().getId());			
+		}		
+		if(orderDetail.getSubscribe() != null) {
+			orderDetailData.setSubscribeId(orderDetail.getSubscribe().getId());			
+		}	
+		orderDetailData.setVersion(orderDetail.getVersion());
+		orderDetailData.setIsActive(orderDetail.getIsActive());
+
+		GetByOrderIdDtoRes result = new GetByOrderIdDtoRes();
 		result.setData(orderDetailData);
 
 		return result;

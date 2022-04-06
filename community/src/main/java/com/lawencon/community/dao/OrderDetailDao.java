@@ -18,14 +18,14 @@ public class OrderDetailDao extends AbstractJpaDao<OrderDetail>{
 		OrderDetail orderDetail = new OrderDetail();
 		orderDetail.setId(obj[0].toString());
 		
+		Subscribe subscribe = new Subscribe();
 		if(obj[1] != null) {
-			Subscribe subscribe = new Subscribe();
 			subscribe.setId(obj[1].toString());
 			orderDetail.setSubscribe(subscribe);
 		}
 		
+		Activity activity = new Activity();
 		if(obj[2] != null) {
-			Activity activity = new Activity();
 			activity.setId(obj[2].toString());
 			orderDetail.setActivity(activity);
 		}
