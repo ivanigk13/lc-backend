@@ -1,5 +1,7 @@
 package com.lawencon.community.dto.activitytype;
 
+import java.math.BigDecimal;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -13,6 +15,9 @@ public class UpdateActivityTypeDtoReq {
 	
 	@NotEmpty(message = "Activity Type Name must be filled")
 	private String activityTypeName;
+	
+	@NotNull(message = "Price must be filled")
+	private BigDecimal price;
 	
 	@NotNull(message = "Version must be filled")
 	private Integer version;
