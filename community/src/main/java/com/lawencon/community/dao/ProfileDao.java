@@ -33,7 +33,6 @@ public class ProfileDao extends AbstractJpaDao<Profile>{
 		if(obj[2]!=null) industry.setId(obj[2].toString());
 		profile.setIndustry(industry);
 		
-		
 		Position position = new Position();
 		if(obj[3]!=null) position.setId(obj[3].toString());
 		profile.setPosition(position);
@@ -53,7 +52,7 @@ public class ProfileDao extends AbstractJpaDao<Profile>{
 		profile.setFullName(obj[7].toString());
 		profile.setCompanyName(obj[8].toString());
 		profile.setPhoneNumber(obj[9].toString());
-		profile.setPostalCode(obj[10].toString());
+		if(obj[10]!=null) profile.setPostalCode(obj[10].toString());
 		profile.setVersion(Integer.valueOf(obj[11].toString()));
 		profile.setIsActive(Boolean.valueOf(obj[12].toString()));
 		
