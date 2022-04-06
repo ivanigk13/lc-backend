@@ -13,7 +13,7 @@ import com.lawencon.community.model.File;
 public class ArticleDao extends AbstractJpaDao<Article> {
 
 	public List<Article> getLastTwo() {
-		String sql = "SELECT id, file_id, title, content, version, is_active FROM article ORDER BY created_by DESC LIMIT 2";
+		String sql = "SELECT id, file_id, title, content, version, is_active FROM article ORDER BY created_at DESC LIMIT 2";
 		List<?> results = createNativeQuery(sql).getResultList();
 		List<Article> articles = new ArrayList<Article>();
 		for (Object result : results) {
