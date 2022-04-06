@@ -41,6 +41,8 @@ public class OrderService extends BaseCommunityService {
 
 			TransactionStatus transactionStatus = transactionStatusDao.getById(transactionStatusDao.getStatusPendingId());
 			order.setTransactionStatus(transactionStatus);
+			String invoice = "IVC-" + generateCode(5);
+			order.setInvoice(invoice);
 
 			User user = userDao.getById(orderReq.getUserId());
 			order.setUser(user);
@@ -55,7 +57,6 @@ public class OrderService extends BaseCommunityService {
 			begin();
 			fileThread = fileDao.save(fileThread);
 			order.setFile(fileThread);
-			order.setInvoice(orderReq.getInvoice());
 			order.setCreatedBy(getId());
 
 			Orders orderInsert = orderDao.save(order);
