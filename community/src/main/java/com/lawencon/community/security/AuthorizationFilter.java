@@ -19,6 +19,7 @@ import com.lawencon.community.dto.user.AuthorizationDtoRes;
 
 import io.jsonwebtoken.ClaimJwtException;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.SignatureException;
 
 public class AuthorizationFilter extends BasicAuthenticationFilter{
@@ -48,6 +49,10 @@ public class AuthorizationFilter extends BasicAuthenticationFilter{
 			response.setStatus(HttpStatus.UNAUTHORIZED.value());
 			e.printStackTrace();
 		} catch (SignatureException e) {
+			authorizationDtoRes.setMsg("token invalid");
+			response.setStatus(HttpStatus.UNAUTHORIZED.value());
+			e.printStackTrace();
+		} catch (MalformedJwtException e) {
 			authorizationDtoRes.setMsg("token invalid");
 			response.setStatus(HttpStatus.UNAUTHORIZED.value());
 			e.printStackTrace();
