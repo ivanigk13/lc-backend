@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.lawencon.community.dao.PollingDetailDao;
 import com.lawencon.community.dao.PollingHeaderDao;
 import com.lawencon.community.dto.pollingheader.DeletePollingHeaderDtoRes;
 import com.lawencon.community.dto.pollingheader.GetAllPollingHeaderDtoRes;
@@ -16,6 +17,7 @@ import com.lawencon.community.dto.pollingheader.InsertPollingHeaderDtoRes;
 import com.lawencon.community.dto.pollingheader.UpdatePollingHeaderDtoDataRes;
 import com.lawencon.community.dto.pollingheader.UpdatePollingHeaderDtoReq;
 import com.lawencon.community.dto.pollingheader.UpdatePollingHeaderDtoRes;
+import com.lawencon.community.model.PollingDetail;
 import com.lawencon.community.model.PollingHeader;
 import com.lawencon.community.model.Thread;
 
@@ -26,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 public class PollingHeaderService extends BaseCommunityService {
 
 	private final PollingHeaderDao pollingHeaderDao;
+	private final PollingDetailDao pollingDetailDao;
 	
 	public InsertPollingHeaderDtoRes insert(InsertPollingHeaderDtoReq data) throws Exception {
 		PollingHeader pollingHeader = new PollingHeader();
@@ -37,6 +40,19 @@ public class PollingHeaderService extends BaseCommunityService {
 		
 		begin();
 		pollingHeader = pollingHeaderDao.save(pollingHeader);
+		
+		List<String> details = data.getData();
+		for(int i = 0; i <  details.size(); i++) {
+			PollingHeader header = new PollingHeader();
+			header.setId(pollingHeader.getId());
+			
+			PollingDetail pollingDetail = new PollingDetail();
+			pollingDetail.setPollingName(details.get(i));
+			pollingDetail.setPollingHeader(header);
+			pollingDetail.setCreatedBy(getId());
+			
+			pollingDetailDao.save(pollingDetail);
+		}
 		commit();
 		
 		InsertPollingHeaderDtoDataRes pollingHeaderDataRes = new InsertPollingHeaderDtoDataRes();
