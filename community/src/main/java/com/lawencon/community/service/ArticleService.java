@@ -124,7 +124,9 @@ public class ArticleService extends BaseCommunityService {
 		articles.forEach(article -> {
 			GetArticleDtoDataRes dataRes = new GetArticleDtoDataRes();
 			dataRes.setId(article.getId());
+			if(article.getFile() != null) {
 			dataRes.setFileId(article.getFile().getId());
+			}
 			dataRes.setTitle(article.getTitle());
 			dataRes.setContent(article.getContent());
 			dataRes.setVersion(article.getVersion());
