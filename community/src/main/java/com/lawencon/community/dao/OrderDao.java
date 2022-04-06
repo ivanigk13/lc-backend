@@ -16,8 +16,8 @@ public class OrderDao extends AbstractJpaDao<Orders>{
 
 	public List<Orders> getPendingOrder(){
 		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT o.id, o.transaction_status_id, ts.status_name, o.user_id, o.file, o.invoice ");
-		sb.append("FROM order as o ");
+		sb.append("SELECT o.id, o.transaction_status_id, ts.status_name, o.user_id, o.file_id, o.invoice ");
+		sb.append("FROM orders as o ");
 		sb.append("INNER JOIN transaction_status ts ON o.transaction_status_id = ts.id ");
 		sb.append("WHERE ts.status_code = :code ");
 		sb.append("ORDER BY o.id ASC");
@@ -52,8 +52,8 @@ public class OrderDao extends AbstractJpaDao<Orders>{
 	
 	public List<Orders> getOrderByUserId(String id){
 		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT o.id, o.transaction_status_id, ts.status_name, o.user_id, o.file, o.invoice ");
-		sb.append("FROM order as o ");
+		sb.append("SELECT o.id, o.transaction_status_id, ts.status_name, o.user_id, o.file_id, o.invoice ");
+		sb.append("FROM orders as o ");
 		sb.append("INNER JOIN transaction_status ts ON o.transaction_status_id = ts.id ");
 		sb.append("WHERE o.user_id = :id ");
 		sb.append("ORDER BY o.id ASC");
@@ -88,7 +88,7 @@ public class OrderDao extends AbstractJpaDao<Orders>{
 	
 	public List<Orders> getApprovedOrderByUserId(String id){
 		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT o.id, o.transaction_status_id, ts.status_name, o.user_id, o.file, o.invoice ");
+		sb.append("SELECT o.id, o.transaction_status_id, ts.status_name, o.user_id, o.file_id, o.invoice ");
 		sb.append("FROM order as o ");
 		sb.append("INNER JOIN transaction_status ts ON o.transaction_status_id = ts.id ");
 		sb.append("WHERE o.user_id = :id AND ts.status_code = :code");
