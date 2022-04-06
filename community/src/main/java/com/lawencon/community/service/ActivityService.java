@@ -14,6 +14,7 @@ import com.lawencon.community.dto.activity.DeleteActivityDtoRes;
 import com.lawencon.community.dto.activity.GetActivityDtoDataRes;
 import com.lawencon.community.dto.activity.GetAllActivityDtoRes;
 import com.lawencon.community.dto.activity.GetByIdActivityDtoRes;
+import com.lawencon.community.dto.activity.GetLastTwoActivityDtoRes;
 import com.lawencon.community.dto.activity.InsertActivityDtoDataRes;
 import com.lawencon.community.dto.activity.InsertActivityDtoReq;
 import com.lawencon.community.dto.activity.InsertActivityDtoRes;
@@ -347,4 +348,69 @@ public class ActivityService extends BaseCommunityService {
 			throw new Exception(e);
 		}
 	}
+	
+	public GetLastTwoActivityDtoRes getLastTwoEventActivity() throws Exception {
+		List<Activity> activities = activityDao.getLastTwoEventActivity();
+		
+		List<GetActivityDtoDataRes> data = new ArrayList<>();
+		
+		activities.forEach(activity -> {
+			GetActivityDtoDataRes activityData = new GetActivityDtoDataRes();
+			activityData.setId(activity.getId());
+			activityData.setFileId(activity.getFile().getId());
+			activityData.setCategoryName(activity.getCategory().getCategoryName());
+			activityData.setActivityTypeName(activity.getActivityType().getActivityTypeName());
+			activityData.setTransactionStatusId(activity.getTransactionStatus().getId());
+			activityData.setTransactionStatusName(activity.getTransactionStatus().getStatusName());
+			activityData.setPaymentFileId(activity.getPaymentFile().getId());
+			activityData.setActivityName(activity.getActivityName());
+			activityData.setDateStart(activity.getDateStart());
+			activityData.setDateEnd(activity.getDateEnd());
+			activityData.setTimeStart(activity.getTimeStart());
+			activityData.setTimeEnd(activity.getTimeEnd());
+			activityData.setPrice(activity.getPrice());
+			activityData.setLocation(activity.getLocation());
+			activityData.setVersion(activity.getVersion());
+			
+			data.add(activityData);
+		});
+		
+		GetLastTwoActivityDtoRes activityRes = new GetLastTwoActivityDtoRes();
+		activityRes.setData(data);
+		
+		return activityRes;
+	}
+	
+	public GetLastTwoActivityDtoRes getLastTwoCourseActivity() throws Exception {
+		List<Activity> activities = activityDao.getLastTwoCourseActivity();
+		
+		List<GetActivityDtoDataRes> data = new ArrayList<>();
+		
+		activities.forEach(activity -> {
+			GetActivityDtoDataRes activityData = new GetActivityDtoDataRes();
+			activityData.setId(activity.getId());
+			activityData.setFileId(activity.getFile().getId());
+			activityData.setCategoryName(activity.getCategory().getCategoryName());
+			activityData.setActivityTypeName(activity.getActivityType().getActivityTypeName());
+			activityData.setTransactionStatusId(activity.getTransactionStatus().getId());
+			activityData.setTransactionStatusName(activity.getTransactionStatus().getStatusName());
+			activityData.setPaymentFileId(activity.getPaymentFile().getId());
+			activityData.setActivityName(activity.getActivityName());
+			activityData.setDateStart(activity.getDateStart());
+			activityData.setDateEnd(activity.getDateEnd());
+			activityData.setTimeStart(activity.getTimeStart());
+			activityData.setTimeEnd(activity.getTimeEnd());
+			activityData.setPrice(activity.getPrice());
+			activityData.setLocation(activity.getLocation());
+			activityData.setVersion(activity.getVersion());
+			
+			data.add(activityData);
+		});
+		
+		GetLastTwoActivityDtoRes activityRes = new GetLastTwoActivityDtoRes();
+		activityRes.setData(data);
+		
+		return activityRes;
+	}
+	
 }
