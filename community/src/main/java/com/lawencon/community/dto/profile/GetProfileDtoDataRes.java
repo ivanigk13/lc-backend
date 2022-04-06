@@ -10,6 +10,7 @@ public class GetProfileDtoDataRes {
 	private String industryId;
 	private String positionId;
 	private String cityId;
+	private String provinceId;
 	private String fileId;
 	private String socialMediaId;
 	private String fullName;
