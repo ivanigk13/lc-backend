@@ -36,12 +36,16 @@ public class OrderDetailService extends BaseCommunityService {
 		OrderDetail orderDetail = new OrderDetail();
 		Orders order = orderDao.getById(data.getOrderId());
 		orderDetail.setOrder(order);
-
+		
+		if(data.getSubscribeId() != null) {
 		Subscribe subscribe = subscribeDao.getById(data.getSubscribeId());
 		orderDetail.setSubscribe(subscribe);
-
+		}
+		
+		if(data.getActivityId() != null) {
 		Activity activity = activityDao.getById(data.getActivityId());
 		orderDetail.setActivity(activity);
+		}
 		
 		orderDetail.setCreatedBy(getId());
 

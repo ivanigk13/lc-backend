@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.lawencon.community.dto.order.DeleteOrderDtoRes;
 import com.lawencon.community.dto.order.GetAllOrderDtoRes;
 import com.lawencon.community.dto.order.GetByIdOrderDtoRes;
+import com.lawencon.community.dto.order.GetByUserIdOrderDtoRes;
 import com.lawencon.community.dto.order.InsertOrderDtoRes;
 import com.lawencon.community.service.OrderService;
 
@@ -39,6 +40,12 @@ public class OrderController {
 	public ResponseEntity<GetByIdOrderDtoRes> getById(@PathVariable("id") String id) throws Exception{
 		GetByIdOrderDtoRes order = orderService.getById(id);
 		return new ResponseEntity<GetByIdOrderDtoRes>(order, HttpStatus.OK);		
+	}
+	
+	@GetMapping("user/{id}")
+	public ResponseEntity<GetByUserIdOrderDtoRes> getByUserId(@PathVariable("id") String id) throws Exception{
+		GetByUserIdOrderDtoRes order = orderService.getByUserId(id);
+		return new ResponseEntity<GetByUserIdOrderDtoRes>(order, HttpStatus.OK);		
 	}
 	
 	@GetMapping

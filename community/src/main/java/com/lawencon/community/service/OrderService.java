@@ -14,6 +14,7 @@ import com.lawencon.community.dao.UserDao;
 import com.lawencon.community.dto.order.DeleteOrderDtoRes;
 import com.lawencon.community.dto.order.GetAllOrderDtoRes;
 import com.lawencon.community.dto.order.GetByIdOrderDtoRes;
+import com.lawencon.community.dto.order.GetByUserIdOrderDtoRes;
 import com.lawencon.community.dto.order.GetOrderDtoDataRes;
 import com.lawencon.community.dto.order.InsertOrderDtoDataRes;
 import com.lawencon.community.dto.order.InsertOrderDtoReq;
@@ -142,4 +143,26 @@ public class OrderService extends BaseCommunityService {
 			throw new Exception(e);
 		}
 	}
+	
+	public GetByUserIdOrderDtoRes getByUserId(String id) throws Exception {
+		List<Orders> orders = orderDao.getOrderByUserId(id);				
+		List<GetOrderDtoDataRes> data = new ArrayList<>();
+
+		orders.forEach(list -> {
+			GetOrderDtoDataRes order = new GetOrderDtoDataRes();
+			order.setId(list.getId());
+			order.setTransactionStatusId(list.getTransactionStatus().getId());
+			order.setFileId(list.getFile().getId());
+			order.setUserId(list.getUser().getId());
+			order.setInvoice(list.getInvoice());
+			order.setVersion(list.getVersion());
+			order.setIsActive(list.getIsActive());
+			data.add(order);
+		});
+
+		GetByUserIdOrderDtoRes result = new GetByUserIdOrderDtoRes();
+		result.setData(data);
+
+		return result;
+	} 
 }
