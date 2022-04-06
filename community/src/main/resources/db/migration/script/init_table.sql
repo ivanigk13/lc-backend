@@ -399,6 +399,7 @@ CREATE TABLE activity_type(
 	id varchar(36) DEFAULT uuid_generate_v4 (),
 	activity_type_code varchar(5) NOT NULL,
 	activity_type_name varchar(10) NOT NULL,
+	price bigint NOT NULL,
 	created_by varchar(36),
 	created_at timestamp WITHOUT time zone DEFAULT CURRENT_TIMESTAMP,
 	updated_by varchar(36),
