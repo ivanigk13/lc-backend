@@ -1,6 +1,9 @@
 package com.lawencon.community.dto.activitytype;
 
+import java.math.BigDecimal;
+
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import lombok.Data;
@@ -15,5 +18,8 @@ public class InsertActivityTypeDtoReq {
 	@NotEmpty(message = "Activity Type Name must be filled")
 	@Size(min = 1, max = 10, message = "Activity Type Name min length is 1 and max length is 10")
 	private String activityTypeName;
+	
+	@NotNull(message = "Price must be filled")
+	private BigDecimal price;
 	
 }
