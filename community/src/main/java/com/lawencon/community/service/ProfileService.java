@@ -230,12 +230,20 @@ public class ProfileService extends BaseCommunityService {
 		GetProfileDtoDataRes profileDataRes = new GetProfileDtoDataRes();
 		profileDataRes.setId(profile.getId());
 		profileDataRes.setUserId(profile.getUser().getId());
-		profileDataRes.setIndustryId(profile.getIndustry().getId());
-		profileDataRes.setPositionId(profile.getPosition().getId());
+		if(profile.getIndustry()!=null) {
+			profileDataRes.setIndustryId(profile.getIndustry().getId());
+		}
+		if(profile.getPosition()!=null) {
+			profileDataRes.setPositionId(profile.getPosition().getId());
+		}
+		
 		if(profile.getCity()!=null) {
 			profileDataRes.setCityId(profile.getCity().getId());
-			profileDataRes.setProvinceId(profile.getCity().getProvince().getId());		
+			if(profile.getCity().getProvince()!=null) {
+				profileDataRes.setProvinceId(profile.getCity().getProvince().getId());		
+			}
 		}
+		
 		if(profile.getFile()!=null) {
 			profileDataRes.setFileId(profile.getFile().getId());
 		}
@@ -243,10 +251,11 @@ public class ProfileService extends BaseCommunityService {
 		if(profile.getSocialMedia() != null ) {
 			profileDataRes.setSocialMediaId(profile.getSocialMedia().getId());
 		}
+		
 		profileDataRes.setFullName(profile.getFullName());
 		profileDataRes.setCompanyName(profile.getCompanyName());
 		profileDataRes.setPhoneNumber(profile.getPhoneNumber());
-		profileDataRes.setPostalCode(profile.getPostalCode());
+		if(profile.getPostalCode()!=null) profileDataRes.setPostalCode(profile.getPostalCode());
 		profileDataRes.setVersion(profile.getVersion());
 		profileDataRes.setIsActive(profile.getIsActive());
 		
