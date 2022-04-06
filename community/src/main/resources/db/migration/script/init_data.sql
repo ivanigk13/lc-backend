@@ -14,12 +14,12 @@ INSERT INTO industry (industry_code, industry_name, created_by) VALUES
 	('IDT05', 'Logistic and Supply Chain', (SELECT id FROM users WHERE email = 'admin@mail.com'));
 	
 INSERT INTO position (position_code, position_name, created_by) VALUES
-	('POS01', 'Programming', (SELECT id FROM users WHERE email = 'admin@mail.com')),
+	('POS01', 'Programmer', (SELECT id FROM users WHERE email = 'admin@mail.com')),
 	('POS02', 'Business Development', (SELECT id FROM users WHERE email = 'admin@mail.com'));
 			
-INSERT INTO activity_type (activity_type_code, activity_type_name, created_by) VALUES
-	('AT01', 'Event', (SELECT id FROM users WHERE email = 'admin@mail.com')),
-	('AT02', 'Course', (SELECT id FROM users WHERE email = 'admin@mail.com'));
+INSERT INTO activity_type (activity_type_code, activity_type_name, price, created_by) VALUES
+	('AT01', 'Event', 100000, (SELECT id FROM users WHERE email = 'admin@mail.com')),
+	('AT02', 'Course', 50000, (SELECT id FROM users WHERE email = 'admin@mail.com'));
 
 INSERT INTO thread_type (thread_type_code, thread_type_name, created_by) VALUES
 	('THT01', 'Regular', (SELECT id FROM users WHERE email = 'admin@mail.com')),
