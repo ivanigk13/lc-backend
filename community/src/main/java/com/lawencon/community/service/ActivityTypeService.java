@@ -30,6 +30,7 @@ public class ActivityTypeService extends BaseCommunityService {
 		ActivityType activityType = new ActivityType();
 		activityType.setActivityTypeName(data.getActivityTypeName());
 		activityType.setActivityTypeCode(data.getActivityTypeCode());
+		activityType.setPrice(data.getPrice());		
 		activityType.setCreatedBy(getId());
 
 		begin();
@@ -49,6 +50,7 @@ public class ActivityTypeService extends BaseCommunityService {
 	public UpdateActivityTypeDtoRes update(UpdateActivityTypeDtoReq data) throws Exception {
 		ActivityType activityType = activityTypeDao.getById(data.getId());
 		activityType.setActivityTypeName(data.getActivityTypeName());
+		activityType.setPrice(data.getPrice());		
 		activityType.setVersion(data.getVersion());
 		activityType.setIsActive(data.getIsActive());
 		activityType.setUpdatedBy(getId());
@@ -74,13 +76,14 @@ public class ActivityTypeService extends BaseCommunityService {
 		List<GetActivityTypeDtoDataRes> data = new ArrayList<>();
 
 		activityTypes.forEach(list -> {
-			GetActivityTypeDtoDataRes ActivityType = new GetActivityTypeDtoDataRes();
-			ActivityType.setId(list.getId());
-			ActivityType.setActivityTypeName(list.getActivityTypeName());
-			ActivityType.setActivityTypeCode(list.getActivityTypeCode());
-			ActivityType.setVersion(list.getVersion());
-			ActivityType.setIsActive(list.getIsActive());
-			data.add(ActivityType);
+			GetActivityTypeDtoDataRes activityType = new GetActivityTypeDtoDataRes();
+			activityType.setId(list.getId());
+			activityType.setActivityTypeName(list.getActivityTypeName());
+			activityType.setActivityTypeCode(list.getActivityTypeCode());
+			activityType.setPrice(list.getPrice());
+			activityType.setVersion(list.getVersion());
+			activityType.setIsActive(list.getIsActive());
+			data.add(activityType);
 		});
 
 		GetAllActivityTypeDtoRes result = new GetAllActivityTypeDtoRes();
@@ -92,15 +95,16 @@ public class ActivityTypeService extends BaseCommunityService {
 	public GetByIdActivityTypeDtoRes getById(String id) throws Exception {
 		ActivityType activityType = activityTypeDao.getById(id);
 
-		GetActivityTypeDtoDataRes ActivityTypeData = new GetActivityTypeDtoDataRes();
-		ActivityTypeData.setId(activityType.getId());
-		ActivityTypeData.setActivityTypeName(activityType.getActivityTypeName());
-		ActivityTypeData.setActivityTypeCode(activityType.getActivityTypeCode());
-		ActivityTypeData.setVersion(activityType.getVersion());
-		ActivityTypeData.setIsActive(activityType.getIsActive());
+		GetActivityTypeDtoDataRes activityTypeData = new GetActivityTypeDtoDataRes();
+		activityTypeData.setId(activityType.getId());
+		activityTypeData.setActivityTypeName(activityType.getActivityTypeName());
+		activityTypeData.setActivityTypeCode(activityType.getActivityTypeCode());
+		activityTypeData.setPrice(activityType.getPrice());
+		activityTypeData.setVersion(activityType.getVersion());
+		activityTypeData.setIsActive(activityType.getIsActive());
 
 		GetByIdActivityTypeDtoRes result = new GetByIdActivityTypeDtoRes();
-		result.setData(ActivityTypeData);
+		result.setData(activityTypeData);
 
 		return result;
 	}
