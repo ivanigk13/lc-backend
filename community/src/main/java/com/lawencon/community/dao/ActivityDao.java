@@ -242,7 +242,7 @@ public class ActivityDao extends AbstractJpaDao<Activity>{
 		builder.append("INNER JOIN transaction_status as ts ON a.transaction_status_id = ts.id ");
 		builder.append("INNER JOIN category as c ON a.category_id = c.id ");
 		builder.append("WHERE ts.status_code = :status_code AND at.activity_type_code = :type_code ");
-		builder.append("ORDER BY a.created_by DESC LIMIT 2");
+		builder.append("ORDER BY a.created_at DESC LIMIT 2");
 		List<?> results = createNativeQuery(builder.toString())
 							.setParameter("status_code", TransactionStatusConstant.APPROVED.getStatusCode())
 							.setParameter("type_code", ActivityTypeConstant.EVENT.getActivityTypeCode())
@@ -298,7 +298,7 @@ public class ActivityDao extends AbstractJpaDao<Activity>{
 		builder.append("INNER JOIN transaction_status as ts ON a.transaction_status_id = ts.id ");
 		builder.append("INNER JOIN category as c ON a.category_id = c.id ");
 		builder.append("WHERE ts.status_code = :status_code AND at.activity_type_code = :type_code ");
-		builder.append("ORDER BY a.created_by DESC LIMIT 2");
+		builder.append("ORDER BY a.created_at DESC LIMIT 2");
 		List<?> results = createNativeQuery(builder.toString())
 							.setParameter("status_code", TransactionStatusConstant.APPROVED.getStatusCode())
 							.setParameter("type_code", ActivityTypeConstant.COURSE.getActivityTypeCode())
