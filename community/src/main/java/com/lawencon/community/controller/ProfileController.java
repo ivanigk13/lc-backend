@@ -66,4 +66,9 @@ public class ProfileController {
 		return new ResponseEntity<DeleteProfileDtoRes>(result, HttpStatus.OK);
 	}
 
+	@GetMapping("user/{id}")
+	public ResponseEntity<GetByIdProfileDtoRes> getByUserId(@PathVariable("id") String id) throws Exception {
+		GetByIdProfileDtoRes result = profileService.getByUserId(id);
+		return new ResponseEntity<GetByIdProfileDtoRes>(result, HttpStatus.OK);
+	}
 }
