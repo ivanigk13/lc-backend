@@ -13,6 +13,7 @@ import com.lawencon.community.dto.article.DeleteArticleDtoRes;
 import com.lawencon.community.dto.article.GetAllArticleDtoRes;
 import com.lawencon.community.dto.article.GetArticleDtoDataRes;
 import com.lawencon.community.dto.article.GetByIdArticleDtoRes;
+import com.lawencon.community.dto.article.GetLastTwoArticleDtoRes;
 import com.lawencon.community.dto.article.InsertArticleDtoDataRes;
 import com.lawencon.community.dto.article.InsertArticleDtoReq;
 import com.lawencon.community.dto.article.InsertArticleDtoRes;
@@ -175,5 +176,28 @@ public class ArticleService extends BaseCommunityService {
 			rollback();
 			throw new Exception(e);
 		}
+	}
+	
+	public GetLastTwoArticleDtoRes getLastTwo() throws Exception {
+		List<Article> articles = articleDao.getLastTwo();
+		
+		List<GetArticleDtoDataRes> data = new ArrayList<GetArticleDtoDataRes>();
+		
+		articles.forEach(article -> {
+			GetArticleDtoDataRes dataRes = new GetArticleDtoDataRes();
+			dataRes.setId(article.getId());
+			dataRes.setFileId(article.getFile().getId());
+			dataRes.setTitle(article.getTitle());
+			dataRes.setContent(article.getContent());
+			dataRes.setVersion(article.getVersion());
+			dataRes.setIsActive(article.getIsActive());
+			
+			data.add(dataRes);
+		});
+		
+		GetLastTwoArticleDtoRes result = new GetLastTwoArticleDtoRes();
+		result.setData(data);
+		
+		return result;
 	}
 }

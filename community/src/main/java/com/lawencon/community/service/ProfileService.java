@@ -139,7 +139,10 @@ public class ProfileService extends BaseCommunityService {
 		profileDataRes.setUserId(profile.getUser().getId());
 		profileDataRes.setIndustryId(profile.getIndustry().getId());
 		profileDataRes.setPositionId(profile.getPosition().getId());
-		profileDataRes.setCityId(profile.getCity().getId());
+		if(profile.getCity()!=null) {
+			profileDataRes.setCityId(profile.getCity().getId());
+			profileDataRes.setProvinceId(profile.getCity().getProvince().getId());		
+		}
 		if(profile.getFile()!=null) {
 			profileDataRes.setFileId(profile.getFile().getId());
 		}
@@ -173,7 +176,10 @@ public class ProfileService extends BaseCommunityService {
 			profileDataRes.setUserId(profile.getUser().getId());
 			profileDataRes.setIndustryId(profile.getIndustry().getId());
 			profileDataRes.setPositionId(profile.getPosition().getId());
-			profileDataRes.setCityId(profile.getCity().getId());
+			if(profile.getCity()!=null) {
+				profileDataRes.setCityId(profile.getCity().getId());
+				profileDataRes.setProvinceId(profile.getCity().getProvince().getId());		
+			}
 			
 			if(profile.getSocialMedia() != null) {
 				profileDataRes.setFileId(profile.getFile().getId());
@@ -226,7 +232,10 @@ public class ProfileService extends BaseCommunityService {
 		profileDataRes.setUserId(profile.getUser().getId());
 		profileDataRes.setIndustryId(profile.getIndustry().getId());
 		profileDataRes.setPositionId(profile.getPosition().getId());
-		profileDataRes.setCityId(profile.getCity().getId());
+		if(profile.getCity()!=null) {
+			profileDataRes.setCityId(profile.getCity().getId());
+			profileDataRes.setProvinceId(profile.getCity().getProvince().getId());		
+		}
 		if(profile.getFile()!=null) {
 			profileDataRes.setFileId(profile.getFile().getId());
 		}

@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.lawencon.community.dto.activity.DeleteActivityDtoRes;
 import com.lawencon.community.dto.activity.GetAllActivityDtoRes;
 import com.lawencon.community.dto.activity.GetByIdActivityDtoRes;
+import com.lawencon.community.dto.activity.GetLastTwoActivityDtoRes;
 import com.lawencon.community.dto.activity.InsertActivityDtoRes;
 import com.lawencon.community.dto.activity.UpdateActivityDtoRes;
 import com.lawencon.community.service.ActivityService;
@@ -85,5 +86,17 @@ public class ActivityController {
 	public ResponseEntity<DeleteActivityDtoRes> delete(@PathVariable("id") String id) throws Exception{
 		DeleteActivityDtoRes activity = activityService.deleteById(id);
 		return new ResponseEntity<DeleteActivityDtoRes>(activity, HttpStatus.OK);		
+	}
+	
+	@GetMapping("last-two-event")
+	public ResponseEntity<GetLastTwoActivityDtoRes> getLastTwoEvent() throws Exception{
+		GetLastTwoActivityDtoRes activity = activityService.getLastTwoEventActivity();
+		return new ResponseEntity<GetLastTwoActivityDtoRes>(activity, HttpStatus.OK);		
+	}
+	
+	@GetMapping("last-two-course")
+	public ResponseEntity<GetLastTwoActivityDtoRes> getLastTwoCourse() throws Exception{
+		GetLastTwoActivityDtoRes activity = activityService.getLastTwoCourseActivity();
+		return new ResponseEntity<GetLastTwoActivityDtoRes>(activity, HttpStatus.OK);		
 	}
 }
