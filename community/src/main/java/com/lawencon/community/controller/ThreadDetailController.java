@@ -43,4 +43,10 @@ public class ThreadDetailController {
 		InsertThreadDetailDtoRes threadDetail = threadDetailService.insert(data);
 		return new ResponseEntity<InsertThreadDetailDtoRes>(threadDetail, HttpStatus.CREATED);		
 	}
+	
+	@GetMapping("count/{id}")
+	public ResponseEntity<Integer> getTotalCommentByThreadId(@PathVariable("id") String id) throws Exception{
+		Integer counter = threadDetailService.getTotalCommentByThreadId(id);
+		return new ResponseEntity<Integer>(counter, HttpStatus.OK);		
+	}
 }

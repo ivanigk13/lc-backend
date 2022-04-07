@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lawencon.community.dto.threadlike.GetByIdThreadLikeDtoRes;
 import com.lawencon.community.dto.threadlike.InsertThreadLikeDtoReq;
 import com.lawencon.community.dto.threadlike.InsertThreadLikeDtoRes;
+import com.lawencon.community.dto.threadlike.UpdateThreadLikeDtoReq;
+import com.lawencon.community.dto.threadlike.UpdateThreadLikeDtoRes;
 import com.lawencon.community.service.ThreadLikeService;
 
 import lombok.RequiredArgsConstructor;
@@ -35,6 +38,12 @@ public class ThreadLikeController {
 	public ResponseEntity<InsertThreadLikeDtoRes> insert(@RequestBody @Valid InsertThreadLikeDtoReq data) throws Exception{
 		InsertThreadLikeDtoRes threadLike = threadLikeService.insert(data);
 		return new ResponseEntity<InsertThreadLikeDtoRes>(threadLike, HttpStatus.CREATED);		
+	}
+	
+	@PutMapping
+	public ResponseEntity<UpdateThreadLikeDtoRes> update(@RequestBody @Valid UpdateThreadLikeDtoReq data) throws Exception{
+		UpdateThreadLikeDtoRes threadLike = threadLikeService.update(data);
+		return new ResponseEntity<UpdateThreadLikeDtoRes>(threadLike, HttpStatus.CREATED);		
 	}
 	
 	@GetMapping("thread/{id}")
