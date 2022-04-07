@@ -1,5 +1,7 @@
 package com.lawencon.community.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -19,6 +22,8 @@ import com.lawencon.community.dto.activity.GetByIdActivityDtoRes;
 import com.lawencon.community.dto.activity.GetLastTwoActivityDtoRes;
 import com.lawencon.community.dto.activity.InsertActivityDtoRes;
 import com.lawencon.community.dto.activity.UpdateActivityDtoRes;
+import com.lawencon.community.dto.activity.UpdateActivityTransactionStatusDtoReq;
+import com.lawencon.community.dto.activity.UpdateActivityTransactionStatusDtoRes;
 import com.lawencon.community.service.ActivityService;
 
 import lombok.RequiredArgsConstructor;
@@ -44,6 +49,18 @@ public class ActivityController {
 								@RequestPart(required = true) MultipartFile[] file) throws Exception{
 		UpdateActivityDtoRes activity = activityService.update(data, file);
 		return new ResponseEntity<UpdateActivityDtoRes>(activity, HttpStatus.OK);		
+	}
+	
+	@PutMapping("approve")
+	public ResponseEntity<UpdateActivityTransactionStatusDtoRes> updateApprove(@RequestBody @Valid UpdateActivityTransactionStatusDtoReq data) throws Exception{
+		UpdateActivityTransactionStatusDtoRes activityType = activityService.updateApprove(data);
+		return new ResponseEntity<UpdateActivityTransactionStatusDtoRes>(activityType, HttpStatus.OK);		
+	}
+	
+	@PutMapping("reject")
+	public ResponseEntity<UpdateActivityTransactionStatusDtoRes> updateReject(@RequestBody @Valid UpdateActivityTransactionStatusDtoReq data) throws Exception{
+		UpdateActivityTransactionStatusDtoRes activityType = activityService.updateReject(data);
+		return new ResponseEntity<UpdateActivityTransactionStatusDtoRes>(activityType, HttpStatus.OK);		
 	}
 	
 	@GetMapping("{id}")
