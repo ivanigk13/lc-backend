@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lawencon.community.dao.FileDao;
+import com.lawencon.community.dao.ProfileDao;
 import com.lawencon.community.dao.ThreadDao;
 import com.lawencon.community.dao.ThreadTypeDao;
 import com.lawencon.community.dto.thread.GetAllThreadDtoRes;
@@ -20,6 +21,7 @@ import com.lawencon.community.dto.thread.UpdateThreadDtoDataRes;
 import com.lawencon.community.dto.thread.UpdateThreadDtoReq;
 import com.lawencon.community.dto.thread.UpdateThreadDtoRes;
 import com.lawencon.community.model.File;
+import com.lawencon.community.model.Profile;
 import com.lawencon.community.model.Thread;
 import com.lawencon.community.model.ThreadType;
 
@@ -32,6 +34,7 @@ public class ThreadService extends BaseCommunityService {
 	private final ThreadDao threadDao;
 	private final ThreadTypeDao threadTypeDao;
 	private final FileDao fileDao;
+	private final ProfileDao profileDao;
 
 	public InsertThreadDtoRes insert(String content, MultipartFile file) throws Exception {
 		try {
@@ -107,6 +110,13 @@ public class ThreadService extends BaseCommunityService {
 		threads.forEach(list -> {
 			GetThreadDtoDataRes thread = new GetThreadDtoDataRes();
 			thread.setId(list.getId());
+			
+			Profile profile = profileDao.getByUserId(list.getCreatedBy());
+			if(profile.getFile() != null) {
+			thread.setProfilePictureId(profile.getFile().getId());
+			}
+			
+			thread.setFullName(profile.getFullName());
 			thread.setThreadTypeId(list.getThreadType().getId());
 			thread.setThreadTypeName(list.getThreadType().getThreadTypeName());
 			if(list.getFile()!=null) {
@@ -130,9 +140,18 @@ public class ThreadService extends BaseCommunityService {
 
 		GetThreadDtoDataRes threadData = new GetThreadDtoDataRes();
 		threadData.setId(thread.getId());
+		
+		Profile profile = profileDao.getByUserId(thread.getCreatedBy());
+		if(profile.getFile() != null) {
+		threadData.setProfilePictureId(profile.getFile().getId());
+		}
+		
+		threadData.setFullName(profile.getFullName());
 		threadData.setThreadTypeId(thread.getThreadType().getId());
 		threadData.setThreadTypeName(thread.getThreadType().getThreadTypeName());
+		if(thread.getFile() != null) {
 		threadData.setFileId(thread.getFile().getId());
+		}
 		threadData.setTitle(thread.getTitle());
 		threadData.setContent(thread.getContent());
 		threadData.setVersion(thread.getVersion());

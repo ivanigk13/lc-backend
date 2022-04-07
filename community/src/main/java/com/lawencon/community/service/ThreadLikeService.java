@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.lawencon.community.dao.ThreadDao;
 import com.lawencon.community.dao.ThreadLikeDao;
 import com.lawencon.community.dao.UserDao;
+import com.lawencon.community.dto.threadlike.DeleteThreadLikeDtoRes;
 import com.lawencon.community.dto.threadlike.GetByIdThreadLikeDtoRes;
 import com.lawencon.community.dto.threadlike.GetThreadLikeDtoDataRes;
 import com.lawencon.community.dto.threadlike.InsertThreadLikeDtoDataRes;
@@ -94,5 +95,32 @@ public class ThreadLikeService extends BaseCommunityService{
 	public Integer getLikeCounterByThreadId(String id) throws Exception {
 		return threadLikeDao.getLikeCounterByThreadId(id);
 	}
+	
+	public Integer isUserLikeByThreadId(String threadId, String userId) throws Exception {
+		return threadLikeDao.isUserLikeByThreadId(threadId, userId);
+	}
+	
+	public DeleteThreadLikeDtoRes deleteById(String id) throws Exception {
+		
+		try {			
+			begin();
+			boolean isDeleted = threadLikeDao.deleteById(id);
+			commit();
+			
+			DeleteThreadLikeDtoRes likeRes = new DeleteThreadLikeDtoRes();
+			if(isDeleted) {
+				likeRes.setMsg("Delete Successfully");
+			} else {
+				likeRes.setMsg("Delete Unsuccessfully");
+			}
+			
+			return likeRes;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new Exception(e);
+		}
+	}  
 
 }

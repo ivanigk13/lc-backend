@@ -6,6 +6,8 @@ import lombok.Data;
 public class GetThreadDetailDtoDataRes {
 
 	private String id;
+	private String profilePictureId;
+	private String fullName;
 	private String threadId;
 	private String comment;
 	private Integer version;

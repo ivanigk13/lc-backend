@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.lawencon.community.dao.ProfileDao;
 import com.lawencon.community.dao.ThreadDao;
 import com.lawencon.community.dao.ThreadDetailDao;
 import com.lawencon.community.dto.threaddetail.GetAllByThreadIdThreadDetailDtoRes;
@@ -13,6 +14,7 @@ import com.lawencon.community.dto.threaddetail.GetThreadDetailDtoDataRes;
 import com.lawencon.community.dto.threaddetail.InsertThreadDetailDtoDataRes;
 import com.lawencon.community.dto.threaddetail.InsertThreadDetailDtoReq;
 import com.lawencon.community.dto.threaddetail.InsertThreadDetailDtoRes;
+import com.lawencon.community.model.Profile;
 import com.lawencon.community.model.Thread;
 import com.lawencon.community.model.ThreadDetail;
 
@@ -24,6 +26,7 @@ public class ThreadDetailService extends BaseCommunityService{
 	
 	private final ThreadDetailDao threadDetailDao;
 	private final ThreadDao threadDao;
+	private final ProfileDao profileDao;
 	
 	public InsertThreadDetailDtoRes insert(InsertThreadDetailDtoReq data) throws Exception {
 		ThreadDetail threadDetail = new ThreadDetail();
@@ -70,6 +73,14 @@ public class ThreadDetailService extends BaseCommunityService{
 		for(ThreadDetail threadDetail : threadDetails) {
 			GetThreadDetailDtoDataRes data = new GetThreadDetailDtoDataRes();
 			data.setId(threadDetail.getId());
+			
+			Profile profile = profileDao.getByUserId(threadDetail.getCreatedBy());
+			if(profile.getFile() != null) {
+				data.setProfilePictureId(profile.getFile().getId());				
+			}
+			
+			data.setFullName(profile.getFullName());
+			
 			data.setThreadId(threadDetail.getThread().getId());
 			data.setComment(threadDetail.getComment());
 			data.setVersion(threadDetail.getVersion());

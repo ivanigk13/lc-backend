@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lawencon.community.dao.ArticleDao;
 import com.lawencon.community.dao.FileDao;
+import com.lawencon.community.dao.ProfileDao;
 import com.lawencon.community.dto.article.DeleteArticleDtoRes;
 import com.lawencon.community.dto.article.GetAllArticleDtoRes;
 import com.lawencon.community.dto.article.GetArticleDtoDataRes;
@@ -22,6 +23,7 @@ import com.lawencon.community.dto.article.UpdateArticleDtoReq;
 import com.lawencon.community.dto.article.UpdateArticleDtoRes;
 import com.lawencon.community.model.Article;
 import com.lawencon.community.model.File;
+import com.lawencon.community.model.Profile;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,6 +33,7 @@ public class ArticleService extends BaseCommunityService {
 
 	private final ArticleDao articleDao;
 	private final FileDao fileDao;
+	private final ProfileDao profileDao;
 	
 	public InsertArticleDtoRes insert(String data, MultipartFile file) throws Exception {
 		try {
@@ -124,9 +127,14 @@ public class ArticleService extends BaseCommunityService {
 		articles.forEach(article -> {
 			GetArticleDtoDataRes dataRes = new GetArticleDtoDataRes();
 			dataRes.setId(article.getId());
+			
 			if(article.getFile() != null) {
 			dataRes.setFileId(article.getFile().getId());
 			}
+			
+			Profile profile = profileDao.getByUserId(article.getCreatedBy());
+			dataRes.setPublisherName(profile.getFullName());
+			dataRes.setPublishedTime(article.getCreatedAt());
 			dataRes.setTitle(article.getTitle());
 			dataRes.setContent(article.getContent());
 			dataRes.setVersion(article.getVersion());

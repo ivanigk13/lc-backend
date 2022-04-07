@@ -13,7 +13,7 @@ import com.lawencon.community.model.ThreadDetail;
 public class ThreadDetailDao extends AbstractJpaDao<ThreadDetail>{
 
 	public List<ThreadDetail> getAllByThreadId(String threadId) {
-		String sql = "SELECT id, thread_id, comment, version, is_active FROM thread_detail WHERE thread_id = :id ORDER BY id ASC";
+		String sql = "SELECT id, thread_id, comment, version, is_active, created_by FROM thread_detail WHERE thread_id = :id";
 		List<?> results = createNativeQuery(sql).setParameter("id", threadId).getResultList();
 		List<ThreadDetail> threadDetails = new ArrayList<ThreadDetail>();
 		for (Object result : results) {
@@ -27,6 +27,7 @@ public class ThreadDetailDao extends AbstractJpaDao<ThreadDetail>{
 			threadDetail.setComment(obj[2].toString());
 			threadDetail.setVersion(Integer.valueOf(obj[3].toString()));
 			threadDetail.setIsActive(Boolean.valueOf(obj[4].toString()));
+			threadDetail.setCreatedBy(obj[5].toString());
 			
 			threadDetails.add(threadDetail);
 		}
