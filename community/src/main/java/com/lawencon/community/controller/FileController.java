@@ -24,7 +24,7 @@ public class FileController {
 	public ResponseEntity<byte[]> downloadFile(@PathVariable("id") String id){
 		File file = fileService.getById(id);
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=attachment." + file.getExtensionName());
+        httpHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "file;filename=file." + file.getExtensionName());
 
         return ResponseEntity.ok().headers(httpHeaders).contentType(MediaType.APPLICATION_OCTET_STREAM).body(file.getContent());
 	}

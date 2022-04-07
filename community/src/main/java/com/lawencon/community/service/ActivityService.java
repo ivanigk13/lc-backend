@@ -21,6 +21,9 @@ import com.lawencon.community.dto.activity.InsertActivityDtoRes;
 import com.lawencon.community.dto.activity.UpdateActivityDtoDataRes;
 import com.lawencon.community.dto.activity.UpdateActivityDtoReq;
 import com.lawencon.community.dto.activity.UpdateActivityDtoRes;
+import com.lawencon.community.dto.activity.UpdateActivityTransactionStatusDtoDataRes;
+import com.lawencon.community.dto.activity.UpdateActivityTransactionStatusDtoReq;
+import com.lawencon.community.dto.activity.UpdateActivityTransactionStatusDtoRes;
 import com.lawencon.community.model.Activity;
 import com.lawencon.community.model.ActivityType;
 import com.lawencon.community.model.Category;
@@ -143,6 +146,48 @@ public class ActivityService extends BaseCommunityService {
 		activityVersion.setVersion(activityUpdate.getVersion());
 
 		UpdateActivityDtoRes result = new UpdateActivityDtoRes();
+		result.setData(activityVersion);
+		result.setMsg("Update Successfully");
+		return result;
+	}
+	
+	public UpdateActivityTransactionStatusDtoRes updateApprove(UpdateActivityTransactionStatusDtoReq data) throws Exception {
+		Activity activity = activityDao.getById(data.getId());
+		
+		TransactionStatus transactionStatus = new TransactionStatus();
+		transactionStatus.setId(transactionStatusDao.getStatusApproveId());
+		activity.setTransactionStatus(transactionStatus);
+		activity.setUpdatedBy(getId());
+		
+		begin();
+		Activity activityUpdate = activityDao.save(activity);
+		commit();
+
+		UpdateActivityTransactionStatusDtoDataRes activityVersion = new UpdateActivityTransactionStatusDtoDataRes();
+		activityVersion.setVersion(activityUpdate.getVersion());
+
+		UpdateActivityTransactionStatusDtoRes result = new UpdateActivityTransactionStatusDtoRes();
+		result.setData(activityVersion);
+		result.setMsg("Update Successfully");
+		return result;
+	}
+	
+	public UpdateActivityTransactionStatusDtoRes updateReject(UpdateActivityTransactionStatusDtoReq data) throws Exception {
+		Activity activity = activityDao.getById(data.getId());
+		
+		TransactionStatus transactionStatus = new TransactionStatus();
+		transactionStatus.setId(transactionStatusDao.getStatusRejectId());
+		activity.setTransactionStatus(transactionStatus);
+		activity.setUpdatedBy(getId());
+		
+		begin();
+		Activity activityUpdate = activityDao.save(activity);
+		commit();
+
+		UpdateActivityTransactionStatusDtoDataRes activityVersion = new UpdateActivityTransactionStatusDtoDataRes();
+		activityVersion.setVersion(activityUpdate.getVersion());
+
+		UpdateActivityTransactionStatusDtoRes result = new UpdateActivityTransactionStatusDtoRes();
 		result.setData(activityVersion);
 		result.setMsg("Update Successfully");
 		return result;
