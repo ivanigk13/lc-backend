@@ -109,7 +109,9 @@ public class ThreadService extends BaseCommunityService {
 			thread.setId(list.getId());
 			thread.setThreadTypeId(list.getThreadType().getId());
 			thread.setThreadTypeName(list.getThreadType().getThreadTypeName());
-			thread.setFileId(list.getFile().getId());
+			if(list.getFile()!=null) {
+				thread.setFileId(list.getFile().getId());
+			}
 			thread.setTitle(list.getTitle());
 			thread.setContent(list.getContent());
 			thread.setVersion(list.getVersion());
