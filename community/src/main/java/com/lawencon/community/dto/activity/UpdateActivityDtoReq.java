@@ -24,7 +24,10 @@ public class UpdateActivityDtoReq {
 	private String paymentFileId;
 	
 	@NotEmpty(message = "Activity Name must be filled")
-	private String activityName;		
+	private String activityName;	
+	
+	@NotNull(message = "Transaction Status Id must be filled")
+	private String transactionStatusId;
 	
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@NotNull(message = "Date Start must be filled")
