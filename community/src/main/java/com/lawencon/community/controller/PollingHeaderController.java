@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lawencon.community.dto.pollingheader.DeletePollingHeaderDtoRes;
 import com.lawencon.community.dto.pollingheader.GetAllPollingHeaderDtoRes;
 import com.lawencon.community.dto.pollingheader.GetByIdPollingHeaderDtoRes;
+import com.lawencon.community.dto.pollingheader.GetByThreadIdPollingHeaderDtoRes;
 import com.lawencon.community.dto.pollingheader.InsertPollingHeaderDtoReq;
 import com.lawencon.community.dto.pollingheader.InsertPollingHeaderDtoRes;
 import com.lawencon.community.dto.pollingheader.UpdatePollingHeaderDtoReq;
@@ -44,6 +45,12 @@ public class PollingHeaderController {
 	public ResponseEntity<GetByIdPollingHeaderDtoRes> getById(@PathVariable("id") String id) throws Exception {
 		GetByIdPollingHeaderDtoRes result = pollingHeaderService.getById(id);
 		return new ResponseEntity<GetByIdPollingHeaderDtoRes>(result, HttpStatus.OK);
+	}
+	
+	@GetMapping("thread/{id}")
+	public ResponseEntity<GetByThreadIdPollingHeaderDtoRes> getByThreadId(@PathVariable("id") String id) throws Exception {
+		GetByThreadIdPollingHeaderDtoRes result = pollingHeaderService.getByThreadId(id);
+		return new ResponseEntity<GetByThreadIdPollingHeaderDtoRes>(result, HttpStatus.OK);
 	}
 
 	@PostMapping
