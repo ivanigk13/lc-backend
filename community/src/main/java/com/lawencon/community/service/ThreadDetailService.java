@@ -84,4 +84,8 @@ public class ThreadDetailService extends BaseCommunityService{
 		return result;
 	}
 	
+	public Integer getTotalCommentByThreadId(String threadId) throws Exception{
+		return threadDetailDao.getTotalCommentByThreadId(threadId);
+	}
+	
 }
