@@ -16,4 +16,20 @@ public class TransactionStatusDao extends AbstractJpaDao<TransactionStatus>{
 		String id = obj.toString();
 		return id;
 	}
+	
+	public String getStatusApproveId() {
+		String sql = "SELECT id FROM transaction_status WHERE status_code = :code";
+		Object result = createNativeQuery(sql).setParameter("code", TransactionStatusConstant.APPROVED.getStatusCode()).getSingleResult();
+		Object obj = (Object) result;
+		String id = obj.toString();
+		return id;
+	}
+	
+	public String getStatusRejectId() {
+		String sql = "SELECT id FROM transaction_status WHERE status_code = :code";
+		Object result = createNativeQuery(sql).setParameter("code", TransactionStatusConstant.REJECTED.getStatusCode()).getSingleResult();
+		Object obj = (Object) result;
+		String id = obj.toString();
+		return id;
+	}
 }
