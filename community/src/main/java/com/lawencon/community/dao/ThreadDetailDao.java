@@ -32,4 +32,12 @@ public class ThreadDetailDao extends AbstractJpaDao<ThreadDetail>{
 		}
 		return threadDetails;
 	}
+	
+	public Integer getTotalCommentByThreadId(String threadId) {
+		String sql = "SELECT COUNT(comment) FROM thread_detail WHERE thread_id = :id";
+		Object result = createNativeQuery(sql).setParameter("id", threadId).getSingleResult();
+		Object obj = (Object) result;
+		Integer counter = Integer.valueOf(obj.toString());
+		return counter;
+	}
 }
