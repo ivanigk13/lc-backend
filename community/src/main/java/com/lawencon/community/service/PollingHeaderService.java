@@ -10,6 +10,7 @@ import com.lawencon.community.dao.PollingHeaderDao;
 import com.lawencon.community.dto.pollingheader.DeletePollingHeaderDtoRes;
 import com.lawencon.community.dto.pollingheader.GetAllPollingHeaderDtoRes;
 import com.lawencon.community.dto.pollingheader.GetByIdPollingHeaderDtoRes;
+import com.lawencon.community.dto.pollingheader.GetByThreadIdPollingHeaderDtoRes;
 import com.lawencon.community.dto.pollingheader.GetPollingHeaderDtoDataRes;
 import com.lawencon.community.dto.pollingheader.InsertPollingHeaderDtoDataRes;
 import com.lawencon.community.dto.pollingheader.InsertPollingHeaderDtoReq;
@@ -99,6 +100,20 @@ public class PollingHeaderService extends BaseCommunityService {
 		return pollingHeaderRes;
 	}
 	
+	public GetByThreadIdPollingHeaderDtoRes getByThreadId(String id) throws Exception {
+		PollingHeader pollingHeader = pollingHeaderDao.getByThreadId(id);
+		GetPollingHeaderDtoDataRes pollingHeaderDataRes = new GetPollingHeaderDtoDataRes();
+		pollingHeaderDataRes.setId(pollingHeader.getId());
+		pollingHeaderDataRes.setThreadId(pollingHeader.getThread().getId());
+		pollingHeaderDataRes.setTitle(pollingHeader.getTitle());		
+		
+		GetByThreadIdPollingHeaderDtoRes pollingHeaderRes = new GetByThreadIdPollingHeaderDtoRes();
+		pollingHeaderRes.setData(pollingHeaderDataRes);
+		
+		return pollingHeaderRes;
+	}
+
+	
 	public GetAllPollingHeaderDtoRes getAll(Integer start, Integer max) throws Exception {
 		List<PollingHeader> pollingHeaders;	
 		if(start == null) pollingHeaders = pollingHeaderDao.getAll();
@@ -122,6 +137,8 @@ public class PollingHeaderService extends BaseCommunityService {
 		
 		return pollingHeaderRes;
 	}
+	
+	
 	
 	public DeletePollingHeaderDtoRes deleteById(String id) throws Exception {
 		try {			
