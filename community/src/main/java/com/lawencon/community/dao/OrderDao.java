@@ -50,6 +50,43 @@ public class OrderDao extends AbstractJpaDao<Orders>{
 		return orders;
 	}
 	
+	public List<Orders> getPendingOrderSubscribe(){
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT o.id, o.transaction_status_id, ts.status_name, o.user_id, o.file_id, o.invoice ");
+		sb.append("FROM orders as o ");
+		sb.append("INNER JOIN transaction_status ts ON o.transaction_status_id = ts.id ");
+		sb.append("INNER JOIN order_detail od ON o.id = od.order_id ");
+		sb.append("WHERE ts.status_code = :code AND subscribe_id IS NOT NULL ");
+		sb.append("ORDER BY o.id ASC");
+		List<?> results = createNativeQuery(sb.toString())
+								.setParameter("code", TransactionStatusConstant.PENDING.getStatusCode())
+								.getResultList();
+		List<Orders> orders = new ArrayList<Orders>();
+		for (Object result : results) {
+			Object[] obj = (Object[]) result;
+			Orders order = new Orders();
+			order.setId(obj[0].toString());
+			
+			com.lawencon.community.model.TransactionStatus transactionStatus = new com.lawencon.community.model.TransactionStatus();
+			transactionStatus.setId(obj[1].toString());
+			transactionStatus.setStatusName(obj[2].toString());
+			order.setTransactionStatus(transactionStatus);
+			
+			User user = new User();
+			user.setId(obj[3].toString());
+			order.setUser(user);
+			
+			File file = new File();
+			file.setId(obj[4].toString());
+			order.setFile(file);
+			
+			order.setInvoice(obj[5].toString());
+			
+			orders.add(order);
+		}
+		return orders;
+	}
+	
 	public List<Orders> getOrderByUserId(String id){
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT o.id, o.transaction_status_id, ts.status_name, o.user_id, o.file_id, o.invoice ");
@@ -90,8 +127,8 @@ public class OrderDao extends AbstractJpaDao<Orders>{
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT o.id, o.transaction_status_id, ts.status_name, o.user_id, o.file_id, o.invoice ");
 		sb.append("FROM order as o ");
-		sb.append("INNER JOIN transaction_status ts ON o.transaction_status_id = ts.id ");
-		sb.append("WHERE o.user_id = :id AND ts.status_code = :code");
+		sb.append("INNER JOIN transaction_status ts ON ts.id  = o.transaction_status_id ");
+		sb.append("WHERE o.user_id = :id AND ts.status_code = :code ");
 		sb.append("ORDER BY o.id ASC");
 		List<?> results = createNativeQuery(sb.toString())
 								.setParameter("id", id)

@@ -75,8 +75,12 @@ public class OrderDetailService extends BaseCommunityService {
 			GetOrderDetailDtoDataRes orderDetail = new GetOrderDetailDtoDataRes();
 			orderDetail.setId(list.getId());
 			orderDetail.setOrderId(list.getOrder().getId());
-			orderDetail.setActivityId(list.getActivity().getId());
-			orderDetail.setSubscribeId(list.getSubscribe().getId());
+			if(list.getActivity() != null) {
+				orderDetail.setActivityId(list.getActivity().getId());			
+			}		
+			if(list.getSubscribe() != null) {
+				orderDetail.setSubscribeId(list.getSubscribe().getId());			
+			}
 			orderDetail.setActivityId(list.getActivity().getId());
 			orderDetail.setVersion(list.getVersion());
 			orderDetail.setIsActive(list.getIsActive());
