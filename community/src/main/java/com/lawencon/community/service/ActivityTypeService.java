@@ -26,48 +26,6 @@ public class ActivityTypeService extends BaseCommunityService {
 
 	private final ActivityTypeDao activityTypeDao;
 
-	public InsertActivityTypeDtoRes insert(InsertActivityTypeDtoReq data) throws Exception {
-		ActivityType activityType = new ActivityType();
-		activityType.setActivityTypeName(data.getActivityTypeName());
-		activityType.setActivityTypeCode(data.getActivityTypeCode());
-		activityType.setPrice(data.getPrice());		
-		activityType.setCreatedBy(getId());
-
-		begin();
-		ActivityType activityTypeInsert = activityTypeDao.save(activityType);
-		commit();
-		
-		InsertActivityTypeDtoDataRes activityTypeId = new InsertActivityTypeDtoDataRes();
-		activityTypeId.setId(activityTypeInsert.getId());
-
-		InsertActivityTypeDtoRes result = new InsertActivityTypeDtoRes();
-		result.setData(activityTypeId);
-		result.setMsg("Insert Successfully");
-		
-		return result;
-	}
-
-	public UpdateActivityTypeDtoRes update(UpdateActivityTypeDtoReq data) throws Exception {
-		ActivityType activityType = activityTypeDao.getById(data.getId());
-		activityType.setActivityTypeName(data.getActivityTypeName());
-		activityType.setPrice(data.getPrice());		
-		activityType.setVersion(data.getVersion());
-		activityType.setIsActive(data.getIsActive());
-		activityType.setUpdatedBy(getId());
-
-		begin();
-		ActivityType activityTypeUpdate = activityTypeDao.save(activityType);
-		commit();
-
-		UpdateActivityTypeDtoDataRes activityTypeVersion = new UpdateActivityTypeDtoDataRes();
-		activityTypeVersion.setVersion(activityTypeUpdate.getVersion());
-
-		UpdateActivityTypeDtoRes result = new UpdateActivityTypeDtoRes();
-		result.setData(activityTypeVersion);
-		result.setMsg("Update Successfully");
-		return result;
-	}
-
 	public GetAllActivityTypeDtoRes getAll(Integer start, Integer max) throws Exception {
 		List<ActivityType> activityTypes;	
 		if(start == null) activityTypes = activityTypeDao.getAll();
@@ -94,18 +52,65 @@ public class ActivityTypeService extends BaseCommunityService {
 
 	public GetByIdActivityTypeDtoRes getById(String id) throws Exception {
 		ActivityType activityType = activityTypeDao.getById(id);
+		if(activityType!=null) {
+			GetActivityTypeDtoDataRes activityTypeData = new GetActivityTypeDtoDataRes();
+			activityTypeData.setId(activityType.getId());
+			activityTypeData.setActivityTypeName(activityType.getActivityTypeName());
+			activityTypeData.setActivityTypeCode(activityType.getActivityTypeCode());
+			activityTypeData.setPrice(activityType.getPrice());
+			activityTypeData.setVersion(activityType.getVersion());
+			activityTypeData.setIsActive(activityType.getIsActive());
+			
+			GetByIdActivityTypeDtoRes result = new GetByIdActivityTypeDtoRes();
+			result.setData(activityTypeData);
+			
+			return result;
+		}
+		
+		throw new RuntimeException("Activity Type Id doesn't exist");
+	}
 
-		GetActivityTypeDtoDataRes activityTypeData = new GetActivityTypeDtoDataRes();
-		activityTypeData.setId(activityType.getId());
-		activityTypeData.setActivityTypeName(activityType.getActivityTypeName());
-		activityTypeData.setActivityTypeCode(activityType.getActivityTypeCode());
-		activityTypeData.setPrice(activityType.getPrice());
-		activityTypeData.setVersion(activityType.getVersion());
-		activityTypeData.setIsActive(activityType.getIsActive());
+	public InsertActivityTypeDtoRes insert(InsertActivityTypeDtoReq data) throws Exception {
+		ActivityType activityType = new ActivityType();
+		valBkNotExist(data.getActivityTypeCode(), data.getActivityTypeName());
+		activityType.setActivityTypeCode(data.getActivityTypeCode());
+		activityType.setActivityTypeName(data.getActivityTypeName());
+		activityType.setPrice(data.getPrice());		
+		activityType.setCreatedBy(getId());
 
-		GetByIdActivityTypeDtoRes result = new GetByIdActivityTypeDtoRes();
-		result.setData(activityTypeData);
+		begin();
+		ActivityType activityTypeInsert = activityTypeDao.save(activityType);
+		commit();
+		
+		InsertActivityTypeDtoDataRes activityTypeId = new InsertActivityTypeDtoDataRes();
+		activityTypeId.setId(activityTypeInsert.getId());
 
+		InsertActivityTypeDtoRes result = new InsertActivityTypeDtoRes();
+		result.setData(activityTypeId);
+		result.setMsg("Insert Successfully");
+		
+		return result;
+	}
+
+	public UpdateActivityTypeDtoRes update(UpdateActivityTypeDtoReq data) throws Exception {
+		ActivityType activityType = activityTypeDao.getById(data.getId());
+		valBkNotExist(data.getActivityTypeName());
+		activityType.setActivityTypeName(data.getActivityTypeName());
+		activityType.setPrice(data.getPrice());		
+		activityType.setVersion(data.getVersion());
+		activityType.setIsActive(data.getIsActive());
+		activityType.setUpdatedBy(getId());
+
+		begin();
+		ActivityType activityTypeUpdate = activityTypeDao.save(activityType);
+		commit();
+
+		UpdateActivityTypeDtoDataRes activityTypeVersion = new UpdateActivityTypeDtoDataRes();
+		activityTypeVersion.setVersion(activityTypeUpdate.getVersion());
+
+		UpdateActivityTypeDtoRes result = new UpdateActivityTypeDtoRes();
+		result.setData(activityTypeVersion);
+		result.setMsg("Update Successfully");
 		return result;
 	}
 	
@@ -128,6 +133,21 @@ public class ActivityTypeService extends BaseCommunityService {
 			e.printStackTrace();
 			rollback();
 			throw new Exception(e);
+		}
+	}
+	
+	private void valBkNotExist(String code, String name) {
+		Integer flagCode = activityTypeDao.isActivityTypeCodeExist(code);
+		Integer flagName = activityTypeDao.isActivityTypeNameExist(name);
+		if(flagCode == 1 || flagName == 1) {
+			throw new RuntimeException("Activity Type Code or Activity Type Name has existed");
+		}
+	}
+	
+	private void valBkNotExist(String name) {
+		Integer flagName = activityTypeDao.isActivityTypeNameExist(name);
+		if(flagName == 1) {
+			throw new RuntimeException("Activity Type Name has existed");
 		}
 	}
 

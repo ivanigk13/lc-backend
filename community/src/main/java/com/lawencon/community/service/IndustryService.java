@@ -26,46 +26,6 @@ public class IndustryService extends BaseCommunityService {
 
 	private final IndustryDao industryDao;
 	
-	public InsertIndustryDtoRes insert(InsertIndustryDtoReq data) throws Exception {
-		Industry industry = new Industry();
-		industry.setIndustryName(data.getIndustryName());
-		industry.setIndustryCode(data.getIndustryCode());
-		industry.setCreatedBy(getId());
-		
-		begin();
-		Industry industryInsert = industryDao.save(industry);
-		commit();
-		
-		InsertIndustryDtoDataRes industryId = new InsertIndustryDtoDataRes();
-		industryId.setId(industryInsert.getId());
-		
-		InsertIndustryDtoRes result = new InsertIndustryDtoRes();
-		result.setData(industryId);
-		result.setMsg("Insert Successfully");
-		
-		return result;
-	}
-	
-	public UpdateIndustryDtoRes update(UpdateIndustryDtoReq data) throws Exception{
-		Industry industry = industryDao.getById(data.getId());
-		industry.setIndustryName(data.getIndustryName());
-		industry.setUpdatedBy(getId());
-		industry.setVersion(data.getVersion());
-		industry.setIsActive(data.getIsActive());
-		
-		begin();
-		Industry industryUpdate = industryDao.save(industry);
-		commit();
-		
-		UpdateIndustryDtoDataRes industryVersion = new UpdateIndustryDtoDataRes();
-		industryVersion.setVersion(industryUpdate.getVersion());
-		
-		UpdateIndustryDtoRes result = new UpdateIndustryDtoRes();
-		result.setData(industryVersion);
-		result.setMsg("Update Successfully");
-		return result;
-	}
-	
 	public GetAllIndustryDtoRes getAll(Integer start, Integer max) throws Exception{
 		List<Industry> industries;	
 		if(start == null) industries = industryDao.getAll();
@@ -90,18 +50,63 @@ public class IndustryService extends BaseCommunityService {
 	
 	public GetByIdIndustryDtoRes getById(String id) throws Exception{
 		Industry industry = industryDao.getById(id);
+		if(industry!=null) {
+			GetIndustryDtoDataRes industryData = new GetIndustryDtoDataRes();
+			industryData.setId(industry.getId());
+			industryData.setIndustryName(industry.getIndustryName());
+			industryData.setIndustryCode(industry.getIndustryCode());
+			industryData.setVersion(industry.getVersion());
+			industryData.setIsActive(industry.getIsActive());
+			
+			GetByIdIndustryDtoRes result = new GetByIdIndustryDtoRes();
+			result.setData(industryData);		
+			
+			return result;
+		}
 		
-		GetIndustryDtoDataRes industryData = new GetIndustryDtoDataRes();
-		industryData.setId(industry.getId());
-		industryData.setIndustryName(industry.getIndustryName());
-		industryData.setIndustryCode(industry.getIndustryCode());
-		industryData.setVersion(industry.getVersion());
-		industryData.setIsActive(industry.getIsActive());
+		throw new RuntimeException("Industry Id doesn't exist");
+	}
+	
+	public InsertIndustryDtoRes insert(InsertIndustryDtoReq data) throws Exception {
+		Industry industry = new Industry();
+		valBkNotExist(data.getIndustryCode(), data.getIndustryName());
+		industry.setIndustryName(data.getIndustryName());
+		industry.setIndustryCode(data.getIndustryCode());
+		industry.setCreatedBy(getId());
 		
-		GetByIdIndustryDtoRes result = new GetByIdIndustryDtoRes();
-		result.setData(industryData);		
+		begin();
+		Industry industryInsert = industryDao.save(industry);
+		commit();
 		
-		return result;		
+		InsertIndustryDtoDataRes industryId = new InsertIndustryDtoDataRes();
+		industryId.setId(industryInsert.getId());
+		
+		InsertIndustryDtoRes result = new InsertIndustryDtoRes();
+		result.setData(industryId);
+		result.setMsg("Insert Successfully");
+		
+		return result;
+	}
+	
+	public UpdateIndustryDtoRes update(UpdateIndustryDtoReq data) throws Exception{
+		Industry industry = industryDao.getById(data.getId());
+		valBkNotExist(data.getIndustryName());
+		industry.setIndustryName(data.getIndustryName());
+		industry.setUpdatedBy(getId());
+		industry.setVersion(data.getVersion());
+		industry.setIsActive(data.getIsActive());
+		
+		begin();
+		Industry industryUpdate = industryDao.save(industry);
+		commit();
+		
+		UpdateIndustryDtoDataRes industryVersion = new UpdateIndustryDtoDataRes();
+		industryVersion.setVersion(industryUpdate.getVersion());
+		
+		UpdateIndustryDtoRes result = new UpdateIndustryDtoRes();
+		result.setData(industryVersion);
+		result.setMsg("Update Successfully");
+		return result;
 	}
 	
 	public DeleteIndustryDtoRes deleteById(String id) throws Exception {
@@ -123,6 +128,21 @@ public class IndustryService extends BaseCommunityService {
 			e.printStackTrace();
 			rollback();
 			throw new Exception(e);
+		}
+	}
+	
+	private void valBkNotExist(String code, String name) {
+		Integer flagCode = industryDao.isIndustryCodeExist(code);
+		Integer flagName = industryDao.isIndustryNameExist(name);
+		if(flagCode == 1 || flagName == 1) {
+			throw new RuntimeException("Industry Code or Industry Name has existed");
+		}
+	}
+	
+	private void valBkNotExist(String name) {
+		Integer flagName = industryDao.isIndustryNameExist(name);
+		if(flagName == 1) {
+			throw new RuntimeException("Industry Name has existed");
 		}
 	}
 }

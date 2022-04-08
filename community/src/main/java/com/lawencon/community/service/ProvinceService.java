@@ -18,21 +18,6 @@ import lombok.RequiredArgsConstructor;
 public class ProvinceService extends BaseCommunityService {
 
 	private final ProvinceDao provinceDao;
-	
-	public GetByIdProvinceDtoRes getById(String id) throws Exception {
-		Province province = provinceDao.getById(id);
-		GetProvinceDtoDataRes provinceDataRes = new GetProvinceDtoDataRes();
-		provinceDataRes.setId(province.getId());
-		provinceDataRes.setProvinceCode(province.getProvinceCode());
-		provinceDataRes.setProvinceName(province.getProvinceName());
-		provinceDataRes.setVersion(province.getVersion());
-		provinceDataRes.setIsActive(province.getIsActive());
-		
-		GetByIdProvinceDtoRes provinceRes = new GetByIdProvinceDtoRes();
-		provinceRes.setData(provinceDataRes);
-		
-		return provinceRes;
-	}
 
 	public GetAllProvinceDtoRes getAll(Integer start, Integer max) throws Exception {
 		List<Province> provinces;
@@ -56,5 +41,24 @@ public class ProvinceService extends BaseCommunityService {
 		provinceRes.setData(data);
 		
 		return provinceRes;
+	}
+	
+	public GetByIdProvinceDtoRes getById(String id) throws Exception {
+		Province province = provinceDao.getById(id);
+		if(province!=null) {
+			GetProvinceDtoDataRes provinceDataRes = new GetProvinceDtoDataRes();
+			provinceDataRes.setId(province.getId());
+			provinceDataRes.setProvinceCode(province.getProvinceCode());
+			provinceDataRes.setProvinceName(province.getProvinceName());
+			provinceDataRes.setVersion(province.getVersion());
+			provinceDataRes.setIsActive(province.getIsActive());
+			
+			GetByIdProvinceDtoRes provinceRes = new GetByIdProvinceDtoRes();
+			provinceRes.setData(provinceDataRes);
+			
+			return provinceRes;
+		}
+		
+		throw new RuntimeException("Province Id doesn't exist");
 	}
 }

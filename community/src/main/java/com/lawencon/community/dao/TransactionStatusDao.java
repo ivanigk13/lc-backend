@@ -32,4 +32,18 @@ public class TransactionStatusDao extends AbstractJpaDao<TransactionStatus>{
 		String id = obj.toString();
 		return id;
 	}
+	
+	public Integer isStatusCodeExist(String code) {
+		String sql = "SELECT COUNT(id) FROM transaction_status where status_code = :code";
+		Object result = createNativeQuery(sql).setParameter("code", code).getSingleResult();
+		Integer flag = Integer.valueOf(result.toString());
+		return flag;
+	}
+	
+	public Integer isStatusNameExist(String name) {
+		String sql = "SELECT COUNT(id) FROM transaction_status where status_name = :name";
+		Object result = createNativeQuery(sql).setParameter("name", name).getSingleResult();
+		Integer flag = Integer.valueOf(result.toString());
+		return flag;
+	}
 }

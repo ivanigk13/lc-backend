@@ -26,5 +26,19 @@ public class CityDao extends AbstractJpaDao<City>{
 		});
 		return cities;
 	}
+	
+	public Integer isCityCodeExist(String code) {
+		String sql = "SELECT COUNT(id) FROM city where city_code = :code";
+		Object result = createNativeQuery(sql).setParameter("code", code).getSingleResult();
+		Integer flag = Integer.valueOf(result.toString());
+		return flag;
+	}
+	
+	public Integer isCityNameExist(String name) {
+		String sql = "SELECT COUNT(id) FROM city where city_name = :name";
+		Object result = createNativeQuery(sql).setParameter("name", name).getSingleResult();
+		Integer flag = Integer.valueOf(result.toString());
+		return flag;
+	}
 
 }
