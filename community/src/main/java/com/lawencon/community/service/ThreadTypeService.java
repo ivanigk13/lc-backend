@@ -26,62 +26,6 @@ public class ThreadTypeService extends BaseCommunityService {
 	
 	private final ThreadTypeDao threadTypeDao;
 	
-	public InsertThreadTypeDtoRes insert(InsertThreadTypeDtoReq data) throws Exception {
-		ThreadType threadType = new ThreadType();
-		threadType.setThreadTypeCode(data.getThreadTypeCode());
-		threadType.setThreadTypeName(data.getThreadTypeCode());
-		threadType.setCreatedBy(getId());
-		
-		begin();
-		threadType = threadTypeDao.save(threadType);
-		commit();
-		
-		InsertThreadTypeDtoDataRes threadTypeDataRes = new InsertThreadTypeDtoDataRes();
-		threadTypeDataRes.setId(threadType.getId());
-		
-		InsertThreadTypeDtoRes threadTypeRes = new InsertThreadTypeDtoRes();
-		threadTypeRes.setMsg("Insert Successfully");
-		threadTypeRes.setData(threadTypeDataRes);
-		
-		return threadTypeRes;
-	}
-	
-	public UpdateThreadTypeDtoRes update(UpdateThreadTypeDtoReq data) throws Exception {
-		ThreadType threadType = threadTypeDao.getById(data.getId());
-		threadType.setThreadTypeName(data.getThreadTypeName());
-		threadType.setUpdatedBy(getId());
-		threadType.setVersion(data.getVersion());
-		threadType.setIsActive(data.getIsActive());
-		
-		begin();
-		threadType = threadTypeDao.save(threadType);
-		commit();
-		
-		UpdateThreadTypeDtoDataRes threadTypeDataRes = new UpdateThreadTypeDtoDataRes();
-		threadTypeDataRes.setVersion(threadType.getVersion());
-		
-		UpdateThreadTypeDtoRes threadTypeRes = new UpdateThreadTypeDtoRes();
-		threadTypeRes.setMsg("Update Successfully");
-		threadTypeRes.setData(threadTypeDataRes);
-		
-		return threadTypeRes;
-	}
-
-	public GetByIdThreadTypeDtoRes getById(String id) throws Exception {
-		ThreadType threadType = threadTypeDao.getById(id);
-		GetThreadTypeDtoDataRes threadTypeDataRes = new GetThreadTypeDtoDataRes();
-		threadTypeDataRes.setId(threadType.getId());
-		threadTypeDataRes.setThreadTypeCode(threadType.getThreadTypeCode());
-		threadTypeDataRes.setThreadTypeName(threadType.getThreadTypeName());
-		threadTypeDataRes.setVersion(threadType.getVersion());
-		threadTypeDataRes.setIsActive(threadType.getIsActive());
-		
-		GetByIdThreadTypeDtoRes threadTypeRes = new GetByIdThreadTypeDtoRes();
-		threadTypeRes.setData(threadTypeDataRes);
-		
-		return threadTypeRes;
-	}
-	
 	public GetAllThreadTypeDtoRes getAll(Integer start, Integer max) throws Exception {
 		List<ThreadType> threadTypes;
 		if(start==null) threadTypes = threadTypeDao.getAll();
@@ -105,6 +49,68 @@ public class ThreadTypeService extends BaseCommunityService {
 		
 		return threadTypeRes;
 	}
+
+	public GetByIdThreadTypeDtoRes getById(String id) throws Exception {
+		ThreadType threadType = threadTypeDao.getById(id);
+		if(threadType!=null) {
+			GetThreadTypeDtoDataRes threadTypeDataRes = new GetThreadTypeDtoDataRes();
+			threadTypeDataRes.setId(threadType.getId());
+			threadTypeDataRes.setThreadTypeCode(threadType.getThreadTypeCode());
+			threadTypeDataRes.setThreadTypeName(threadType.getThreadTypeName());
+			threadTypeDataRes.setVersion(threadType.getVersion());
+			threadTypeDataRes.setIsActive(threadType.getIsActive());
+			
+			GetByIdThreadTypeDtoRes threadTypeRes = new GetByIdThreadTypeDtoRes();
+			threadTypeRes.setData(threadTypeDataRes);
+			
+			return threadTypeRes;
+		}
+		
+		throw new RuntimeException("ThreadType Id doesn't exist");
+	}
+	
+	public InsertThreadTypeDtoRes insert(InsertThreadTypeDtoReq data) throws Exception {
+		ThreadType threadType = new ThreadType();
+		valBkNotExist(data.getThreadTypeCode(), data.getThreadTypeName());
+		threadType.setThreadTypeCode(data.getThreadTypeCode());
+		threadType.setThreadTypeName(data.getThreadTypeCode());
+		threadType.setCreatedBy(getId());
+		
+		begin();
+		threadType = threadTypeDao.save(threadType);
+		commit();
+		
+		InsertThreadTypeDtoDataRes threadTypeDataRes = new InsertThreadTypeDtoDataRes();
+		threadTypeDataRes.setId(threadType.getId());
+		
+		InsertThreadTypeDtoRes threadTypeRes = new InsertThreadTypeDtoRes();
+		threadTypeRes.setMsg("Insert Successfully");
+		threadTypeRes.setData(threadTypeDataRes);
+		
+		return threadTypeRes;
+	}
+	
+	public UpdateThreadTypeDtoRes update(UpdateThreadTypeDtoReq data) throws Exception {
+		ThreadType threadType = threadTypeDao.getById(data.getId());
+		valBkNotExist(data.getThreadTypeName());
+		threadType.setThreadTypeName(data.getThreadTypeName());
+		threadType.setUpdatedBy(getId());
+		threadType.setVersion(data.getVersion());
+		threadType.setIsActive(data.getIsActive());
+		
+		begin();
+		threadType = threadTypeDao.save(threadType);
+		commit();
+		
+		UpdateThreadTypeDtoDataRes threadTypeDataRes = new UpdateThreadTypeDtoDataRes();
+		threadTypeDataRes.setVersion(threadType.getVersion());
+		
+		UpdateThreadTypeDtoRes threadTypeRes = new UpdateThreadTypeDtoRes();
+		threadTypeRes.setMsg("Update Successfully");
+		threadTypeRes.setData(threadTypeDataRes);
+		
+		return threadTypeRes;
+	}
 	
 	public DeleteThreadTypeDtoRes deleteById(String id) throws Exception {
 		try {			
@@ -125,6 +131,21 @@ public class ThreadTypeService extends BaseCommunityService {
 			e.printStackTrace();
 			rollback();
 			throw new Exception(e);
+		}
+	}
+	
+	private void valBkNotExist(String code, String name) {
+		Integer flagCode = threadTypeDao.isThreadTypeCodeExist(code);
+		Integer flagName = threadTypeDao.isThreadTypeNameExist(name);
+		if(flagCode == 1 || flagName == 1) {
+			throw new RuntimeException("ThreadType Code or ThreadType Name has existed");
+		}
+	}
+	
+	private void valBkNotExist(String name) {
+		Integer flagName = threadTypeDao.isThreadTypeNameExist(name);
+		if(flagName == 1) {
+			throw new RuntimeException("ThreadType Name has existed");
 		}
 	}
 }
