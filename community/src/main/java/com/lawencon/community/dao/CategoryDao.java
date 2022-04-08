@@ -16,7 +16,7 @@ public class CategoryDao extends AbstractJpaDao<Category>{
 	}
 	
 	public Integer isCategoryNameExist(String name) {
-		String sql = "SELECT COUNT(id) FROM roles where category_name = :name";
+		String sql = "SELECT COUNT(id) FROM category where category_name = :name";
 		Object result = createNativeQuery(sql).setParameter("name", name).getSingleResult();
 		Integer flag = Integer.valueOf(result.toString());
 		return flag;
