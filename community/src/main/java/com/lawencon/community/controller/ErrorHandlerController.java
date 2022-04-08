@@ -34,7 +34,6 @@ public class ErrorHandlerController {
 	public ResponseEntity<?> constraintViolationExceptionHandler(RuntimeException e) {
 		Map<String, Object> maps = new HashMap<String, Object>();
 		maps.put("msg", NestedExceptionUtils.getMostSpecificCause(e).getMessage());
-		e.printStackTrace();
 		return new ResponseEntity<>(maps, HttpStatus.BAD_REQUEST);		
 	}
 }
