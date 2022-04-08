@@ -29,4 +29,20 @@ public class PollingVoterDao extends AbstractJpaDao<PollingVoter>{
 		}
 		return pollingVoters;
 	}
+	
+	public Integer getCountIdByHeaderId(String headerId, String userId) {
+		StringBuilder builder = new StringBuilder();
+		builder.append("SELECT count(pv.id) FROM polling_voter pv ");
+		builder.append("INNER JOIN polling_detail pd ON pd.id = pv.polling_detail_id ");
+		builder.append("INNER JOIN polling_header ph ON pd.polling_header_id = ph.id ");
+		builder.append("WHERE ph.id = :id AND pv.created_by = :user_id");
+		
+		Object result = createNativeQuery(builder.toString())
+					.setParameter("id", headerId)
+					.setParameter("user_id", userId)
+					.getSingleResult();
+		Object obj = (Object) result;
+		Integer counter = Integer.valueOf(obj.toString());
+		return counter;
+	}
 }

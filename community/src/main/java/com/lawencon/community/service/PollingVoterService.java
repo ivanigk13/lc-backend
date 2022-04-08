@@ -128,6 +128,10 @@ public class PollingVoterService extends BaseCommunityService {
 
 		return pollingVoterRes;
 	}
+	
+	public Integer getCountIdByHeaderId(String headerId, String userId) throws Exception {
+		return pollingVoterDao.getCountIdByHeaderId(headerId, userId);		
+	}
 
 	public DeletePollingVoterDtoRes deleteById(String id) throws Exception {
 		try {			
