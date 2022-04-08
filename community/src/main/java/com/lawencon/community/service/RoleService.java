@@ -134,16 +134,16 @@ public class RoleService extends BaseCommunityService {
 		}
 	}
 
-	private void valBkNotExist(String roleCode, String roleName) {
-		Integer flagCode = roleDao.isRoleCodeExist(roleCode);
-		Integer flagName = roleDao.isRoleNameExist(roleName);
+	private void valBkNotExist(String code, String name) {
+		Integer flagCode = roleDao.isRoleCodeExist(code);
+		Integer flagName = roleDao.isRoleNameExist(name);
 		if(flagCode == 1 || flagName == 1) {
 			throw new RuntimeException("Role Code or Role Name has existed");
 		}
 	}
 	
-	private void valBkNotExist(String roleName) {
-		Integer flagName = roleDao.isRoleNameExist(roleName);
+	private void valBkNotExist(String name) {
+		Integer flagName = roleDao.isRoleNameExist(name);
 		if(flagName == 1) {
 			throw new RuntimeException("Role Name has existed");
 		}
