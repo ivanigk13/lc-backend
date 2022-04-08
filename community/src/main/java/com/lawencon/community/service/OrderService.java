@@ -22,6 +22,9 @@ import com.lawencon.community.dto.order.GetOrderDtoDataRes;
 import com.lawencon.community.dto.order.InsertOrderDtoDataRes;
 import com.lawencon.community.dto.order.InsertOrderDtoReq;
 import com.lawencon.community.dto.order.InsertOrderDtoRes;
+import com.lawencon.community.dto.order.UpdateOrderDtoDataRes;
+import com.lawencon.community.dto.order.UpdateOrderDtoReq;
+import com.lawencon.community.dto.order.UpdateOrderDtoRes;
 import com.lawencon.community.model.Activity;
 import com.lawencon.community.model.File;
 import com.lawencon.community.model.OrderDetail;
@@ -51,7 +54,7 @@ public class OrderService extends BaseCommunityService {
 
 			TransactionStatus transactionStatus = transactionStatusDao.getById(transactionStatusDao.getStatusPendingId());
 			order.setTransactionStatus(transactionStatus);
-			String invoice = "IVC-" + generateCode(5);
+			String invoice = "INV-" + generateCode(5);
 			order.setInvoice(invoice);
 
 			User user = userDao.getById(orderReq.getUserId());
@@ -88,6 +91,50 @@ public class OrderService extends BaseCommunityService {
 		
 	}
 	
+	public UpdateOrderDtoRes updateApprove(UpdateOrderDtoReq data) throws Exception {
+		Orders order = orderDao.getById(data.getId());
+		
+		TransactionStatus transactionStatus = new TransactionStatus();
+		transactionStatus.setId(transactionStatusDao.getStatusApproveId());
+		order.setTransactionStatus(transactionStatus);
+		order.setUpdatedBy(getId());
+		
+		begin();
+		order = orderDao.save(order);
+		commit();
+		
+		UpdateOrderDtoDataRes dataRes = new UpdateOrderDtoDataRes();
+		dataRes.setVersion(order.getVersion());
+		
+		UpdateOrderDtoRes orderRes = new UpdateOrderDtoRes();
+		orderRes.setData(dataRes);
+		orderRes.setMsg("Update Succesfully");
+		
+		return orderRes;
+	}
+	
+	public UpdateOrderDtoRes updateReject(UpdateOrderDtoReq data) throws Exception {
+		Orders order = orderDao.getById(data.getId());
+		
+		TransactionStatus transactionStatus = new TransactionStatus();
+		transactionStatus.setId(transactionStatusDao.getStatusRejectId());
+		order.setTransactionStatus(transactionStatus);
+		order.setUpdatedBy(getId());
+		
+		begin();
+		order = orderDao.save(order);
+		commit();
+		
+		UpdateOrderDtoDataRes dataRes = new UpdateOrderDtoDataRes();
+		dataRes.setVersion(order.getVersion());
+		
+		UpdateOrderDtoRes orderRes = new UpdateOrderDtoRes();
+		orderRes.setData(dataRes);
+		orderRes.setMsg("Update Succesfully");
+		
+		return orderRes;
+	}
+	
 	public GetAllOrderDtoRes getAll(Integer start, Integer max) throws Exception {
 		List<Orders> orders;	
 		if(start == null) orders = orderDao.getAll();
@@ -96,25 +143,65 @@ public class OrderService extends BaseCommunityService {
 		List<GetOrderDtoDataRes> data = new ArrayList<>();
 
 		orders.forEach(list -> {
-			GetOrderDtoDataRes order = new GetOrderDtoDataRes();			
+			GetOrderDtoDataRes order = new GetOrderDtoDataRes();
 			order.setId(list.getId());
+			order.setTransactionStatusId(list.getTransactionStatus().getId());
+			
+			TransactionStatus transactionStatus = transactionStatusDao.getById(order.getTransactionStatusId());
+			order.setTransactionStatusName(transactionStatus.getStatusName());
+			
+			order.setFileId(list.getFile().getId());
+			order.setUserId(list.getUser().getId());
 			
 			OrderDetail orderDetail = orderDetailDao.getOrderDetailByOrderId(order.getId());
 			
 			if(orderDetail.getActivity() != null) {
 				Activity activity = activityDao.getById(orderDetail.getActivity().getId());
+				order.setActivityId(activity.getId());
 				order.setActivityName(activity.getActivityName());				
 			}
 			
 			if(orderDetail.getSubscribe() != null) {
-				String test = orderDetail.getSubscribe().getId();
-				Subscribe subscribe = subscribeDao.getById(test);
+				Subscribe subscribe = subscribeDao.getById(orderDetail.getSubscribe().getId());
+				order.setSubscribeId(subscribe.getId());
 				order.setDuration(subscribe.getDuration());
 			}
-			
+			order.setInvoice(list.getInvoice());
+			order.setVersion(list.getVersion());
+			order.setIsActive(list.getIsActive());
+			data.add(order);
+		});
+
+		GetAllOrderDtoRes result = new GetAllOrderDtoRes();
+		result.setData(data);
+
+		return result;
+	}
+	
+	public GetAllOrderDtoRes getAllPendingSubscribe(Integer start, Integer max) throws Exception {
+		List<Orders> orders;	
+		if(start == null) orders = orderDao.getPendingOrderSubscribe();
+		else orders = orderDao.getAll(start, max);
+		
+		List<GetOrderDtoDataRes> data = new ArrayList<>();
+
+		orders.forEach(list -> {
+			GetOrderDtoDataRes order = new GetOrderDtoDataRes();
+			order.setId(list.getId());
 			order.setTransactionStatusId(list.getTransactionStatus().getId());
+			
+			TransactionStatus transactionStatus = transactionStatusDao.getById(order.getTransactionStatusId());
+			order.setTransactionStatusName(transactionStatus.getStatusName());
+			
 			order.setFileId(list.getFile().getId());
 			order.setUserId(list.getUser().getId());
+			
+			OrderDetail orderDetail = orderDetailDao.getOrderDetailByOrderId(order.getId());
+			
+			Subscribe subscribe = subscribeDao.getById(orderDetail.getSubscribe().getId());
+			order.setSubscribeId(subscribe.getId());
+			order.setDuration(subscribe.getDuration());
+			
 			order.setInvoice(list.getInvoice());
 			order.setVersion(list.getVersion());
 			order.setIsActive(list.getIsActive());
