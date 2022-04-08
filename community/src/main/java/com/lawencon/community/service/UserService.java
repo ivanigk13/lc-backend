@@ -39,6 +39,55 @@ public class UserService extends BaseCommunityService implements UserDetailsServ
 	private final PasswordEncoder encoder;
 	private final EmailSenderService emailSenderService;
 	private final String idCreate = "1";
+
+	
+	public GetAllUserDtoRes getAll(Integer start, Integer max) throws Exception {
+		List<User> users;
+		if(start==null) users = userDao.getAll();
+		else users = userDao.getAll(start, max);
+		
+		List<GetUserDtoDataRes> data = new ArrayList<GetUserDtoDataRes>();
+		
+		users.forEach(user -> {
+			GetUserDtoDataRes userDataRes = new GetUserDtoDataRes();
+			userDataRes.setId(user.getId());
+			userDataRes.setRoleId(user.getRole().getId());
+			userDataRes.setRoleName(user.getRole().getRoleName());
+			userDataRes.setEmail(user.getEmail());
+			userDataRes.setPassword(user.getPassword());
+			userDataRes.setVersion(user.getVersion());
+			userDataRes.setIsActive(user.getIsActive());
+			
+			data.add(userDataRes);
+		});
+		
+		GetAllUserDtoRes userRes = new GetAllUserDtoRes();
+		userRes.setData(data);
+		
+		return userRes;
+	}
+	
+	public GetByIdUserDtoRes getById(String id) throws Exception {
+		User user = userDao.getById(id);
+		if(user != null) {
+			GetUserDtoDataRes userDataRes = new GetUserDtoDataRes();
+			userDataRes.setId(user.getId());
+			userDataRes.setRoleId(user.getRole().getId());
+			userDataRes.setRoleName(user.getRole().getRoleName());
+			userDataRes.setEmail(user.getEmail());
+			userDataRes.setPassword(user.getPassword());
+			userDataRes.setCreatedAt(user.getCreatedAt());
+			userDataRes.setVersion(user.getVersion());
+			userDataRes.setIsActive(user.getIsActive());
+			
+			GetByIdUserDtoRes userRes = new GetByIdUserDtoRes();
+			userRes.setData(userDataRes);
+			
+			return userRes;
+		}
+		
+		throw new RuntimeException("User Id doesn't exist");
+	}
 	
 	public InsertUserDtoRes insert(InsertUserDtoReq data) throws Exception {
 		User user = new User();
@@ -46,6 +95,7 @@ public class UserService extends BaseCommunityService implements UserDetailsServ
 		role.setId(roleDao.getRoleMemberId());
 //		role.setId(roleDao.getRoleAdminId());
 		user.setRole(role);
+		valBkNotExist(data.getEmail());
 		user.setEmail(data.getEmail());
 		user.setPassword(encoder.encode(data.getPassword()));
 		user.setCreatedBy(idCreate);
@@ -84,50 +134,6 @@ public class UserService extends BaseCommunityService implements UserDetailsServ
 		UpdateUserDtoRes userRes = new UpdateUserDtoRes();
 		userRes.setMsg("Update Successfully");
 		userRes.setData(userDataRes);
-		
-		return userRes;
-	}
-	
-	public GetByIdUserDtoRes getById(String id) throws Exception {
-		User user = userDao.getById(id);
-		GetUserDtoDataRes userDataRes = new GetUserDtoDataRes();
-		userDataRes.setId(user.getId());
-		userDataRes.setRoleId(user.getRole().getId());
-		userDataRes.setRoleName(user.getRole().getRoleName());
-		userDataRes.setEmail(user.getEmail());
-		userDataRes.setPassword(user.getPassword());
-		userDataRes.setCreatedAt(user.getCreatedAt());
-		userDataRes.setVersion(user.getVersion());
-		userDataRes.setIsActive(user.getIsActive());
-		
-		GetByIdUserDtoRes userRes = new GetByIdUserDtoRes();
-		userRes.setData(userDataRes);
-		
-		return userRes;
-	}
-	
-	public GetAllUserDtoRes getAll(Integer start, Integer max) throws Exception {
-		List<User> users;
-		if(start==null) users = userDao.getAll();
-		else users = userDao.getAll(start, max);
-		
-		List<GetUserDtoDataRes> data = new ArrayList<GetUserDtoDataRes>();
-		
-		users.forEach(user -> {
-			GetUserDtoDataRes userDataRes = new GetUserDtoDataRes();
-			userDataRes.setId(user.getId());
-			userDataRes.setRoleId(user.getRole().getId());
-			userDataRes.setRoleName(user.getRole().getRoleName());
-			userDataRes.setEmail(user.getEmail());
-			userDataRes.setPassword(user.getPassword());
-			userDataRes.setVersion(user.getVersion());
-			userDataRes.setIsActive(user.getIsActive());
-			
-			data.add(userDataRes);
-		});
-		
-		GetAllUserDtoRes userRes = new GetAllUserDtoRes();
-		userRes.setData(data);
 		
 		return userRes;
 	}
@@ -187,5 +193,12 @@ public class UserService extends BaseCommunityService implements UserDetailsServ
 		}
 		User user = userDao.getByEmail(username);
 		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
+	}
+	
+	private void valBkNotExist(String email) {
+		Integer flag = userDao.isEmailExist(email);
+		if(flag==1) {
+			throw new RuntimeException("Email has existed");
+		}
 	}
  }
