@@ -35,4 +35,11 @@ public class UserDao extends AbstractJpaDao<User>{
 		
 		return user;
 	}
+	
+	public Integer isEmailExist(String email) {
+		String sql = "SELECT COUNT(id) FROM users WHERE email = :email";
+		Object result = createNativeQuery(sql).setParameter("email", email).getSingleResult();
+		Integer flag = Integer.valueOf(result.toString());
+		return flag;
+	}
 }

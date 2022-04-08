@@ -29,4 +29,18 @@ public class RoleDao extends AbstractJpaDao<Role>{
 		String id = result.toString();
 		return id;
 	}
+	
+	public Integer isRoleCodeExist(String code) {
+		String sql = "SELECT COUNT(id) FROM roles where role_code = :code";
+		Object result = createNativeQuery(sql).setParameter("code", code).getSingleResult();
+		Integer flag = Integer.valueOf(result.toString());
+		return flag;
+	}
+	
+	public Integer isRoleNameExist(String name) {
+		String sql = "SELECT COUNT(id) FROM roles where role_name = :name";
+		Object result = createNativeQuery(sql).setParameter("name", name).getSingleResult();
+		Integer flag = Integer.valueOf(result.toString());
+		return flag;
+	}
 }
