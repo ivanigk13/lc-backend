@@ -46,6 +46,12 @@ public class PollingVoterController {
 		return new ResponseEntity<GetAllPollingVoterDtoRes>(result, HttpStatus.OK);
 	} 
 	
+	@GetMapping("header/{id}/{userId}")
+	public ResponseEntity<Integer> getCountIdByHeaderId(@PathVariable("id") String id,@PathVariable("userId") String userId) throws Exception{
+		Integer counter = pollingVoterService.getCountIdByHeaderId(id,userId);
+		return new ResponseEntity<Integer>(counter, HttpStatus.OK);		
+	}
+	
 	@GetMapping("{id}")
 	public ResponseEntity<GetByIdPollingVoterDtoRes> getById(@PathVariable("id") String id) throws Exception {
 		GetByIdPollingVoterDtoRes result = pollingVoterService.getById(id);
