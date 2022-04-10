@@ -50,6 +50,44 @@ public class OrderDao extends AbstractJpaDao<Orders>{
 		return orders;
 	}
 	
+	public List<Orders> getPendingOrderByActivityId(String id){
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT o.id, o.transaction_status_id, ts.status_name, o.user_id, o.file_id, o.invoice ");
+		sb.append("FROM orders as o ");
+		sb.append("INNER JOIN transaction_status ts ON o.transaction_status_id = ts.id ");
+		sb.append("INNER JOIN order_detail od  ON od.order_id = o.id ");
+		sb.append("WHERE ts.status_code = :code AND od.activity_id = :id ");
+		sb.append("ORDER BY o.id ASC");
+		List<?> results = createNativeQuery(sb.toString())
+								.setParameter("code", TransactionStatusConstant.PENDING.getStatusCode())
+								.setParameter("id", id)
+								.getResultList();
+		List<Orders> orders = new ArrayList<Orders>();
+		for (Object result : results) {
+			Object[] obj = (Object[]) result;
+			Orders order = new Orders();
+			order.setId(obj[0].toString());
+			
+			com.lawencon.community.model.TransactionStatus transactionStatus = new com.lawencon.community.model.TransactionStatus();
+			transactionStatus.setId(obj[1].toString());
+			transactionStatus.setStatusName(obj[2].toString());
+			order.setTransactionStatus(transactionStatus);
+			
+			User user = new User();
+			user.setId(obj[3].toString());
+			order.setUser(user);
+			
+			File file = new File();
+			file.setId(obj[4].toString());
+			order.setFile(file);
+			
+			order.setInvoice(obj[5].toString());
+			
+			orders.add(order);
+		}
+		return orders;
+	}
+	
 	public List<Orders> getPendingOrderSubscribe(){
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT o.id, o.transaction_status_id, ts.status_name, o.user_id, o.file_id, o.invoice ");

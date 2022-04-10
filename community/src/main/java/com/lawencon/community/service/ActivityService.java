@@ -372,6 +372,38 @@ public class ActivityService extends BaseCommunityService {
 		return activityRes;
 	}
 	
+	public GetAllActivityDtoRes getApprovedUserActivity(String userId) {
+		List<Activity> activities = activityDao.getApprovedUserActivity(userId);
+		
+		List<GetActivityDtoDataRes> data = new ArrayList<>();
+		
+		activities.forEach(activity -> {
+			GetActivityDtoDataRes activityData = new GetActivityDtoDataRes();
+			activityData.setId(activity.getId());
+			activityData.setFileId(activity.getFile().getId());
+			activityData.setCategoryName(activity.getCategory().getCategoryName());
+			activityData.setActivityTypeName(activity.getActivityType().getActivityTypeName());
+			activityData.setTransactionStatusId(activity.getTransactionStatus().getId());
+			activityData.setTransactionStatusName(activity.getTransactionStatus().getStatusName());
+			activityData.setPaymentFileId(activity.getPaymentFile().getId());
+			activityData.setActivityName(activity.getActivityName());
+			activityData.setDateStart(activity.getDateStart());
+			activityData.setDateEnd(activity.getDateEnd());
+			activityData.setTimeStart(activity.getTimeStart());
+			activityData.setTimeEnd(activity.getTimeEnd());
+			activityData.setPrice(activity.getPrice());
+			activityData.setLocation(activity.getLocation());
+			activityData.setVersion(activity.getVersion());
+			
+			data.add(activityData);
+		});
+		
+		GetAllActivityDtoRes activityRes = new GetAllActivityDtoRes();
+		activityRes.setData(data);
+		
+		return activityRes;
+	}
+	
 	public DeleteActivityDtoRes deleteById(String id) throws Exception {
 		try {			
 			begin();

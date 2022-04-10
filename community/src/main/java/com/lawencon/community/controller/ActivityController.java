@@ -75,6 +75,12 @@ public class ActivityController {
 		return new ResponseEntity<GetAllActivityDtoRes>(activity, HttpStatus.OK);		
 	}
 	
+	@GetMapping("approve/user/{id}")
+	public ResponseEntity<GetAllActivityDtoRes> getApprovedUserActivity(@PathVariable("id") String id) throws Exception{
+		GetAllActivityDtoRes activity = activityService.getApprovedUserActivity(id);
+		return new ResponseEntity<GetAllActivityDtoRes>(activity, HttpStatus.OK);		
+	}
+	
 	@GetMapping
 	public ResponseEntity<GetAllActivityDtoRes> getAll(@RequestParam(value = "start", required = false) Integer start, @RequestParam(value = "max", required = false) Integer max) throws Exception{
 		GetAllActivityDtoRes activity = activityService.getAll(start, max);

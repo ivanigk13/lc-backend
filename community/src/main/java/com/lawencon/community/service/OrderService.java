@@ -213,6 +213,46 @@ public class OrderService extends BaseCommunityService {
 
 		return result;
 	}
+	
+	public GetAllOrderDtoRes getPendingOrderByActivityId(String id) throws Exception {
+		List<Orders> orders = orderDao.getPendingOrderByActivityId(id);				
+		List<GetOrderDtoDataRes> data = new ArrayList<>();
+
+		orders.forEach(list -> {
+			GetOrderDtoDataRes order = new GetOrderDtoDataRes();
+			order.setId(list.getId());
+			order.setTransactionStatusId(list.getTransactionStatus().getId());
+			
+			TransactionStatus transactionStatus = transactionStatusDao.getById(order.getTransactionStatusId());
+			order.setTransactionStatusName(transactionStatus.getStatusName());
+			
+			order.setFileId(list.getFile().getId());
+			order.setUserId(list.getUser().getId());
+			
+			OrderDetail orderDetail = orderDetailDao.getOrderDetailByOrderId(order.getId());
+			
+			if(orderDetail.getActivity() != null) {
+				Activity activity = activityDao.getById(orderDetail.getActivity().getId());
+				order.setActivityId(activity.getId());
+				order.setActivityName(activity.getActivityName());				
+			}
+			
+			if(orderDetail.getSubscribe() != null) {
+				Subscribe subscribe = subscribeDao.getById(orderDetail.getSubscribe().getId());
+				order.setSubscribeId(subscribe.getId());
+				order.setDuration(subscribe.getDuration());
+			}
+			order.setInvoice(list.getInvoice());
+			order.setVersion(list.getVersion());
+			order.setIsActive(list.getIsActive());
+			data.add(order);
+		});
+
+		GetAllOrderDtoRes result = new GetAllOrderDtoRes();
+		result.setData(data);
+
+		return result;
+	}
 
 	public GetByIdOrderDtoRes getById(String id) throws Exception {
 		Orders order = orderDao.getById(id);

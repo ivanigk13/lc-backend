@@ -82,6 +82,12 @@ public class OrderController {
 		return new ResponseEntity<GetAllOrderDtoRes>(order, HttpStatus.OK);		
 	}
 	
+	@GetMapping("activity/{id}")
+	public ResponseEntity<GetAllOrderDtoRes> getPendingOrderByActivityId(@PathVariable("id") String id) throws Exception{
+		GetAllOrderDtoRes order = orderService.getPendingOrderByActivityId(id);
+		return new ResponseEntity<GetAllOrderDtoRes>(order, HttpStatus.OK);		
+	}
+	
 	@DeleteMapping("{id}")
 	public ResponseEntity<DeleteOrderDtoRes> delete(@PathVariable("id") String id) throws Exception{
 		DeleteOrderDtoRes order = orderService.deleteById(id);

@@ -46,6 +46,18 @@ public class TransactionStatusController {
 		return new ResponseEntity<GetByIdTransactionStatusDtoRes>(transactionStatus, HttpStatus.OK);		
 	}
 	
+	@GetMapping("approve")
+	public ResponseEntity<String> getApproveId() throws Exception{
+		String transactionStatus = transactionStatusService.getApprovedId();
+		return new ResponseEntity<String>(transactionStatus, HttpStatus.OK);		
+	}
+	
+	@GetMapping("reject")
+	public ResponseEntity<String> getRejectId() throws Exception{
+		String transactionStatus = transactionStatusService.getRejectId();
+		return new ResponseEntity<String>(transactionStatus, HttpStatus.OK);		
+	}
+	
 	@PostMapping
 	public ResponseEntity<InsertTransactionStatusDtoRes> insert(@RequestPart @Valid InsertTransactionStatusDtoReq data) throws Exception{
 		InsertTransactionStatusDtoRes transactionStatus = transactionStatusService.insert(data);

@@ -134,6 +134,16 @@ public class TransactionStatusService extends BaseCommunityService {
 		}
 	}
 	
+	public String getApprovedId() throws Exception {
+		String approvedTransactionStatus = transactionStatusDao.getStatusApproveId();					
+			return approvedTransactionStatus;		
+	}
+	
+	public String getRejectId() throws Exception {
+		String rejectTransactionStatus = transactionStatusDao.getStatusRejectId();
+		return rejectTransactionStatus;
+	}
+	
 	private void valBkNotExist(String code, String name) {
 		Integer flagCode = transactionStatusDao.isStatusCodeExist(code);
 		Integer flagName = transactionStatusDao.isStatusNameExist(name);
