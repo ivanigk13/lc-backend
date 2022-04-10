@@ -151,19 +151,22 @@ public class ArticleService extends BaseCommunityService {
 	
 	public GetByIdArticleDtoRes getById(String id) throws Exception {
 		Article article = articleDao.getById(id);
+		if(article!=null) {
+			GetArticleDtoDataRes dataRes = new GetArticleDtoDataRes();
+			dataRes.setId(article.getId());
+			dataRes.setFileId(article.getFile().getId());
+			dataRes.setTitle(article.getTitle());
+			dataRes.setContent(article.getContent());
+			dataRes.setVersion(article.getVersion());
+			dataRes.setIsActive(article.getIsActive());
+			
+			GetByIdArticleDtoRes result = new GetByIdArticleDtoRes();
+			result.setData(dataRes);
+			
+			return result;
+		}
 		
-		GetArticleDtoDataRes dataRes = new GetArticleDtoDataRes();
-		dataRes.setId(article.getId());
-		dataRes.setFileId(article.getFile().getId());
-		dataRes.setTitle(article.getTitle());
-		dataRes.setContent(article.getContent());
-		dataRes.setVersion(article.getVersion());
-		dataRes.setIsActive(article.getIsActive());
-		
-		GetByIdArticleDtoRes result = new GetByIdArticleDtoRes();
-		result.setData(dataRes);
-		
-		return result;
+		throw new RuntimeException("Article Id doesn't exist");
 	}
 	
 	public DeleteArticleDtoRes deleteById(String id) throws Exception {

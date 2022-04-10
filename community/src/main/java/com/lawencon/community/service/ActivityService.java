@@ -225,25 +225,28 @@ public class ActivityService extends BaseCommunityService {
 
 	public GetByIdActivityDtoRes getById(String id) throws Exception {
 		Activity activity = activityDao.getById(id);
-
-		GetActivityDtoDataRes activityData = new GetActivityDtoDataRes();
-		activityData.setId(activity.getId());
-		activityData.setActivityName(activity.getActivityName());
-		activityData.setActivityTypeName(activity.getActivityType().getActivityTypeName());
-		activityData.setCategoryName(activity.getCategory().getCategoryName());
-		activityData.setFileId(activity.getFile().getId());
-		activityData.setPaymentFileId(activity.getPaymentFile().getId());
-		activityData.setDateStart(activity.getDateStart());
-		activityData.setDateEnd(activity.getDateEnd());
-		activityData.setTimeStart(activity.getTimeStart());
-		activityData.setTimeEnd(activity.getTimeEnd());
-		activityData.setPrice(activity.getPrice());
-		activityData.setLocation(activity.getLocation());
-		activityData.setVersion(activity.getVersion());
-
-		GetByIdActivityDtoRes result = new GetByIdActivityDtoRes();
-		result.setData(activityData);
-		return result;
+		if(activity!=null) {
+			GetActivityDtoDataRes activityData = new GetActivityDtoDataRes();
+			activityData.setId(activity.getId());
+			activityData.setActivityName(activity.getActivityName());
+			activityData.setActivityTypeName(activity.getActivityType().getActivityTypeName());
+			activityData.setCategoryName(activity.getCategory().getCategoryName());
+			activityData.setFileId(activity.getFile().getId());
+			activityData.setPaymentFileId(activity.getPaymentFile().getId());
+			activityData.setDateStart(activity.getDateStart());
+			activityData.setDateEnd(activity.getDateEnd());
+			activityData.setTimeStart(activity.getTimeStart());
+			activityData.setTimeEnd(activity.getTimeEnd());
+			activityData.setPrice(activity.getPrice());
+			activityData.setLocation(activity.getLocation());
+			activityData.setVersion(activity.getVersion());
+			
+			GetByIdActivityDtoRes result = new GetByIdActivityDtoRes();
+			result.setData(activityData);
+			return result;
+		}
+		
+		throw new RuntimeException("Activity Id doesn't exist");
 	}
 	
 	public GetAllActivityDtoRes getAllByUserIdActivity(String userId) throws Exception {
