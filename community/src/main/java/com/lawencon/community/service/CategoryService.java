@@ -45,6 +45,7 @@ public class CategoryService extends BaseCommunityService {
 
 		GetAllCategoryDtoRes result = new GetAllCategoryDtoRes();
 		result.setData(data);
+		result.setRows(categoryDao.countAll());
 
 		return result;
 	}
