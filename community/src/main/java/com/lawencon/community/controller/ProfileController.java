@@ -52,7 +52,7 @@ public class ProfileController {
 	
 
 	@PutMapping
-	public ResponseEntity<UpdateProfileDtoRes> update(@RequestPart(name="data") String data, @RequestPart(required = true) MultipartFile file) throws Exception {
+	public ResponseEntity<UpdateProfileDtoRes> update(@RequestPart(name="data") String data, @RequestPart(required = false) MultipartFile file) throws Exception {
 		UpdateProfileDtoRes result = profileService.update(data, file);
 		return new ResponseEntity<UpdateProfileDtoRes>(result, HttpStatus.OK);
 	}
