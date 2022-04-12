@@ -1,8 +1,15 @@
 package com.lawencon.community.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 
 import com.lawencon.base.BaseEntity;
 
@@ -23,10 +30,18 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
+@Indexed
 public class Role extends BaseEntity{
 	
-	private static final long serialVersionUID = 1019583607543236514L;
+	private static final long serialVersionUID = -6023381543594489514L;
+
+	@FullTextField
 	private String roleCode;
+	
+	@FullTextField
 	private String roleName;
+	
+	@OneToMany(mappedBy = "role")
+	private Set<User> user = new HashSet<User>();
 	
 }

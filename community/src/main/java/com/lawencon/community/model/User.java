@@ -6,6 +6,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
+
 import com.lawencon.base.BaseEntity;
 
 import lombok.Data;
@@ -25,15 +29,20 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
+@Indexed
 public class User extends BaseEntity{
 
 	private static final long serialVersionUID = 2365608740022216271L;
 
 	@OneToOne
 	@JoinColumn(name = "role_id")
+	@IndexedEmbedded
 	private Role role;
 	
+	@FullTextField
 	private String email;
+	
+	@FullTextField
 	private String password; 
 	
 }

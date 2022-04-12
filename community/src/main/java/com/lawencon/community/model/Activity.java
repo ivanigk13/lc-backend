@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
+
 import com.lawencon.base.BaseEntity;
 
 import lombok.Data;
@@ -16,6 +18,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = false)
+@Indexed
 public class Activity extends BaseEntity{
 
 	private static final long serialVersionUID = 7378832516126888635L;
