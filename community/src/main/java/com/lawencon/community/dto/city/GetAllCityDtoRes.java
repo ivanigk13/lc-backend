@@ -8,5 +8,6 @@ import lombok.Data;
 public class GetAllCityDtoRes {
 
 	private String msg;
+	private Long rows;
 	private List<GetCityDtoDataRes> data;
 }

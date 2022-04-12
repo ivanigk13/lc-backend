@@ -8,5 +8,6 @@ import lombok.Data;
 public class GetAllActivityTypeDtoRes {
 
 	private String msg;
+	private Long rows;
 	private List<GetActivityTypeDtoDataRes> data;
 }

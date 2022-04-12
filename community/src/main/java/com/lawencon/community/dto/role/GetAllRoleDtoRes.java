@@ -7,5 +7,6 @@ import lombok.Data;
 public class GetAllRoleDtoRes {
 
 	private String msg;
+	private Long rows;
 	private List<GetRoleDtoDataRes> data;
 }
