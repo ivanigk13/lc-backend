@@ -76,10 +76,45 @@ public class ThreadBookmarkService extends BaseCommunityService {
 
 		return result;
 	}
+	
+	public GetAllThreadBookmarkDtoRes getAllThreadBookmarkByUserId(String id) throws Exception {
+		List<ThreadBookmark> threadBookmarks = threadBookmarkDao.getThreadBookmarkByUserId(id);				
+		List<GetThreadBookmarkDtoDataRes> data = new ArrayList<>();
+
+		threadBookmarks.forEach(list -> {
+			GetThreadBookmarkDtoDataRes threadBookmark = new GetThreadBookmarkDtoDataRes();
+			threadBookmark.setId(list.getId());
+			threadBookmark.setThreadId(list.getThread().getId());
+			threadBookmark.setUserId(list.getUser().getId());
+			threadBookmark.setVersion(list.getVersion());
+			threadBookmark.setIsActive(list.getIsActive());
+			data.add(threadBookmark);
+		});
+
+		GetAllThreadBookmarkDtoRes result = new GetAllThreadBookmarkDtoRes();
+		result.setData(data);
+
+		return result;
+	}
 
 	public GetByIdThreadBookmarkDtoRes getById(String id) throws Exception {
 		ThreadBookmark threadBookmark = threadBookmarkDao.getById(id);
 
+		GetThreadBookmarkDtoDataRes threadBookmarkData = new GetThreadBookmarkDtoDataRes();
+		threadBookmarkData.setId(threadBookmark.getId());
+		threadBookmarkData.setThreadId(threadBookmark.getThread().getId());
+		threadBookmarkData.setUserId(threadBookmark.getUser().getId());
+		threadBookmarkData.setVersion(threadBookmark.getVersion());
+		threadBookmarkData.setIsActive(threadBookmark.getIsActive());
+
+		GetByIdThreadBookmarkDtoRes result = new GetByIdThreadBookmarkDtoRes();
+		result.setData(threadBookmarkData);
+
+		return result;
+	}
+	
+	public GetByIdThreadBookmarkDtoRes getThreadBookmarkByThreadId(String id) throws Exception {
+		ThreadBookmark threadBookmark = threadBookmarkDao.getThreadBookmarkByThreadId(id);
 		GetThreadBookmarkDtoDataRes threadBookmarkData = new GetThreadBookmarkDtoDataRes();
 		threadBookmarkData.setId(threadBookmark.getId());
 		threadBookmarkData.setThreadId(threadBookmark.getThread().getId());
