@@ -21,6 +21,29 @@ public class SocialMediaService extends BaseCommunityService{
 
 	private final SocialMediaDao socialMediaDao;
 	
+	public GetByIdSocialMediaDtoRes getById(String id) throws Exception {
+		SocialMedia socialMedia = socialMediaDao.getById(id);
+
+		GetSocialMediaDtoDataRes socialMediaData = new GetSocialMediaDtoDataRes();
+		socialMediaData.setId(socialMedia.getId());
+		if(socialMedia.getInstagram() != null) {
+			socialMediaData.setInstagram(socialMedia.getInstagram());
+		}
+		if(socialMedia.getFacebook() != null) {
+			socialMediaData.setFacebook(socialMedia.getFacebook());
+		}
+		if(socialMedia.getTwitter() != null) {
+			socialMediaData.setTwitter(socialMedia.getTwitter());
+		}
+		socialMediaData.setVersion(socialMedia.getVersion());
+		socialMediaData.setIsActive(socialMedia.getIsActive());
+
+		GetByIdSocialMediaDtoRes result = new GetByIdSocialMediaDtoRes();
+		result.setData(socialMediaData);
+
+		return result;
+	}
+	
 	public InsertSocialMediaDtoRes insert(InsertSocialMediaDtoReq data) throws Exception {
 		SocialMedia socialMedia = new SocialMedia();
 		socialMedia.setInstagram(data.getInstagram());
@@ -37,7 +60,6 @@ public class SocialMediaService extends BaseCommunityService{
 
 		InsertSocialMediaDtoRes result = new InsertSocialMediaDtoRes();
 		result.setData(socialMediaId);
-		result.setMsg("Insert Successfully");
 		
 		return result;
 	}
