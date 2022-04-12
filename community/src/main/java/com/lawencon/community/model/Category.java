@@ -5,6 +5,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 
 import com.lawencon.base.BaseEntity;
 
@@ -25,6 +26,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
+@Indexed
 public class Category extends BaseEntity{
 	
 	private static final long serialVersionUID = -5449659961400155560L;
