@@ -37,11 +37,23 @@ public class ThreadBookmarkController {
 		return new ResponseEntity<GetAllThreadBookmarkDtoRes>(threadBookmark, HttpStatus.OK);		
 	}
 	
+	@GetMapping("user/{id}")
+	public ResponseEntity<GetAllThreadBookmarkDtoRes> getThreadBookmarkByUserId(@PathVariable("id") String id) throws Exception{
+		GetAllThreadBookmarkDtoRes threadBookmark = threadBookmarkService.getAllThreadBookmarkByUserId(id);
+		return new ResponseEntity<GetAllThreadBookmarkDtoRes>(threadBookmark, HttpStatus.OK);		
+	}
+	
 	@GetMapping("{id}")
 	public ResponseEntity<GetByIdThreadBookmarkDtoRes> getById(@PathVariable("id") String id) throws Exception{
 		GetByIdThreadBookmarkDtoRes threadBookmark = threadBookmarkService.getById(id);
 		return new ResponseEntity<GetByIdThreadBookmarkDtoRes>(threadBookmark, HttpStatus.OK);		
 	}
+	
+	@GetMapping("thread/{id}")
+	public ResponseEntity<GetByIdThreadBookmarkDtoRes> getThreadBookmarkByThreadId(@PathVariable("id") String id) throws Exception{
+		GetByIdThreadBookmarkDtoRes threadBookmark = threadBookmarkService.getThreadBookmarkByThreadId(id);
+		return new ResponseEntity<GetByIdThreadBookmarkDtoRes>(threadBookmark, HttpStatus.OK);		
+	}		
 	
 	@PostMapping
 	public ResponseEntity<InsertThreadBookmarkDtoRes> insert(@RequestBody @Valid InsertThreadBookmarkDtoReq data) throws Exception{

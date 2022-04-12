@@ -34,4 +34,24 @@ public class ThreadBookmarkDao extends AbstractJpaDao<ThreadBookmark>{
 		}
 		return threadBookmarks;
 	}
+	
+	public ThreadBookmark getThreadBookmarkByThreadId(String id){
+		String sql = "SELECT id, thread_id, user_id FROM thread_bookmark WHERE thread_id = :id ORDER BY id";
+		Object result = createNativeQuery(sql).setParameter("id", id).getSingleResult();
+		Object[] obj = (Object[]) result;
+	
+		ThreadBookmark threadBookmark = new ThreadBookmark();
+		threadBookmark.setId(obj[0].toString());
+			
+		Thread thread = new Thread();
+		thread.setId(obj[1].toString());
+		threadBookmark.setThread(thread);
+			
+		User user = new User();
+		user.setId(obj[2].toString());
+		threadBookmark.setUser(user);
+			
+		
+		return threadBookmark;
+	}
 }
