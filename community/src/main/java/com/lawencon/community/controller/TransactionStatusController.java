@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,10 +32,8 @@ public class TransactionStatusController {
 	private final TransactionStatusService transactionStatusService;
 	
 	@GetMapping
-	public ResponseEntity<GetAllTransactionStatusDtoRes> getAll(
-							@RequestParam(value = "start", required = false) Integer start,
-							@RequestParam(value = "max", required = false) Integer max) throws Exception{
-		GetAllTransactionStatusDtoRes transactionStatus = transactionStatusService.getAll(start, max);
+	public ResponseEntity<GetAllTransactionStatusDtoRes> getAll(String query, Integer start, Integer max) throws Exception{
+		GetAllTransactionStatusDtoRes transactionStatus = transactionStatusService.getAll(query, start, max);
 		return new ResponseEntity<GetAllTransactionStatusDtoRes>(transactionStatus, HttpStatus.OK);		
 	}
 	

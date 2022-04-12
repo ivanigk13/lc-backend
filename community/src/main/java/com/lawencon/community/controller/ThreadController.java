@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,9 +31,7 @@ public class ThreadController {
 	private final ThreadService threadService;
 	
 	@GetMapping
-	public ResponseEntity<GetAllThreadDtoRes> getAll(
-							@RequestParam(value = "start", required = false) Integer start,
-							@RequestParam(value = "max", required = false) Integer max) throws Exception{
+	public ResponseEntity<GetAllThreadDtoRes> getAll(Integer start, Integer max) throws Exception{
 		GetAllThreadDtoRes thread = threadService.getAll(start, max);
 		return new ResponseEntity<GetAllThreadDtoRes>(thread, HttpStatus.OK);		
 	}

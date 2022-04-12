@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.community.dto.category.DeleteCategoryDtoRes;
@@ -51,9 +50,7 @@ public class CategoryController {
 	}
 	
 	@GetMapping()
-	public ResponseEntity<GetAllCategoryDtoRes> getAll(
-							@RequestParam(value = "start", required = false) Integer start,
-							@RequestParam(value = "max", required = false) Integer max) throws Exception{
+	public ResponseEntity<GetAllCategoryDtoRes> getAll(Integer start, Integer max) throws Exception{
 		GetAllCategoryDtoRes category = categoryService.getAll(start, max);
 		return new ResponseEntity<GetAllCategoryDtoRes>(category, HttpStatus.OK);		
 	}

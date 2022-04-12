@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.community.dto.province.GetAllProvinceDtoRes;
@@ -22,9 +21,7 @@ public class ProvinceController {
 	private final ProvinceService provinceService;
 	
 	@GetMapping
-	public ResponseEntity<GetAllProvinceDtoRes> getAll(
-							@RequestParam(value = "start", required = false) Integer start,
-							@RequestParam(value = "max", required = false) Integer max) throws Exception{
+	public ResponseEntity<GetAllProvinceDtoRes> getAll(Integer start, Integer max) throws Exception{
 		GetAllProvinceDtoRes result = provinceService.getAll(start, max);
 		return new ResponseEntity<GetAllProvinceDtoRes>(result, HttpStatus.OK);
 	}

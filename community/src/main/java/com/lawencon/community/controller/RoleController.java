@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.community.dto.role.DeleteRoleDtoRes;
@@ -33,10 +32,8 @@ public class RoleController {
 	private final RoleService roleService;
 
 	@GetMapping
-	public ResponseEntity<GetAllRoleDtoRes> getAll(
-							@RequestParam(value = "start", required = false) Integer start,
-							@RequestParam(value = "max", required = false) Integer max) throws Exception{
-		GetAllRoleDtoRes result = roleService.getAll(start,max);
+	public ResponseEntity<GetAllRoleDtoRes> getAll(String query, Integer start, Integer max) throws Exception{
+		GetAllRoleDtoRes result = roleService.getAll(query,start,max);
 		return new ResponseEntity<GetAllRoleDtoRes>(result, HttpStatus.OK);
 	}
 	

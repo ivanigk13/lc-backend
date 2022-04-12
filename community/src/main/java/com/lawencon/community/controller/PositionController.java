@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.community.dto.position.DeletePositionDtoRes;
@@ -33,9 +32,7 @@ public class PositionController {
 	private final PositionService positionService;
 	
 	@GetMapping
-	public ResponseEntity<GetAllPositionDtoRes> getAll(
-							@RequestParam(value = "start", required = false) Integer start,
-							@RequestParam(value = "max", required = false) Integer max) throws Exception{
+	public ResponseEntity<GetAllPositionDtoRes> getAll(Integer start, Integer max) throws Exception{
 		GetAllPositionDtoRes result = positionService.getAll(start, max);
 		return new ResponseEntity<GetAllPositionDtoRes>(result, HttpStatus.OK);
 	}

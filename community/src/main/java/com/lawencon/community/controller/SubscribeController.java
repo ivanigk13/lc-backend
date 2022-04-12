@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.community.dto.subscribe.DeleteSubscribeDtoRes;
@@ -33,9 +32,7 @@ public class SubscribeController {
 	private final SubscribeService subscribeService;
 	
 	@GetMapping
-	public ResponseEntity<GetAllSubscribeDtoRes> getAll(
-							@RequestParam(value = "start", required = false) Integer start,
-							@RequestParam(value = "max", required = false) Integer max) throws Exception{
+	public ResponseEntity<GetAllSubscribeDtoRes> getAll(Integer start, Integer max) throws Exception{
 		GetAllSubscribeDtoRes subscribe = subscribeService.getAll(start, max);
 		return new ResponseEntity<GetAllSubscribeDtoRes>(subscribe, HttpStatus.OK);		
 	}

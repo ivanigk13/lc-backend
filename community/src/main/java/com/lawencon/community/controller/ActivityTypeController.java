@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,6 +31,12 @@ public class ActivityTypeController {
 
 	private final ActivityTypeService activityTypeService;
 	
+	@GetMapping()
+	public ResponseEntity<GetAllActivityTypeDtoRes> getAll(String query, Integer start, Integer max) throws Exception{
+		GetAllActivityTypeDtoRes activityType = activityTypeService.getAll(query, start, max);
+		return new ResponseEntity<GetAllActivityTypeDtoRes>(activityType, HttpStatus.OK);		
+	}
+	
 	@PostMapping
 	public ResponseEntity<InsertActivityTypeDtoRes> insert(@RequestPart @Valid InsertActivityTypeDtoReq data) throws Exception{
 		InsertActivityTypeDtoRes activityType = activityTypeService.insert(data);
@@ -48,14 +53,6 @@ public class ActivityTypeController {
 	public ResponseEntity<GetByIdActivityTypeDtoRes> getById(@PathVariable("id") String id) throws Exception{
 		GetByIdActivityTypeDtoRes activityType = activityTypeService.getById(id);
 		return new ResponseEntity<GetByIdActivityTypeDtoRes>(activityType, HttpStatus.OK);		
-	}
-	
-	@GetMapping()
-	public ResponseEntity<GetAllActivityTypeDtoRes> getAll(
-							@RequestParam(value = "start", required = false) Integer start,
-							@RequestParam(value = "max", required = false) Integer max) throws Exception{
-		GetAllActivityTypeDtoRes activityType = activityTypeService.getAll(start, max);
-		return new ResponseEntity<GetAllActivityTypeDtoRes>(activityType, HttpStatus.OK);		
 	}
 	
 	@DeleteMapping("{id}")

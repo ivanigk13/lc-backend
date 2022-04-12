@@ -22,7 +22,7 @@ import com.lawencon.community.service.SocialMediaService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("social-media")
+@RequestMapping("social-medias")
 @RequiredArgsConstructor
 public class SocialMediaController {
 	
@@ -30,7 +30,7 @@ public class SocialMediaController {
 	
 	@GetMapping("{id}")
 	public ResponseEntity<GetByIdSocialMediaDtoRes> getById(@PathVariable("id") String id) throws Exception{
-		GetByIdSocialMediaDtoRes socialMedia = socialMediaService.getByUserId(id);
+		GetByIdSocialMediaDtoRes socialMedia = socialMediaService.getById(id);
 		return new ResponseEntity<GetByIdSocialMediaDtoRes>(socialMedia, HttpStatus.OK);		
 	}
 	
@@ -44,5 +44,11 @@ public class SocialMediaController {
 	public ResponseEntity<UpdateSocialMediaDtoRes> update(@RequestBody @Valid UpdateSocialMediaDtoReq data) throws Exception{
 		UpdateSocialMediaDtoRes socialMedia = socialMediaService.update(data);
 		return new ResponseEntity<UpdateSocialMediaDtoRes>(socialMedia, HttpStatus.OK);		
+	}
+	
+	@GetMapping("user/{id}")
+	public ResponseEntity<GetByIdSocialMediaDtoRes> getByUserId(@PathVariable("id") String id) throws Exception{
+		GetByIdSocialMediaDtoRes socialMedia = socialMediaService.getByUserId(id);
+		return new ResponseEntity<GetByIdSocialMediaDtoRes>(socialMedia, HttpStatus.OK);		
 	}
 }

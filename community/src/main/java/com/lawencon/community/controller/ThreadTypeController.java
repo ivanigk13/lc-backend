@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.community.dto.threadtype.DeleteThreadTypeDtoRes;
@@ -33,9 +32,7 @@ public class ThreadTypeController {
 	private final ThreadTypeService threadTypeService;
 	
 	@GetMapping
-	public ResponseEntity<GetAllThreadTypeDtoRes> getAll(
-							@RequestParam(value = "start", required = false) Integer start,
-							@RequestParam(value = "max", required = false) Integer max) throws Exception{
+	public ResponseEntity<GetAllThreadTypeDtoRes> getAll(Integer start, Integer max) throws Exception{
 		GetAllThreadTypeDtoRes threadType = threadTypeService.getAll(start, max);
 		return new ResponseEntity<GetAllThreadTypeDtoRes>(threadType, HttpStatus.OK);		
 	}
