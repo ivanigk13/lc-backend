@@ -153,8 +153,13 @@ public class ArticleService extends BaseCommunityService {
 		Article article = articleDao.getById(id);
 		if(article!=null) {
 			GetArticleDtoDataRes dataRes = new GetArticleDtoDataRes();
-			dataRes.setId(article.getId());
+			
+			Profile profile = profileDao.getByUserId(article.getCreatedBy());
+			dataRes.setPublisherName(profile.getFullName());
+			dataRes.setPublishedTime(article.getCreatedAt());
+			if(article.getFile() !=null) {
 			dataRes.setFileId(article.getFile().getId());
+			}
 			dataRes.setTitle(article.getTitle());
 			dataRes.setContent(article.getContent());
 			dataRes.setVersion(article.getVersion());
