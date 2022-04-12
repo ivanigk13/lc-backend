@@ -50,7 +50,10 @@ public class ProfileService extends BaseCommunityService {
 			profile.setIndustry(industry);
 			Position position = new Position();
 			position.setId(profileReq.getPositionId());
-			profile.setPosition(position);		
+			profile.setPosition(position);
+			SocialMedia socialMedia = new SocialMedia();
+			socialMedia.setId(profileReq.getSocialMediaId());
+			profile.setSocialMedia(socialMedia);
 			profile.setCreatedBy(getId());
 			
 			begin();
@@ -85,20 +88,24 @@ public class ProfileService extends BaseCommunityService {
 			position.setId(profileReq.getPositionId());
 			profile.setPosition(position);
 			City city = new City();
-			city.setId(profileReq.getCityId());
-			profile.setCity(city);
-			
-			File file = new File();
-			String splitterFile = photo.getOriginalFilename().substring(
-					photo.getOriginalFilename().lastIndexOf(".") + 1, photo.getOriginalFilename().length());
-			file.setExtensionName(splitterFile);
-			file.setContent(photo.getBytes());
-			file.setCreatedBy(getId());
+			if(profileReq.getCityId()!=null) {
+				city.setId(profileReq.getCityId());
+				profile.setCity(city);
+			}
 			
 			begin();
-			file = fileDao.save(file);
 			
-			profile.setFile(file);
+			File file = new File();
+			if(photo!=null) {
+				String splitterFile = photo.getOriginalFilename().substring(
+						photo.getOriginalFilename().lastIndexOf(".") + 1, photo.getOriginalFilename().length());
+				file.setExtensionName(splitterFile);
+				file.setContent(photo.getBytes());
+				file.setCreatedBy(getId());
+				file = fileDao.save(file);
+				profile.setFile(file);
+			}
+			
 			if(profileReq.getSocialMediaId() != null) {
 				SocialMedia socialMedia = new SocialMedia();
 				socialMedia.setId(profileReq.getSocialMediaId());
@@ -107,7 +114,7 @@ public class ProfileService extends BaseCommunityService {
 			profile.setFullName(profileReq.getFullName());
 			profile.setCompanyName(profileReq.getCompanyName());
 			profile.setPhoneNumber(profileReq.getPhoneNumber());
-			profile.setPostalCode(profileReq.getPostalCode());
+			if(profileReq.getPostalCode()!=null) profile.setPostalCode(profileReq.getPostalCode());
 			profile.setUpdatedBy(getId());
 			profile.setVersion(profileReq.getVersion());
 			profile.setIsActive(profileReq.getIsActive());
@@ -136,12 +143,10 @@ public class ProfileService extends BaseCommunityService {
 		Profile profile = profileDao.getById(id);
 		GetProfileDtoDataRes profileDataRes = new GetProfileDtoDataRes();
 		profileDataRes.setId(profile.getId());
-		profileDataRes.setUserId(profile.getUser().getId());
 		profileDataRes.setIndustryId(profile.getIndustry().getId());
 		profileDataRes.setPositionId(profile.getPosition().getId());
 		if(profile.getCity()!=null) {
 			profileDataRes.setCityId(profile.getCity().getId());
-			profileDataRes.setProvinceId(profile.getCity().getProvince().getId());		
 		}
 		if(profile.getFile()!=null) {
 			profileDataRes.setFileId(profile.getFile().getId());
@@ -173,12 +178,10 @@ public class ProfileService extends BaseCommunityService {
 		profiles.forEach(profile -> {
 			GetProfileDtoDataRes profileDataRes = new GetProfileDtoDataRes();
 			profileDataRes.setId(profile.getId());
-			profileDataRes.setUserId(profile.getUser().getId());
 			profileDataRes.setIndustryId(profile.getIndustry().getId());
 			profileDataRes.setPositionId(profile.getPosition().getId());
 			if(profile.getCity()!=null) {
 				profileDataRes.setCityId(profile.getCity().getId());
-				profileDataRes.setProvinceId(profile.getCity().getProvince().getId());		
 			}
 			
 			if(profile.getSocialMedia() != null) {
@@ -229,7 +232,6 @@ public class ProfileService extends BaseCommunityService {
 		Profile profile = profileDao.getByUserId(id);
 		GetProfileDtoDataRes profileDataRes = new GetProfileDtoDataRes();
 		profileDataRes.setId(profile.getId());
-		profileDataRes.setUserId(profile.getUser().getId());
 		if(profile.getIndustry()!=null) {
 			profileDataRes.setIndustryId(profile.getIndustry().getId());
 		}
@@ -240,7 +242,6 @@ public class ProfileService extends BaseCommunityService {
 		if(profile.getCity()!=null) {
 			profileDataRes.setCityId(profile.getCity().getId());
 			if(profile.getCity().getProvince()!=null) {
-				profileDataRes.setProvinceId(profile.getCity().getProvince().getId());		
 			}
 		}
 		
