@@ -8,5 +8,6 @@ import lombok.Data;
 public class GetAllCategoryDtoRes {
 
 	private String msg;
+	private Long rows;
 	private List<GetCategoryDtoDataRes> data;
 }
