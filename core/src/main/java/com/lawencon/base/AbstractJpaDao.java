@@ -6,8 +6,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import org.hibernate.search.engine.search.query.SearchFetchable;
+import org.hibernate.search.mapper.orm.Search;
 import org.springframework.core.GenericTypeResolver;
 import org.springframework.stereotype.Repository;
+
+import com.lawencon.model.SearchQuery;
 
 /**
  * 
@@ -32,6 +36,29 @@ public class AbstractJpaDao<T extends BaseEntity> {
 		return em().createQuery("FROM " + clazz.getName(), clazz).getResultList();
 	}
 
+	public Long countAll() {
+		return (Long) em().createQuery("SELECT COUNT(id) FROM " + clazz.getName()).getSingleResult();
+	}
+
+	public List<T> getAll(int startPage, int maxPage) {
+		return em().createQuery("FROM " + clazz.getName(), clazz).setFirstResult(startPage).setMaxResults(maxPage)
+				.getResultList();
+	}
+
+	public SearchQuery<T> getAll(String query, int startPage, int maxPage, String... fields) {
+		SearchFetchable<T> searchObj = Search.session(ConnHandler.getManager()).search(clazz)
+				.where(f -> f.match().fields(fields).matching(query));
+
+		List<T> result = searchObj.fetch(startPage, maxPage).hits();
+		List<T> resultAll = searchObj.fetchAllHits();
+
+		SearchQuery<T> data = new SearchQuery<>();
+		data.setData(result);
+		data.setCount(resultAll.size());
+
+		return data;
+	}
+
 	public T save(T entity) throws Exception {
 		if (entity.getId() != null) {
 			entity = em().merge(entity);
@@ -42,7 +69,7 @@ public class AbstractJpaDao<T extends BaseEntity> {
 		return entity;
 	}
 
-	protected void delete(final T entity) throws Exception {
+	public void delete(final T entity) throws Exception {
 		em().remove(entity);
 	}
 
@@ -64,23 +91,12 @@ public class AbstractJpaDao<T extends BaseEntity> {
 		return ConnHandler.getManager();
 	}
 
-	protected <C> TypedQuery<C> createQuery(String sql, Class<C> clazz) {
+	public <C> TypedQuery<C> createQuery(String sql, Class<C> clazz) {
 		return em().createQuery(sql, clazz);
 	}
 
-	protected Query createNativeQuery(String sql) {
+	public Query createNativeQuery(String sql) {
 		return em().createNativeQuery(sql);
 	}
-	
-	public Long countAll() {
-        return (Long) em().createQuery("SELECT COUNT(id) FROM " + clazz.getName()).getSingleResult();
-    }
-
-    public List<T> getAll(int startPage, int maxPage) {
-        return em().createQuery("FROM " + clazz.getName(), clazz)
-                .setFirstResult(startPage)
-                .setMaxResults(maxPage)
-                .getResultList();
-    }
 
 }
