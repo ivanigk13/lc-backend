@@ -1,10 +1,6 @@
 package com.lawencon.community.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -40,11 +36,5 @@ public class TransactionStatus extends BaseEntity{
 	
 	@FullTextField
 	private String statusName;
-	
-	@OneToMany(mappedBy = "transactionStatus")
-	private Set<Activity> activity = new HashSet<Activity>();
-	
-	@OneToMany(mappedBy = "transactionStatus")
-	private Set<Orders> order = new HashSet<Orders>();
 	
 }

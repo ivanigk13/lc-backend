@@ -6,6 +6,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
+
 import com.lawencon.base.BaseEntity;
 
 import lombok.Data;
@@ -32,7 +34,11 @@ public class City extends BaseEntity{
 	@ManyToOne
 	@JoinColumn(name = "province_id")
 	private Province province;
-	private String cityCode; 
+	
+	@FullTextField
+	private String cityCode;
+	
+	@FullTextField
 	private String cityName; 
 	
 }

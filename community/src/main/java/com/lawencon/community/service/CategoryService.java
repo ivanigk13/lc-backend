@@ -17,6 +17,7 @@ import com.lawencon.community.dto.category.UpdateCategoryDtoDataRes;
 import com.lawencon.community.dto.category.UpdateCategoryDtoReq;
 import com.lawencon.community.dto.category.UpdateCategoryDtoRes;
 import com.lawencon.community.model.Category;
+import com.lawencon.model.SearchQuery;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,14 +27,12 @@ public class CategoryService extends BaseCommunityService {
 
 	private final CategoryDao categoryDao;
 
-	public GetAllCategoryDtoRes getAll(Integer start, Integer max) throws Exception {
-		List<Category> categories;	
-		if(start == null) categories = categoryDao.getAll();
-		else categories = categoryDao.getAll(start, max);
+	public GetAllCategoryDtoRes getAll(String query, Integer start, Integer max) throws Exception {
+		SearchQuery<Category> categories = categoryDao.findAll(query, start, max);
 		
 		List<GetCategoryDtoDataRes> data = new ArrayList<>();
 
-		categories.forEach(list -> {
+		categories.getData().forEach(list -> {
 			GetCategoryDtoDataRes category = new GetCategoryDtoDataRes();
 			category.setId(list.getId());
 			category.setCategoryName(list.getCategoryName());

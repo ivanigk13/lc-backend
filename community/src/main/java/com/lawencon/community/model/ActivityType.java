@@ -39,6 +39,5 @@ public class ActivityType extends BaseEntity{
 	@FullTextField
 	private String activityTypeName;
 	
-	
 	private BigDecimal price;
 }

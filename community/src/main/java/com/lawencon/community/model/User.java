@@ -8,7 +8,6 @@ import javax.persistence.UniqueConstraint;
 
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
 
 import com.lawencon.base.BaseEntity;
 
@@ -36,7 +35,6 @@ public class User extends BaseEntity{
 
 	@OneToOne
 	@JoinColumn(name = "role_id")
-	@IndexedEmbedded
 	private Role role;
 	
 	@FullTextField

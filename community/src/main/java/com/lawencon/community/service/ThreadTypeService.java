@@ -17,6 +17,7 @@ import com.lawencon.community.dto.threadtype.UpdateThreadTypeDtoDataRes;
 import com.lawencon.community.dto.threadtype.UpdateThreadTypeDtoReq;
 import com.lawencon.community.dto.threadtype.UpdateThreadTypeDtoRes;
 import com.lawencon.community.model.ThreadType;
+import com.lawencon.model.SearchQuery;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,14 +27,12 @@ public class ThreadTypeService extends BaseCommunityService {
 	
 	private final ThreadTypeDao threadTypeDao;
 	
-	public GetAllThreadTypeDtoRes getAll(Integer start, Integer max) throws Exception {
-		List<ThreadType> threadTypes;
-		if(start==null) threadTypes = threadTypeDao.getAll();
-		else threadTypes = threadTypeDao.getAll(start, max);
+	public GetAllThreadTypeDtoRes getAll(String query, Integer start, Integer max) throws Exception {
+		SearchQuery<ThreadType> threadTypes = threadTypeDao.findAll(query, start, max);
 		
 		List<GetThreadTypeDtoDataRes> data = new ArrayList<GetThreadTypeDtoDataRes>();
 		
-		threadTypes.forEach(threadType -> {
+		threadTypes.getData().forEach(threadType -> {
 			GetThreadTypeDtoDataRes threadTypeDataRes = new GetThreadTypeDtoDataRes();
 			threadTypeDataRes.setId(threadType.getId());
 			threadTypeDataRes.setThreadTypeCode(threadType.getThreadTypeCode());
@@ -46,6 +45,7 @@ public class ThreadTypeService extends BaseCommunityService {
 		
 		GetAllThreadTypeDtoRes threadTypeRes = new GetAllThreadTypeDtoRes();
 		threadTypeRes.setData(data);
+		threadTypeRes.setRows(threadTypeDao.countAll());
 		
 		return threadTypeRes;
 	}

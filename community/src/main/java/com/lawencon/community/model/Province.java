@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
+
 import com.lawencon.base.BaseEntity;
 
 import lombok.Data;
@@ -26,7 +28,11 @@ import lombok.EqualsAndHashCode;
 public class Province extends BaseEntity{
 
 	private static final long serialVersionUID = -8710407403332050955L;
+	
+	@FullTextField
 	private String provinceCode;
+	
+	@FullTextField
 	private String provinceName;
 }
 

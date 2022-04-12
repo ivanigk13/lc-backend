@@ -17,6 +17,7 @@ import com.lawencon.community.dto.industry.UpdateIndustryDtoDataRes;
 import com.lawencon.community.dto.industry.UpdateIndustryDtoReq;
 import com.lawencon.community.dto.industry.UpdateIndustryDtoRes;
 import com.lawencon.community.model.Industry;
+import com.lawencon.model.SearchQuery;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,13 +27,11 @@ public class IndustryService extends BaseCommunityService {
 
 	private final IndustryDao industryDao;
 	
-	public GetAllIndustryDtoRes getAll(Integer start, Integer max) throws Exception{
-		List<Industry> industries;	
-		if(start == null) industries = industryDao.getAll();
-		else industries = industryDao.getAll(start, max);
+	public GetAllIndustryDtoRes getAll(String query, Integer start, Integer max) throws Exception{
+		SearchQuery<Industry> industries = industryDao.findAll(query, start, max);
 		List<GetIndustryDtoDataRes> data = new ArrayList<>();
 		
-		industries.forEach(list -> {
+		industries.getData().forEach(list -> {
 			GetIndustryDtoDataRes industry = new GetIndustryDtoDataRes();
 			industry.setId(list.getId());
 			industry.setIndustryName(list.getIndustryName());
@@ -44,6 +43,7 @@ public class IndustryService extends BaseCommunityService {
 		
 		GetAllIndustryDtoRes result = new GetAllIndustryDtoRes();
 		result.setData(data);
+		result.setRows(industryDao.countAll());
 		
 		return result;
 	}

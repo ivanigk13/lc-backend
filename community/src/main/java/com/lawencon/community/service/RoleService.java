@@ -17,6 +17,7 @@ import com.lawencon.community.dto.role.UpdateRoleDtoDataRes;
 import com.lawencon.community.dto.role.UpdateRoleDtoReq;
 import com.lawencon.community.dto.role.UpdateRoleDtoRes;
 import com.lawencon.community.model.Role;
+import com.lawencon.model.SearchQuery;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,14 +27,11 @@ public class RoleService extends BaseCommunityService {
 	
 	private final RoleDao roleDao;
 	
-	public GetAllRoleDtoRes getAll(Integer start, Integer max) throws Exception {
-		List<Role> roles;
-		if(start == null) roles = roleDao.getAll();
-		else roles = roleDao.getAll(start, max);
-		
+	public GetAllRoleDtoRes getAll(String query, Integer start, Integer max) throws Exception {
+		SearchQuery<Role> roles = roleDao.findAll(query, start, max);
 		List<GetRoleDtoDataRes> data = new ArrayList<GetRoleDtoDataRes>();
 		
-		roles.forEach(role -> {
+		roles.getData().forEach(role -> {
 			GetRoleDtoDataRes roleDataRes = new GetRoleDtoDataRes();
 			roleDataRes.setId(role.getId());
 			roleDataRes.setRoleCode(role.getRoleCode());
@@ -46,6 +44,7 @@ public class RoleService extends BaseCommunityService {
 		
 		GetAllRoleDtoRes roleRes = new GetAllRoleDtoRes();
 		roleRes.setData(data);
+		roleRes.setRows(roleDao.countAll());
 		
 		return roleRes;
 	}

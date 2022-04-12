@@ -17,6 +17,7 @@ import com.lawencon.community.dto.activitytype.UpdateActivityTypeDtoDataRes;
 import com.lawencon.community.dto.activitytype.UpdateActivityTypeDtoReq;
 import com.lawencon.community.dto.activitytype.UpdateActivityTypeDtoRes;
 import com.lawencon.community.model.ActivityType;
+import com.lawencon.model.SearchQuery;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,14 +27,12 @@ public class ActivityTypeService extends BaseCommunityService {
 
 	private final ActivityTypeDao activityTypeDao;
 
-	public GetAllActivityTypeDtoRes getAll(Integer start, Integer max) throws Exception {
-		List<ActivityType> activityTypes;	
-		if(start == null) activityTypes = activityTypeDao.getAll();
-		else activityTypes = activityTypeDao.getAll(start, max);
+	public GetAllActivityTypeDtoRes getAll(String query, Integer start, Integer max) throws Exception {
+		SearchQuery<ActivityType> activityTypes = activityTypeDao.findAll(query, start, max);
 		
 		List<GetActivityTypeDtoDataRes> data = new ArrayList<>();
 
-		activityTypes.forEach(list -> {
+		activityTypes.getData().forEach(list -> {
 			GetActivityTypeDtoDataRes activityType = new GetActivityTypeDtoDataRes();
 			activityType.setId(list.getId());
 			activityType.setActivityTypeName(list.getActivityTypeName());
@@ -46,6 +45,7 @@ public class ActivityTypeService extends BaseCommunityService {
 
 		GetAllActivityTypeDtoRes result = new GetAllActivityTypeDtoRes();
 		result.setData(data);
+		result.setRows(activityTypeDao.countAll());
 
 		return result;
 	}

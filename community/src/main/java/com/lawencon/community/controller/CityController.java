@@ -31,6 +31,18 @@ public class CityController {
 
 	private final CityService cityService;
 	
+	@GetMapping
+	public ResponseEntity<GetAllCityDtoRes> getAll(String query, Integer start, Integer max) throws Exception{
+		GetAllCityDtoRes city = cityService.getAll(query, start, max);
+		return new ResponseEntity<GetAllCityDtoRes>(city, HttpStatus.OK);		
+	}
+	
+	@GetMapping("{id}")
+	public ResponseEntity<GetByIdCityDtoRes> getById(@PathVariable("id") String id) throws Exception{
+		GetByIdCityDtoRes city = cityService.getById(id);
+		return new ResponseEntity<GetByIdCityDtoRes>(city, HttpStatus.OK);		
+	}
+	
 	@PostMapping
 	public ResponseEntity<InsertCityDtoRes> insert(@RequestPart @Valid InsertCityDtoReq data) throws Exception{
 		InsertCityDtoRes city = cityService.insert(data);
@@ -41,18 +53,6 @@ public class CityController {
 	public ResponseEntity<UpdateCityDtoRes> update(@RequestPart @Valid UpdateCityDtoReq data) throws Exception{
 		UpdateCityDtoRes city = cityService.update(data);
 		return new ResponseEntity<UpdateCityDtoRes>(city, HttpStatus.OK);		
-	}
-	
-	@GetMapping("{id}")
-	public ResponseEntity<GetByIdCityDtoRes> getById(@PathVariable("id") String id) throws Exception{
-		GetByIdCityDtoRes city = cityService.getById(id);
-		return new ResponseEntity<GetByIdCityDtoRes>(city, HttpStatus.OK);		
-	}
-	
-	@GetMapping
-	public ResponseEntity<GetAllCityDtoRes> getAll(Integer start, Integer max) throws Exception{
-		GetAllCityDtoRes city = cityService.getAll(start, max);
-		return new ResponseEntity<GetAllCityDtoRes>(city, HttpStatus.OK);		
 	}
 	
 	@DeleteMapping("{id}")

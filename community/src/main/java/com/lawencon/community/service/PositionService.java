@@ -17,6 +17,7 @@ import com.lawencon.community.dto.position.UpdatePositionDtoDataRes;
 import com.lawencon.community.dto.position.UpdatePositionDtoReq;
 import com.lawencon.community.dto.position.UpdatePositionDtoRes;
 import com.lawencon.community.model.Position;
+import com.lawencon.model.SearchQuery;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,14 +27,12 @@ public class PositionService extends BaseCommunityService {
 	
 	private final PositionDao positionDao;
 
-	public GetAllPositionDtoRes getAll(Integer start, Integer max) throws Exception {
-		List<Position> positions;
-		if(start == null) positions = positionDao.getAll();
-		else positions = positionDao.getAll(start, max);
+	public GetAllPositionDtoRes getAll(String query, Integer start, Integer max) throws Exception {
+		SearchQuery<Position> positions = positionDao.findAll(query, start, max);
 		
 		List<GetPositionDtoDataRes> data = new ArrayList<GetPositionDtoDataRes>();
 		
-		positions.forEach(position -> {
+		positions.getData().forEach(position -> {
 			GetPositionDtoDataRes positionDataRes = new GetPositionDtoDataRes();
 			positionDataRes.setId(position.getId());
 			positionDataRes.setPositionCode(position.getPositionCode());
@@ -46,6 +45,7 @@ public class PositionService extends BaseCommunityService {
 		
 		GetAllPositionDtoRes positionRes = new GetAllPositionDtoRes();
 		positionRes.setData(data);
+		positionRes.setRows(positionDao.countAll());
 		
 		return positionRes;
 	}

@@ -17,6 +17,7 @@ import com.lawencon.community.dto.transactionstatus.UpdateTransactionStatusDtoDa
 import com.lawencon.community.dto.transactionstatus.UpdateTransactionStatusDtoReq;
 import com.lawencon.community.dto.transactionstatus.UpdateTransactionStatusDtoRes;
 import com.lawencon.community.model.TransactionStatus;
+import com.lawencon.model.SearchQuery;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,14 +27,12 @@ public class TransactionStatusService extends BaseCommunityService {
 
 	private final TransactionStatusDao transactionStatusDao;
 
-	public GetAllTransactionStatusDtoRes getAll(Integer start, Integer max) throws Exception {
-		List<TransactionStatus> transactionStatuses;
-		if(start==null) transactionStatuses = transactionStatusDao.getAll();
-		else transactionStatuses = transactionStatusDao.getAll(start, max);
+	public GetAllTransactionStatusDtoRes getAll(String query, Integer start, Integer max) throws Exception {
+		SearchQuery<TransactionStatus> transactionStatuses = transactionStatusDao.findAll(query,start, max);
 		
 		List<GetTransactionStatusDtoDataRes> data = new ArrayList<>();
 
-		transactionStatuses.forEach(list -> {
+		transactionStatuses.getData().forEach(list -> {
 			GetTransactionStatusDtoDataRes transactionStatus = new GetTransactionStatusDtoDataRes();
 			transactionStatus.setId(list.getId());
 			transactionStatus.setStatusName(list.getStatusName());
@@ -46,6 +45,7 @@ public class TransactionStatusService extends BaseCommunityService {
 
 		GetAllTransactionStatusDtoRes result = new GetAllTransactionStatusDtoRes();
 		result.setData(data);
+		result.setRows(transactionStatusDao.countAll());
 
 		return result;
 	}

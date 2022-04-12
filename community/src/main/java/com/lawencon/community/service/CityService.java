@@ -19,6 +19,7 @@ import com.lawencon.community.dto.city.UpdateCityDtoReq;
 import com.lawencon.community.dto.city.UpdateCityDtoRes;
 import com.lawencon.community.model.City;
 import com.lawencon.community.model.Province;
+import com.lawencon.model.SearchQuery;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,14 +30,12 @@ public class CityService extends BaseCommunityService {
 	private final CityDao cityDao;
 	private final ProvinceDao provinceDao;
 
-	public GetAllCityDtoRes getAll(Integer start, Integer max) throws Exception {
-		List<City> cities;		
-		if(start == null) cities = cityDao.getAll();
-		else cities = cityDao.getAll(start, max);
+	public GetAllCityDtoRes getAll(String query, Integer start, Integer max) throws Exception {
+		SearchQuery<City> cities = cityDao.findAll(query, start, max);
 		
 		List<GetCityDtoDataRes> data = new ArrayList<>();
 
-		cities.forEach(list -> {
+		cities.getData().forEach(list -> {
 			GetCityDtoDataRes city = new GetCityDtoDataRes();
 			city.setId(list.getId());
 			city.setProvinceId(list.getProvince().getId());
@@ -49,6 +48,7 @@ public class CityService extends BaseCommunityService {
 
 		GetAllCityDtoRes result = new GetAllCityDtoRes();
 		result.setData(data);
+		result.setRows(cityDao.countAll());
 
 		return result;
 	}

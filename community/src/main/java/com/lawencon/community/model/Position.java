@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
+
 import com.lawencon.base.BaseEntity;
 
 import lombok.Data;
@@ -26,6 +28,10 @@ import lombok.EqualsAndHashCode;
 public class Position extends BaseEntity{
 
 	private static final long serialVersionUID = 3735559242985006384L;
+	
+	@FullTextField
 	private String positionCode;
+	
+	@FullTextField
 	private String positionName;
 }

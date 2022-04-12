@@ -32,8 +32,8 @@ public class PositionController {
 	private final PositionService positionService;
 	
 	@GetMapping
-	public ResponseEntity<GetAllPositionDtoRes> getAll(Integer start, Integer max) throws Exception{
-		GetAllPositionDtoRes result = positionService.getAll(start, max);
+	public ResponseEntity<GetAllPositionDtoRes> getAll(String query, Integer start, Integer max) throws Exception{
+		GetAllPositionDtoRes result = positionService.getAll(query, start, max);
 		return new ResponseEntity<GetAllPositionDtoRes>(result, HttpStatus.OK);
 	}
 	

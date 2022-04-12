@@ -31,6 +31,18 @@ public class IndustryController {
 
 	private final IndustryService industryService;
 	
+	@GetMapping
+	public ResponseEntity<GetAllIndustryDtoRes> getAll(String query, Integer start, Integer max) throws Exception{
+		GetAllIndustryDtoRes industry = industryService.getAll(query, start, max);
+		return new ResponseEntity<GetAllIndustryDtoRes>(industry, HttpStatus.OK);		
+	}
+	
+	@GetMapping("{id}")
+	public ResponseEntity<GetByIdIndustryDtoRes> getById(@PathVariable("id") String id) throws Exception{
+		GetByIdIndustryDtoRes industry = industryService.getById(id);
+		return new ResponseEntity<GetByIdIndustryDtoRes>(industry, HttpStatus.OK);		
+	}
+	
 	@PostMapping
 	public ResponseEntity<InsertIndustryDtoRes> insert(@RequestBody @Valid InsertIndustryDtoReq data) throws Exception{
 		InsertIndustryDtoRes industry = industryService.insert(data);
@@ -41,18 +53,6 @@ public class IndustryController {
 	public ResponseEntity<UpdateIndustryDtoRes> update(@RequestBody @Valid UpdateIndustryDtoReq data) throws Exception{
 		UpdateIndustryDtoRes industry = industryService.update(data);
 		return new ResponseEntity<UpdateIndustryDtoRes>(industry, HttpStatus.OK);		
-	}
-	
-	@GetMapping("{id}")
-	public ResponseEntity<GetByIdIndustryDtoRes> getById(@PathVariable("id") String id) throws Exception{
-		GetByIdIndustryDtoRes industry = industryService.getById(id);
-		return new ResponseEntity<GetByIdIndustryDtoRes>(industry, HttpStatus.OK);		
-	}
-	
-	@GetMapping
-	public ResponseEntity<GetAllIndustryDtoRes> getAll(Integer start, Integer max) throws Exception{
-		GetAllIndustryDtoRes industry = industryService.getAll(start, max);
-		return new ResponseEntity<GetAllIndustryDtoRes>(industry, HttpStatus.OK);		
 	}
 	
 	@DeleteMapping("{id}")

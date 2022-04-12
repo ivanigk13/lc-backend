@@ -27,6 +27,7 @@ import com.lawencon.community.dto.user.UpdateUserDtoReq;
 import com.lawencon.community.dto.user.UpdateUserDtoRes;
 import com.lawencon.community.model.Role;
 import com.lawencon.community.model.User;
+import com.lawencon.model.SearchQuery;
 
 import lombok.RequiredArgsConstructor;
 
@@ -41,14 +42,12 @@ public class UserService extends BaseCommunityService implements UserDetailsServ
 	private final String idCreate = "1";
 
 	
-	public GetAllUserDtoRes getAll(Integer start, Integer max) throws Exception {
-		List<User> users;
-		if(start==null) users = userDao.getAll();
-		else users = userDao.getAll(start, max);
+	public GetAllUserDtoRes getAll(String query, Integer start, Integer max) throws Exception {
+		SearchQuery<User> users = userDao.findAll(query, start, max);
 		
 		List<GetUserDtoDataRes> data = new ArrayList<GetUserDtoDataRes>();
 		
-		users.forEach(user -> {
+		users.getData().forEach(user -> {
 			GetUserDtoDataRes userDataRes = new GetUserDtoDataRes();
 			userDataRes.setId(user.getId());
 			userDataRes.setRoleId(user.getRole().getId());
@@ -63,6 +62,7 @@ public class UserService extends BaseCommunityService implements UserDetailsServ
 		
 		GetAllUserDtoRes userRes = new GetAllUserDtoRes();
 		userRes.setData(data);
+		userRes.setRows(userDao.countAll());
 		
 		return userRes;
 	}

@@ -1,10 +1,6 @@
 package com.lawencon.community.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -40,8 +36,5 @@ public class Role extends BaseEntity{
 	
 	@FullTextField
 	private String roleName;
-	
-	@OneToMany(mappedBy = "role")
-	private Set<User> user = new HashSet<User>();
 	
 }

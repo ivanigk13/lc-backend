@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
+
 import com.lawencon.base.BaseEntity;
 
 import lombok.Data;
@@ -26,6 +28,10 @@ import lombok.EqualsAndHashCode;
 public class Industry extends BaseEntity{
 
 	private static final long serialVersionUID = 5070956208128726910L;
+	
+	@FullTextField
 	private String industryCode;
+	
+	@FullTextField
 	private String industryName;
 }

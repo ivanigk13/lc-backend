@@ -31,6 +31,18 @@ public class CategoryController {
 
 	private final CategoryService categoryService;
 	
+	@GetMapping()
+	public ResponseEntity<GetAllCategoryDtoRes> getAll(String query, Integer start, Integer max) throws Exception{
+		GetAllCategoryDtoRes category = categoryService.getAll(query, start, max);
+		return new ResponseEntity<GetAllCategoryDtoRes>(category, HttpStatus.OK);		
+	}
+	
+	@GetMapping("{id}")
+	public ResponseEntity<GetByIdCategoryDtoRes> getById(@PathVariable("id") String id) throws Exception{
+		GetByIdCategoryDtoRes category = categoryService.getById(id);
+		return new ResponseEntity<GetByIdCategoryDtoRes>(category, HttpStatus.OK);		
+	}
+	
 	@PostMapping
 	public ResponseEntity<InsertCategoryDtoRes> insert(@RequestBody @Valid InsertCategoryDtoReq data) throws Exception{
 		InsertCategoryDtoRes category = categoryService.insert(data);
@@ -41,18 +53,6 @@ public class CategoryController {
 	public ResponseEntity<UpdateCategoryDtoRes> update(@RequestBody @Valid UpdateCategoryDtoReq data) throws Exception{
 		UpdateCategoryDtoRes category = categoryService.update(data);
 		return new ResponseEntity<UpdateCategoryDtoRes>(category, HttpStatus.OK);		
-	}
-	
-	@GetMapping("{id}")
-	public ResponseEntity<GetByIdCategoryDtoRes> getById(@PathVariable("id") String id) throws Exception{
-		GetByIdCategoryDtoRes category = categoryService.getById(id);
-		return new ResponseEntity<GetByIdCategoryDtoRes>(category, HttpStatus.OK);		
-	}
-	
-	@GetMapping()
-	public ResponseEntity<GetAllCategoryDtoRes> getAll(Integer start, Integer max) throws Exception{
-		GetAllCategoryDtoRes category = categoryService.getAll(start, max);
-		return new ResponseEntity<GetAllCategoryDtoRes>(category, HttpStatus.OK);		
 	}
 	
 	@DeleteMapping("{id}")

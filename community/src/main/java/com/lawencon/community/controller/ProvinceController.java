@@ -21,8 +21,8 @@ public class ProvinceController {
 	private final ProvinceService provinceService;
 	
 	@GetMapping
-	public ResponseEntity<GetAllProvinceDtoRes> getAll(Integer start, Integer max) throws Exception{
-		GetAllProvinceDtoRes result = provinceService.getAll(start, max);
+	public ResponseEntity<GetAllProvinceDtoRes> getAll(String query, Integer start, Integer max) throws Exception{
+		GetAllProvinceDtoRes result = provinceService.getAll(query, start, max);
 		return new ResponseEntity<GetAllProvinceDtoRes>(result, HttpStatus.OK);
 	}
 	
