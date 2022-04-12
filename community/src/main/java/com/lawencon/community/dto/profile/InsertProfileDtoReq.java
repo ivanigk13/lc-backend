@@ -27,4 +27,7 @@ public class InsertProfileDtoReq {
 	
 	@NotNull(message = "Position Id must be filled")
 	private String positionId;
+	
+	@NotNull(message = "Social Media Id must be filled")
+	private String socialMediaId;
 }

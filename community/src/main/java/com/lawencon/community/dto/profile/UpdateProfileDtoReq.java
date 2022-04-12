@@ -20,6 +20,7 @@ public class UpdateProfileDtoReq {
 	
 	private String cityId;
 	private String socialMediaId;
+	private String fileId;
 	
 	@NotEmpty(message = "Full Name must be filled")
 	@Size(min = 1, max = 50, message = "full name min length is 1 and max length is 50")
