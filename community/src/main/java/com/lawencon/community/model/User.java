@@ -1,5 +1,7 @@
 package com.lawencon.community.model;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -42,5 +44,8 @@ public class User extends BaseEntity{
 	
 	@FullTextField
 	private String password; 
+	
+	
+	private LocalDateTime subscriptionEnd;
 	
 }

@@ -122,8 +122,22 @@ public class ActivityDao extends AbstractJpaDao<Activity>{
 	}
 	
 	public List<Activity> getPendingActivity(int startPage, int maxPage) {
-		return createQuery("FROM Activity", Activity.class).setFirstResult(startPage).setMaxResults(maxPage)
+		return createQuery("FROM Activity WHERE transactionStatus.statusCode = :code", Activity.class)
+				.setParameter("code", TransactionStatusConstant.PENDING.getStatusCode())
+				.setFirstResult(startPage).setMaxResults(maxPage)
 				.getResultList();
+	}
+	
+	public Long countAllPending() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("SELECT COUNT(a.id) FROM activity a ");
+		builder.append("JOIN transaction_status ts ON a.transaction_status_id = ts.id ");
+		builder.append("WHERE ts.status_code = :code");
+		Object result = createNativeQuery(builder.toString())
+							.setParameter("code", TransactionStatusConstant.PENDING.getStatusCode())
+							.getSingleResult();
+		Long counter = Long.valueOf(result.toString());
+		return counter;
 	}
 	
 	public List<Activity> getApprovedEventActivity() {

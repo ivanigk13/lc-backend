@@ -38,27 +38,28 @@ public class ThreadBookmarkService extends BaseCommunityService {
 		User user = userDao.getById(data.getUserId());
 		threadBookmark.setUser(user);
 		threadBookmark.setCreatedBy(getId());
-		
 
 		begin();
 		ThreadBookmark threadBookmarkInsert = threadBookmarkDao.save(threadBookmark);
 		commit();
-		
+
 		InsertThreadBookmarkDtoDataRes threadBookmarkId = new InsertThreadBookmarkDtoDataRes();
 		threadBookmarkId.setId(threadBookmarkInsert.getId());
 
 		InsertThreadBookmarkDtoRes result = new InsertThreadBookmarkDtoRes();
 		result.setData(threadBookmarkId);
 		result.setMsg("Insert Successfully");
-		
+
 		return result;
 	}
 
 	public GetAllThreadBookmarkDtoRes getAll(Integer start, Integer max) throws Exception {
 		List<ThreadBookmark> threadBookmarks;
-		if(start==null) threadBookmarks = threadBookmarkDao.getAll();
-		else threadBookmarks = threadBookmarkDao.getAll(start, max);
-		
+		if (start == null)
+			threadBookmarks = threadBookmarkDao.getAll();
+		else
+			threadBookmarks = threadBookmarkDao.getAll(start, max);
+
 		List<GetThreadBookmarkDtoDataRes> data = new ArrayList<>();
 
 		threadBookmarks.forEach(list -> {
@@ -76,9 +77,9 @@ public class ThreadBookmarkService extends BaseCommunityService {
 
 		return result;
 	}
-	
+
 	public GetAllThreadBookmarkDtoRes getAllThreadBookmarkByUserId(String id) throws Exception {
-		List<ThreadBookmark> threadBookmarks = threadBookmarkDao.getThreadBookmarkByUserId(id);				
+		List<ThreadBookmark> threadBookmarks = threadBookmarkDao.getThreadBookmarkByUserId(id);
 		List<GetThreadBookmarkDtoDataRes> data = new ArrayList<>();
 
 		threadBookmarks.forEach(list -> {
@@ -112,38 +113,41 @@ public class ThreadBookmarkService extends BaseCommunityService {
 
 		return result;
 	}
-	
+
 	public GetByIdThreadBookmarkDtoRes getThreadBookmarkByThreadId(String id) throws Exception {
 		ThreadBookmark threadBookmark = threadBookmarkDao.getThreadBookmarkByThreadId(id);
-		GetThreadBookmarkDtoDataRes threadBookmarkData = new GetThreadBookmarkDtoDataRes();
-		threadBookmarkData.setId(threadBookmark.getId());
-		threadBookmarkData.setThreadId(threadBookmark.getThread().getId());
-		threadBookmarkData.setUserId(threadBookmark.getUser().getId());
-		threadBookmarkData.setVersion(threadBookmark.getVersion());
-		threadBookmarkData.setIsActive(threadBookmark.getIsActive());
+		if (threadBookmark != null) {
+			GetThreadBookmarkDtoDataRes threadBookmarkData = new GetThreadBookmarkDtoDataRes();
+			threadBookmarkData.setId(threadBookmark.getId());
+			threadBookmarkData.setThreadId(threadBookmark.getThread().getId());
+			threadBookmarkData.setUserId(threadBookmark.getUser().getId());
+			threadBookmarkData.setVersion(threadBookmark.getVersion());
+			threadBookmarkData.setIsActive(threadBookmark.getIsActive());
 
-		GetByIdThreadBookmarkDtoRes result = new GetByIdThreadBookmarkDtoRes();
-		result.setData(threadBookmarkData);
-
-		return result;
+			GetByIdThreadBookmarkDtoRes result = new GetByIdThreadBookmarkDtoRes();
+			result.setData(threadBookmarkData);
+			return result;
+		}
+		
+		return null;
+		
 	}
-	
+
 	public DeleteThreadBookmarkDtoRes deleteById(String id) throws Exception {
-		try {			
+		try {
 			begin();
 			boolean isDeleted = threadBookmarkDao.deleteById(id);
 			commit();
-			
+
 			DeleteThreadBookmarkDtoRes threadBookmarkRes = new DeleteThreadBookmarkDtoRes();
-			if(isDeleted) {
+			if (isDeleted) {
 				threadBookmarkRes.setMsg("Delete Successfully");
 			} else {
 				threadBookmarkRes.setMsg("Delete Unsuccessfully");
 			}
-			
+
 			return threadBookmarkRes;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
 			throw new Exception(e);

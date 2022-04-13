@@ -309,6 +309,7 @@ public class ActivityService extends BaseCommunityService {
 		
 		GetAllActivityDtoRes activityRes = new GetAllActivityDtoRes();
 		activityRes.setData(data);
+		activityRes.setRows(activityDao.countAllPending());
 		
 		return activityRes;
 	}

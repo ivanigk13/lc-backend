@@ -60,7 +60,7 @@ public class UserDao extends AbstractJpaDao<User>{
 				sq.setData(data);
 				sq.setCount(count);
 			} else {
-				return getAll(query, startPage, maxPage, "role.roleCode", "role.roleName","email");
+				return getAll(query, startPage, maxPage, "email");
 			}
 		}
 
