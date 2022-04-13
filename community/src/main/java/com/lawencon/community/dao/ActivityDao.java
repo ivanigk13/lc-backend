@@ -16,6 +16,7 @@ import com.lawencon.community.model.ActivityType;
 import com.lawencon.community.model.Category;
 import com.lawencon.community.model.File;
 import com.lawencon.community.model.TransactionStatus;
+import com.lawencon.model.SearchQuery;
 
 @Repository
 public class ActivityDao extends AbstractJpaDao<Activity>{
@@ -398,5 +399,27 @@ public class ActivityDao extends AbstractJpaDao<Activity>{
 			activities.add(activity);
 		}
 		return activities;
+	}
+	
+	public SearchQuery<Activity> findAll(String query, Integer startPage, Integer maxPage) throws Exception {
+		SearchQuery<Activity> sq = new SearchQuery<>();
+		List<Activity> data = null;
+
+		if (startPage == null || maxPage == null) {
+			data = getAll();
+			sq.setData(data);
+		} else {
+			if (query == null) {
+				data = getAll(startPage, maxPage);
+				int count = countAll().intValue();
+
+				sq.setData(data);
+				sq.setCount(count);
+			} else {
+				return getAll(query, startPage, maxPage, "activityName");
+			}
+		}
+
+		return sq;
 	}
 }

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +33,12 @@ import lombok.RequiredArgsConstructor;
 public class ActivityController {
 
 	private final ActivityService activityService;
+	
+	@GetMapping
+	public ResponseEntity<GetAllActivityDtoRes> getAll(String query, Integer start, Integer max) throws Exception{
+		GetAllActivityDtoRes activity = activityService.getAll(query, start, max);
+		return new ResponseEntity<GetAllActivityDtoRes>(activity, HttpStatus.OK);		
+	}
 	
 	@PostMapping
 	public ResponseEntity<InsertActivityDtoRes> insert(
@@ -78,12 +83,6 @@ public class ActivityController {
 	@GetMapping("approve/user/{id}")
 	public ResponseEntity<GetAllActivityDtoRes> getApprovedUserActivity(@PathVariable("id") String id) throws Exception{
 		GetAllActivityDtoRes activity = activityService.getApprovedUserActivity(id);
-		return new ResponseEntity<GetAllActivityDtoRes>(activity, HttpStatus.OK);		
-	}
-	
-	@GetMapping
-	public ResponseEntity<GetAllActivityDtoRes> getAll(@RequestParam(value = "start", required = false) Integer start, @RequestParam(value = "max", required = false) Integer max) throws Exception{
-		GetAllActivityDtoRes activity = activityService.getAll(start, max);
 		return new ResponseEntity<GetAllActivityDtoRes>(activity, HttpStatus.OK);		
 	}
 	

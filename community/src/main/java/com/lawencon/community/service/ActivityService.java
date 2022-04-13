@@ -29,6 +29,7 @@ import com.lawencon.community.model.ActivityType;
 import com.lawencon.community.model.Category;
 import com.lawencon.community.model.File;
 import com.lawencon.community.model.TransactionStatus;
+import com.lawencon.model.SearchQuery;
 
 import lombok.RequiredArgsConstructor;
 
@@ -39,6 +40,61 @@ public class ActivityService extends BaseCommunityService {
 	private final ActivityDao activityDao;
 	private final TransactionStatusDao transactionStatusDao;
 	private final FileDao fileDao;
+
+	public GetAllActivityDtoRes getAll(String query, Integer start, Integer max) throws Exception {
+		SearchQuery<Activity> activities = activityDao.findAll(query, start, max);
+		
+		List<GetActivityDtoDataRes> data = new ArrayList<>();
+
+		activities.getData().forEach(list -> {
+			GetActivityDtoDataRes activityData = new GetActivityDtoDataRes();
+			activityData.setId(list.getId());
+			activityData.setActivityName(list.getActivityName());
+			activityData.setActivityTypeName(list.getActivityType().getActivityTypeName());
+			activityData.setCategoryName(list.getCategory().getCategoryName());
+			activityData.setFileId(list.getFile().getId());
+			activityData.setPaymentFileId(list.getPaymentFile().getId());
+			activityData.setDateStart(list.getDateStart());
+			activityData.setDateEnd(list.getDateEnd());
+			activityData.setTimeStart(list.getTimeStart());
+			activityData.setTimeEnd(list.getTimeEnd());
+			activityData.setPrice(list.getPrice());
+			activityData.setLocation(list.getLocation());
+			activityData.setVersion(list.getVersion());
+			data.add(activityData);
+		});
+
+		GetAllActivityDtoRes result = new GetAllActivityDtoRes();
+		result.setData(data);
+		result.setRows(activityDao.countAll());
+		return result;
+	}
+
+	public GetByIdActivityDtoRes getById(String id) throws Exception {
+		Activity activity = activityDao.getById(id);
+		if(activity!=null) {
+			GetActivityDtoDataRes activityData = new GetActivityDtoDataRes();
+			activityData.setId(activity.getId());
+			activityData.setActivityName(activity.getActivityName());
+			activityData.setActivityTypeName(activity.getActivityType().getActivityTypeName());
+			activityData.setCategoryName(activity.getCategory().getCategoryName());
+			activityData.setFileId(activity.getFile().getId());
+			activityData.setPaymentFileId(activity.getPaymentFile().getId());
+			activityData.setDateStart(activity.getDateStart());
+			activityData.setDateEnd(activity.getDateEnd());
+			activityData.setTimeStart(activity.getTimeStart());
+			activityData.setTimeEnd(activity.getTimeEnd());
+			activityData.setPrice(activity.getPrice());
+			activityData.setLocation(activity.getLocation());
+			activityData.setVersion(activity.getVersion());
+			
+			GetByIdActivityDtoRes result = new GetByIdActivityDtoRes();
+			result.setData(activityData);
+			return result;
+		}
+		
+		throw new RuntimeException("Activity Id doesn't exist");
+	}
 
 	public InsertActivityDtoRes insert(String data, MultipartFile[] files) throws Exception {
 		try {
@@ -191,62 +247,6 @@ public class ActivityService extends BaseCommunityService {
 		result.setData(activityVersion);
 		result.setMsg("Update Successfully");
 		return result;
-	}
-
-	public GetAllActivityDtoRes getAll(Integer start, Integer max) throws Exception {
-		List<Activity> activities;
-		if(start == null) activities = activityDao.getAll();
-		else activities = activityDao.getAll(start, max);
-		
-		List<GetActivityDtoDataRes> data = new ArrayList<>();
-
-		activities.forEach(list -> {
-			GetActivityDtoDataRes activityData = new GetActivityDtoDataRes();
-			activityData.setId(list.getId());
-			activityData.setActivityName(list.getActivityName());
-			activityData.setActivityTypeName(list.getActivityType().getActivityTypeName());
-			activityData.setCategoryName(list.getCategory().getCategoryName());
-			activityData.setFileId(list.getFile().getId());
-			activityData.setPaymentFileId(list.getPaymentFile().getId());
-			activityData.setDateStart(list.getDateStart());
-			activityData.setDateEnd(list.getDateEnd());
-			activityData.setTimeStart(list.getTimeStart());
-			activityData.setTimeEnd(list.getTimeEnd());
-			activityData.setPrice(list.getPrice());
-			activityData.setLocation(list.getLocation());
-			activityData.setVersion(list.getVersion());
-			data.add(activityData);
-		});
-
-		GetAllActivityDtoRes result = new GetAllActivityDtoRes();
-		result.setData(data);
-		return result;
-	}
-
-	public GetByIdActivityDtoRes getById(String id) throws Exception {
-		Activity activity = activityDao.getById(id);
-		if(activity!=null) {
-			GetActivityDtoDataRes activityData = new GetActivityDtoDataRes();
-			activityData.setId(activity.getId());
-			activityData.setActivityName(activity.getActivityName());
-			activityData.setActivityTypeName(activity.getActivityType().getActivityTypeName());
-			activityData.setCategoryName(activity.getCategory().getCategoryName());
-			activityData.setFileId(activity.getFile().getId());
-			activityData.setPaymentFileId(activity.getPaymentFile().getId());
-			activityData.setDateStart(activity.getDateStart());
-			activityData.setDateEnd(activity.getDateEnd());
-			activityData.setTimeStart(activity.getTimeStart());
-			activityData.setTimeEnd(activity.getTimeEnd());
-			activityData.setPrice(activity.getPrice());
-			activityData.setLocation(activity.getLocation());
-			activityData.setVersion(activity.getVersion());
-			
-			GetByIdActivityDtoRes result = new GetByIdActivityDtoRes();
-			result.setData(activityData);
-			return result;
-		}
-		
-		throw new RuntimeException("Activity Id doesn't exist");
 	}
 	
 	public GetAllActivityDtoRes getAllByUserIdActivity(String userId) throws Exception {

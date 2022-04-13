@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 
 import com.lawencon.base.BaseEntity;
@@ -43,7 +44,9 @@ public class Activity extends BaseEntity{
 	@JoinColumn(name = "payment_file_id")
 	private File paymentFile;
 	
+	@FullTextField
 	private String activityName;
+	
 	private Date dateStart;
 	private Date dateEnd;
 	private Time timeStart;
