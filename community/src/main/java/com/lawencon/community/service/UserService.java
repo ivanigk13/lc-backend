@@ -22,6 +22,7 @@ import com.lawencon.community.dto.user.GetUserDtoDataRes;
 import com.lawencon.community.dto.user.InsertUserDtoDataRes;
 import com.lawencon.community.dto.user.InsertUserDtoReq;
 import com.lawencon.community.dto.user.InsertUserDtoRes;
+import com.lawencon.community.dto.user.SubscriptionRes;
 import com.lawencon.community.dto.user.UpdateUserDtoDataRes;
 import com.lawencon.community.dto.user.UpdateUserDtoReq;
 import com.lawencon.community.dto.user.UpdateUserDtoRes;
@@ -136,6 +137,19 @@ public class UserService extends BaseCommunityService implements UserDetailsServ
 		userRes.setData(userDataRes);
 		
 		return userRes;
+	}
+	
+	public SubscriptionRes updateSubscription(String id, Integer duration, String updateUser) throws Exception {
+		begin();
+		boolean result = userDao.updateSubscription(id, duration, updateUser);
+		commit();
+		SubscriptionRes subscriptionRes = new SubscriptionRes();
+		if(result) {
+			subscriptionRes.setMsg("Update Successfully");	
+		} else {
+			subscriptionRes.setMsg("Update Failed");
+		}				
+		return subscriptionRes;
 	}
 	
 	public DeleteUserDtoRes deleteById(String id) throws Exception {

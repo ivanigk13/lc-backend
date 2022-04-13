@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.lawencon.base.AbstractJpaDao;
+import com.lawencon.community.constant.RoleConstant;
 import com.lawencon.community.model.Role;
 import com.lawencon.community.model.User;
 import com.lawencon.model.SearchQuery;
@@ -37,6 +38,27 @@ public class UserDao extends AbstractJpaDao<User>{
 		
 		return user;
 	}
+	
+	public boolean updateSubscription (String id, Integer duration, String updateUser) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("UPDATE users ");
+		sb.append("SET subcription_end = now() + INTERVAL ");		
+		sb.append(String.format("'%s MONTH', ", duration));
+		sb.append("role_id = (SELECT id FROM roles WHERE role_code = :code), ");
+		sb.append("updated_by = :userId, ");
+		sb.append("updated_at = now() ");
+		sb.append("WHERE id = :id");
+		
+		Integer result = createNativeQuery(sb.toString())
+						.setParameter("code", RoleConstant.PREMIUM.getRoleCode())
+						.setParameter("userId", updateUser)
+						.setParameter("id", id)
+						.executeUpdate();
+		
+		return result > 0 ;
+	}
+	
+	
 	
 	public Integer isEmailExist(String email) {
 		String sql = "SELECT COUNT(id) FROM users WHERE email = :email";

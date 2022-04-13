@@ -20,6 +20,7 @@ import com.lawencon.community.dto.user.GetAllUserDtoRes;
 import com.lawencon.community.dto.user.GetByIdUserDtoRes;
 import com.lawencon.community.dto.user.InsertUserDtoReq;
 import com.lawencon.community.dto.user.InsertUserDtoRes;
+import com.lawencon.community.dto.user.SubscriptionRes;
 import com.lawencon.community.dto.user.UpdateUserDtoReq;
 import com.lawencon.community.dto.user.UpdateUserDtoRes;
 import com.lawencon.community.service.UserService;
@@ -55,6 +56,12 @@ public class UserController {
 	public ResponseEntity<UpdateUserDtoRes> update(@RequestBody @Valid UpdateUserDtoReq user) throws Exception{
 		UpdateUserDtoRes result = userService.update(user);
 		return new ResponseEntity<UpdateUserDtoRes>(result, HttpStatus.OK);
+	}
+	
+	@PutMapping("subcription")
+	public ResponseEntity<SubscriptionRes> updateSubscription(String id, Integer duration, String updateUser) throws Exception{
+		SubscriptionRes result = userService.updateSubscription(id, duration, updateUser);
+		return new ResponseEntity<SubscriptionRes>(result, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("{id}")

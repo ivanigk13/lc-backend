@@ -24,7 +24,7 @@ CREATE TABLE users(
 	role_id varchar(36) NOT NULL,
 	"email" varchar(100) NOT NULL,
 	"password" varchar(100) NOT NULL,
-	subcribtion_end timestamp WITHOUT time zone,
+	subcription_end timestamp WITHOUT time zone,
 	created_by varchar(36),
 	created_at timestamp WITHOUT time zone DEFAULT CURRENT_TIMESTAMP,
 	updated_by varchar(36),

@@ -46,6 +46,6 @@ public class User extends BaseEntity{
 	private String password; 
 	
 	
-	private LocalDateTime subscriptionEnd;
+	private LocalDateTime subcriptionEnd;
 	
 }
