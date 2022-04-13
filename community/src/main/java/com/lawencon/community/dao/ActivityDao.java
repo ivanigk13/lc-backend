@@ -121,6 +121,11 @@ public class ActivityDao extends AbstractJpaDao<Activity>{
 		return activities;
 	}
 	
+	public List<Activity> getPendingActivity(int startPage, int maxPage) {
+		return createQuery("FROM Activity", Activity.class).setFirstResult(startPage).setMaxResults(maxPage)
+				.getResultList();
+	}
+	
 	public List<Activity> getApprovedEventActivity() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("SELECT a.id, a.file_id, c.category_name, at.activity_type_name, a.transaction_status_id, ts.status_name, ");

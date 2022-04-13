@@ -281,8 +281,10 @@ public class ActivityService extends BaseCommunityService {
 		return activityRes;
 	}
 	
-	public GetAllActivityDtoRes getPendingActivity() throws Exception {
-		List<Activity> activities = activityDao.getPendingActivity();
+	public GetAllActivityDtoRes getPendingActivity(Integer start, Integer max) throws Exception {
+		List<Activity> activities;
+		if(start==null || max==null) activities = activityDao.getPendingActivity();
+		else activities = activityDao.getPendingActivity(start, max);
 		
 		List<GetActivityDtoDataRes> data = new ArrayList<>();
 		

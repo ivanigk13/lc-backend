@@ -87,8 +87,8 @@ public class ActivityController {
 	}
 	
 	@GetMapping("pending")
-	public ResponseEntity<GetAllActivityDtoRes> getPendingActivity() throws Exception{
-		GetAllActivityDtoRes activity = activityService.getPendingActivity();
+	public ResponseEntity<GetAllActivityDtoRes> getPendingActivity(Integer start, Integer max) throws Exception{
+		GetAllActivityDtoRes activity = activityService.getPendingActivity(start,max);
 		return new ResponseEntity<GetAllActivityDtoRes>(activity, HttpStatus.OK);		
 	}
 	
