@@ -97,8 +97,8 @@ public class UserService extends BaseCommunityService implements UserDetailsServ
 	public InsertUserDtoRes insert(InsertUserDtoReq data) throws Exception {
 		User user = new User();
 		Role role = new Role();
-//		role.setId(roleDao.getRoleMemberId());
-		role.setId(roleDao.getRoleAdminId());
+		role.setId(roleDao.getRoleMemberId());
+//		role.setId(roleDao.getRoleAdminId());
 		user.setRole(role);
 		valBkNotExist(data.getEmail());
 		user.setEmail(data.getEmail());
