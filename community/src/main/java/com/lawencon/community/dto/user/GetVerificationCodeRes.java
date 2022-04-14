@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class GetVerificationCodeRes {
 
-	private Integer verificationCode;
+	private String verificationCode;
 	private String msg;
 }
