@@ -229,14 +229,14 @@ public class UserService extends BaseCommunityService implements UserDetailsServ
 		emailTemplate.setSubject("Verification Code For Register");
 		emailTemplate.setTo(email);
 		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("newPassword", code);
+		model.put("code", code);
 		emailTemplate.setModel(model);
 		executorService.submit(() -> {
-			emailSenderService.sendMessage("EmailSendNewPassword.flth", emailTemplate);			
+			emailSenderService.sendMessage("EmailSendVerificationCode.flth", emailTemplate);			
 		});
 		executorService.shutdown();
 		GetVerificationCodeRes getCodeRes = new GetVerificationCodeRes();
-		getCodeRes.setVerificationCode(Integer.valueOf(code));
+		getCodeRes.setVerificationCode(code);
 		getCodeRes.setMsg("Check your email for verification code");
 		return getCodeRes;
 	}
