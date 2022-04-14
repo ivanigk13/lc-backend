@@ -70,7 +70,8 @@ public class CityService extends BaseCommunityService {
 			return result;
 		}
 		
-		throw new RuntimeException("City Id doesn't exist");
+		return null;
+//		throw new RuntimeException("City Id doesn't exist");
 	}
 
 	public InsertCityDtoRes insert(InsertCityDtoReq data) throws Exception {
