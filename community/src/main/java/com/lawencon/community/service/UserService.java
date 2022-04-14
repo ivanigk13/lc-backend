@@ -225,7 +225,7 @@ public class UserService extends BaseCommunityService implements UserDetailsServ
 		ExecutorService executorService = Executors.newFixedThreadPool(1);
 		String code = generateVerificationCode(6);
 		EmailTemplate emailTemplate= new EmailTemplate();
-		emailTemplate.setFrom("LawverProject");
+		emailTemplate.setFrom("lawversproject@gmail.com");
 		emailTemplate.setSubject("Verification Code For Register");
 		emailTemplate.setTo(email);
 		Map<String, Object> model = new HashMap<String, Object>();
@@ -236,7 +236,7 @@ public class UserService extends BaseCommunityService implements UserDetailsServ
 		});
 		executorService.shutdown();
 		GetVerificationCodeRes getCodeRes = new GetVerificationCodeRes();
-		getCodeRes.setVerificationCode(Integer.valueOf(code));
+		getCodeRes.setVerificationCode(code);
 		getCodeRes.setMsg("Check your email for verification code");
 		return getCodeRes;
 	}
