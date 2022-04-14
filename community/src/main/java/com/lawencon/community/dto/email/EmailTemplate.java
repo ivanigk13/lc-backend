@@ -7,9 +7,9 @@ import lombok.Data;
 @Data
 public class EmailTemplate {
 
-	String to;
-    String from;
-    String subject;
-    String content;
+	private String to;
+    private String from;
+    private String subject;
+    private String content;
     private Map<String, Object> model;
 }
