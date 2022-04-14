@@ -2,7 +2,7 @@ package com.lawencon.community.model;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -33,7 +33,7 @@ public class City extends BaseEntity{
 
 	private static final long serialVersionUID = -367065163396635966L;
 	
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "province_id")
 	private Province province;
 	
