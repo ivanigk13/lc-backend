@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.0.final using JasperReports Library version 6.19.0-646c68931cebf1a58bc65c4359d1f0ca223c5e94  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReportAdminActivity" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3516e7da-6bc9-458d-8b9e-658226c7ec27">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.jrdax"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<queryString>
+		<![CDATA[SELECT od.activity_id, p.full_name, u.email, p.phone_number, a.activity_name, at2.activity_type_name, a.date_start, a.date_end, a.location 
+FROM order_detail od 
+INNER JOIN orders o ON o.id = od.order_id 
+INNER JOIN users u ON u.id = o.user_id 
+INNER JOIN profile p ON p.user_id = u.id 
+INNER JOIN activity a ON a.id = od.activity_id
+INNER JOIN activity_type at2 ON at2.id = a.activity_type_id]]>
+	</queryString>
+	<field name="fullName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="full_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="full_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="profile"/>
+		<property name="net.sf.jasperreports.sql.field.column.name" value="full_name"/>
+	</field>
+	<field name="email" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="email"/>
+		<property name="com.jaspersoft.studio.field.label" value="email"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="users"/>
+	</field>
+	<field name="phoneNumber" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="phone_number"/>
+		<property name="com.jaspersoft.studio.field.label" value="phone_number"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="profile"/>
+		<property name="net.sf.jasperreports.sql.field.column.name" value="phone_number"/>
+	</field>
+	<field name="activityName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="activity_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="activity_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="activity"/>
+		<property name="net.sf.jasperreports.sql.field.column.name" value="activity_name"/>
+	</field>
+	<field name="activityTypeName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="activity_type_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="activity_type_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="activity_type"/>
+		<property name="net.sf.jasperreports.sql.field.column.name" value="activity_type_name"/>
+	</field>
+	<field name="dateStart" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="date_start"/>
+		<property name="com.jaspersoft.studio.field.label" value="date_start"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="activity"/>
+		<property name="net.sf.jasperreports.sql.field.column.name" value="date_start"/>
+	</field>
+	<field name="dateEnd" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="date_end"/>
+		<property name="com.jaspersoft.studio.field.label" value="date_end"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="activity"/>
+		<property name="net.sf.jasperreports.sql.field.column.name" value="date_end"/>
+	</field>
+	<field name="location" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="location"/>
+		<property name="com.jaspersoft.studio.field.label" value="location"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="activity"/>
+	</field>
+	<field name="activityId" class="java.lang.String">
+		<property name="net.sf.jasperreports.sql.field.column.name" value="activity_id"/>
+	</field>
+	<group name="Activity">
+		<groupExpression><![CDATA[$F{activityId}]]></groupExpression>
+		<groupHeader>
+			<band height="66">
+				<textField>
+					<reportElement x="63" y="10" width="482" height="20" uuid="2f791e36-0f39-496f-bd14-1c47a808d2af"/>
+					<textElement verticalAlignment="Middle">
+						<font size="11" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{activityName}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="11" y="10" width="52" height="20" uuid="016b9b43-e6cf-4ad0-9777-484ecc2d9afc"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{activityTypeName} + " :"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="11" y="32" width="40" height="20" uuid="f3e32ca1-fa31-4566-af29-c08586086b52"/>
+					<text><![CDATA[Date : ]]></text>
+				</staticText>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="51" y="32" width="160" height="20" uuid="4e2bab06-47b6-45dd-a7f3-36c7dfeb3a35"/>
+					<textFieldExpression><![CDATA[$F{dateStart} + " - " + $F{dateEnd}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="221" y="31" width="50" height="20" uuid="ccc295fc-152b-4c5f-81c3-73660692201b"/>
+					<text><![CDATA[Location :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="173" y="44" width="247" height="20" uuid="c9af68c8-9ee6-44ac-867e-fb183be30874"/>
+					<box>
+						<pen lineWidth="0.75"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Email]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="271" y="31" width="130" height="20" uuid="fef01c3e-b799-4193-9344-18c0cfebe26d"/>
+					<textFieldExpression><![CDATA[$F{location}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="441" y="44" width="122" height="20" uuid="4721a9d2-5a2a-46dc-857b-104e98891f84"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Phone Number]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="11" y="44" width="90" height="22" uuid="71e7e301-1c91-408a-ab54-0ae58965d98c"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Full Name]]></text>
+				</staticText>
+				<line>
+					<reportElement x="11" y="64" width="542" height="1" uuid="90b2417a-39c9-44b0-a677-8320ca1de857"/>
+				</line>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="90" splitType="Stretch">
+			<staticText>
+				<reportElement x="173" y="60" width="209" height="30" uuid="98c094d0-1faf-446e-81a7-8550fde44727"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[List of Participant]]></text>
+			</staticText>
+			<line>
+				<reportElement x="3" y="56" width="549" height="1" forecolor="#030303" uuid="54baa893-cdbb-4e69-9242-f716ee57a590"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Solid" lineColor="#3387D7"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="2" y="0" width="550" height="70" uuid="d431cbe0-5dab-47e5-8f00-36600f1a3fe0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="26"/>
+				</textElement>
+				<text><![CDATA[Report Activity]]></text>
+			</staticText>
+			<image isUsingCache="false">
+				<reportElement x="10" y="6" width="110" height="34" uuid="626151d2-ba47-4cb2-a0c1-1286f237b57f"/>
+				<imageExpression><![CDATA["https://raw.githubusercontent.com/ivanigk13/lc-frontend/master/projects/lawverse-login/src/assets/img/lawverse-logo.png"]]></imageExpression>
+			</image>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="450" y="0" width="93" height="20" uuid="58a9715f-9a06-4a2f-84fa-67a7183b0160"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="212" y="85" width="130" height="1" uuid="3e232c23-5544-4e24-a65b-b5ed7ae3cb04"/>
+			</line>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="10" y="-1" width="140" height="21" uuid="4dd37cd6-0abc-4aaf-8f44-9d65354a836a">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<paragraph leftIndent="3" spacingBefore="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fullName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="172" y="-1" width="249" height="21" uuid="b711bb40-6b5e-4e17-8e94-2987a738294f">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<paragraph leftIndent="3" spacingBefore="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="440" y="-1" width="122" height="21" uuid="36f3a44b-2848-41e8-8ac7-1ace2f93aeeb">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<paragraph leftIndent="3" spacingBefore="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{phoneNumber}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
