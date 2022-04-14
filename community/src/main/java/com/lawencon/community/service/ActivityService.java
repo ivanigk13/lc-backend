@@ -192,8 +192,7 @@ public class ActivityService extends BaseCommunityService {
 		activity.setTimeEnd(req.getTimeEnd());
 		activity.setPrice(req.getPrice());
 		activity.setLocation(req.getLocation());
-		activity.setVersion(req.getVersion());
-		activity.setIsActive(req.getIsActive());
+		activity.setVersion(req.getVersion());		
 		activity.setUpdatedBy(getId());
 
 		Activity activityUpdate = activityDao.save(activity);

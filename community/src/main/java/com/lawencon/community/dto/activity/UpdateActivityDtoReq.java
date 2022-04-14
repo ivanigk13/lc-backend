@@ -52,6 +52,4 @@ public class UpdateActivityDtoReq {
 	@NotNull(message = "Version must be filled")
 	private Integer version;
 	
-	@NotNull(message = "Is Active must be filled")
-	private Boolean isActive;
 }
