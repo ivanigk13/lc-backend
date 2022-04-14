@@ -1,7 +1,9 @@
 package com.lawencon.community.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.lawencon.community.dao.RoleDao;
 import com.lawencon.community.dao.UserDao;
+import com.lawencon.community.dto.email.EmailTemplate;
 import com.lawencon.community.dto.user.DeleteUserDtoRes;
 import com.lawencon.community.dto.user.ForgotPasswordReq;
 import com.lawencon.community.dto.user.ForgotPasswordRes;
@@ -189,8 +192,16 @@ public class UserService extends BaseCommunityService implements UserDetailsServ
 			User userSave = userDao.save(user);
 			commit();
 			
+			EmailTemplate emailTemplate= new EmailTemplate();
+			emailTemplate.setFrom("lawversproject@gmail.com");
+			emailTemplate.setSubject("New Password for Login");
+			emailTemplate.setTo(userSave.getEmail());
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("newPassword", passwordGenerate);
+			emailTemplate.setModel(model);
+			
 			executorService.submit(() -> {
-				emailSenderService.sendMessage(userSave.getEmail(), "Thi is Your New Password for Login",  (passwordGenerate + "\n Please Change Your Password"));			
+				emailSenderService.sendMessage("EmailSendNewPassword.flth", emailTemplate);			
 			});
 			executorService.shutdown();
 			

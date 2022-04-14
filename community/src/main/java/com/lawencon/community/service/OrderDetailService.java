@@ -13,13 +13,17 @@ import com.lawencon.community.dto.orderdetail.DeleteOrderDetailDtoRes;
 import com.lawencon.community.dto.orderdetail.GetAllOrderDetailDtoRes;
 import com.lawencon.community.dto.orderdetail.GetByIdOrderDetailDtoRes;
 import com.lawencon.community.dto.orderdetail.GetByOrderIdDtoRes;
+import com.lawencon.community.dto.orderdetail.GetIncomeActivityDtoDataRes;
+import com.lawencon.community.dto.orderdetail.GetIncomeActivityDtoRes;
 import com.lawencon.community.dto.orderdetail.GetOrderDetailDtoDataRes;
+import com.lawencon.community.dto.orderdetail.GetParticipantDtoDataRes;
+import com.lawencon.community.dto.orderdetail.GetParticipantDtoRes;
 import com.lawencon.community.dto.orderdetail.InsertOrderDetailDtoDataRes;
 import com.lawencon.community.dto.orderdetail.InsertOrderDetailDtoReq;
 import com.lawencon.community.dto.orderdetail.InsertOrderDetailDtoRes;
 import com.lawencon.community.model.Activity;
-import com.lawencon.community.model.Orders;
 import com.lawencon.community.model.OrderDetail;
+import com.lawencon.community.model.Orders;
 import com.lawencon.community.model.Subscribe;
 
 import lombok.RequiredArgsConstructor;
@@ -157,5 +161,38 @@ public class OrderDetailService extends BaseCommunityService {
 			rollback();
 			throw new Exception(e);
 		}
+	}
+	
+	public GetParticipantDtoRes getParticipant(String id) throws Exception {
+		List<GetParticipantDtoDataRes> details = orderDetailDao.getParticipant(id);
+		
+		GetParticipantDtoRes dataRes = new GetParticipantDtoRes();
+		dataRes.setData(details);
+		
+		return dataRes;
+	}
+	
+	public List<GetIncomeActivityDtoDataRes> getIncome(String id) throws Exception {
+		List<GetIncomeActivityDtoDataRes> details = orderDetailDao.getReportIncome(id);
+		
+		return details;
+	}
+	
+	public GetParticipantDtoRes getAllParticipant() throws Exception {
+		List<GetParticipantDtoDataRes> details = orderDetailDao.getAllParticipant();
+		
+		GetParticipantDtoRes dataRes = new GetParticipantDtoRes();
+		dataRes.setData(details);
+		
+		return dataRes;
+	}
+	
+	public GetIncomeActivityDtoRes getAllIncome() throws Exception {
+		List<GetIncomeActivityDtoDataRes> details = orderDetailDao.getAllIncome();
+		
+		GetIncomeActivityDtoRes dataRes = new GetIncomeActivityDtoRes();
+		dataRes.setData(details);
+		
+		return dataRes;
 	}
 }
