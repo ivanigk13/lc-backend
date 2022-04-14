@@ -18,6 +18,7 @@ import com.lawencon.community.dto.user.ForgotPasswordReq;
 import com.lawencon.community.dto.user.ForgotPasswordRes;
 import com.lawencon.community.dto.user.GetAllUserDtoRes;
 import com.lawencon.community.dto.user.GetByIdUserDtoRes;
+import com.lawencon.community.dto.user.GetVerificationCodeRes;
 import com.lawencon.community.dto.user.InsertUserDtoReq;
 import com.lawencon.community.dto.user.InsertUserDtoRes;
 import com.lawencon.community.dto.user.SubscriptionRes;
@@ -74,5 +75,11 @@ public class UserController {
 	public ResponseEntity<ForgotPasswordRes> forgotPass(@RequestBody @Valid ForgotPasswordReq email) throws Exception{
 		ForgotPasswordRes result = userService.forgotPassword(email);
 		return new ResponseEntity<ForgotPasswordRes>(result, HttpStatus.OK);
+	}
+	
+	@GetMapping("code/{email}")
+	public ResponseEntity<GetVerificationCodeRes> getVerificationCode(@PathVariable("email") String email) throws Exception{
+		GetVerificationCodeRes result = userService.getVerificationCode(email);
+		return new ResponseEntity<GetVerificationCodeRes>(result, HttpStatus.OK);
 	}
 }

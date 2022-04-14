@@ -19,6 +19,7 @@ import com.lawencon.community.dto.user.ForgotPasswordRes;
 import com.lawencon.community.dto.user.GetAllUserDtoRes;
 import com.lawencon.community.dto.user.GetByIdUserDtoRes;
 import com.lawencon.community.dto.user.GetUserDtoDataRes;
+import com.lawencon.community.dto.user.GetVerificationCodeRes;
 import com.lawencon.community.dto.user.InsertUserDtoDataRes;
 import com.lawencon.community.dto.user.InsertUserDtoReq;
 import com.lawencon.community.dto.user.InsertUserDtoRes;
@@ -93,8 +94,8 @@ public class UserService extends BaseCommunityService implements UserDetailsServ
 	public InsertUserDtoRes insert(InsertUserDtoReq data) throws Exception {
 		User user = new User();
 		Role role = new Role();
-		role.setId(roleDao.getRoleMemberId());
-//		role.setId(roleDao.getRoleAdminId());
+//		role.setId(roleDao.getRoleMemberId());
+		role.setId(roleDao.getRoleAdminId());
 		user.setRole(role);
 		valBkNotExist(data.getEmail());
 		user.setEmail(data.getEmail());
@@ -190,7 +191,7 @@ public class UserService extends BaseCommunityService implements UserDetailsServ
 			commit();
 			
 			executorService.submit(() -> {
-				emailSenderService.sendMessage(userSave.getEmail(), "Thi is Your New Password for Login",  (passwordGenerate + "\n Please Change Your Password"));			
+				emailSenderService.sendMessage(userSave.getEmail(), "This is Your New Password for Login",  (passwordGenerate + "\n Please Change Your Password"));			
 			});
 			executorService.shutdown();
 			
@@ -209,10 +210,24 @@ public class UserService extends BaseCommunityService implements UserDetailsServ
 		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
 	}
 	
+	public GetVerificationCodeRes getVerificationCode(String email) throws Exception {
+		ExecutorService executorService = Executors.newFixedThreadPool(1);
+		String code = generateVerificationCode(6);
+		executorService.submit(() -> {
+			emailSenderService.sendMessage(email, "Verification Code For Register", ("This is Your Verification Code: "+code));			
+		});
+		executorService.shutdown();
+		GetVerificationCodeRes getCodeRes = new GetVerificationCodeRes();
+		getCodeRes.setVerificationCode(Integer.valueOf(code));
+		getCodeRes.setMsg("Check your email for verification code");
+		return getCodeRes;
+	}
+	
 	private void valBkNotExist(String email) {
 		Integer flag = userDao.isEmailExist(email);
 		if(flag==1) {
 			throw new RuntimeException("Email has existed");
 		}
 	}
+	
  }
