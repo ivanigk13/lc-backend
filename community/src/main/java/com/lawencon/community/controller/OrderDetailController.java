@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.community.dto.orderdetail.DeleteOrderDetailDtoRes;
 import com.lawencon.community.dto.orderdetail.GetAllOrderDetailDtoRes;
-import com.lawencon.community.dto.orderdetail.GetByIdOrderDetailDtoRes;
 import com.lawencon.community.dto.orderdetail.GetByOrderIdDtoRes;
+import com.lawencon.community.dto.orderdetail.GetIncomeActivityDtoRes;
+import com.lawencon.community.dto.orderdetail.GetParticipantDtoRes;
 import com.lawencon.community.dto.orderdetail.InsertOrderDetailDtoReq;
 import com.lawencon.community.dto.orderdetail.InsertOrderDetailDtoRes;
 import com.lawencon.community.service.OrderDetailService;
@@ -36,9 +37,9 @@ public class OrderDetailController {
 	}
 	
 	@GetMapping("{id}")
-	public ResponseEntity<GetByIdOrderDetailDtoRes> getById(@PathVariable("id") String id) throws Exception{
-		GetByIdOrderDetailDtoRes orderDetail = orderDetailService.getById(id);
-		return new ResponseEntity<GetByIdOrderDetailDtoRes>(orderDetail, HttpStatus.OK);		
+	public ResponseEntity<GetParticipantDtoRes> getById(@PathVariable("id") String id) throws Exception{
+		GetParticipantDtoRes orderDetail = orderDetailService.getParticipant(id);
+		return new ResponseEntity<GetParticipantDtoRes>(orderDetail, HttpStatus.OK);		
 	}
 	
 	@GetMapping("order/{id}")
@@ -51,6 +52,24 @@ public class OrderDetailController {
 	public ResponseEntity<GetAllOrderDetailDtoRes> getAll(Integer start, Integer max) throws Exception{
 		GetAllOrderDetailDtoRes orderDetail = orderDetailService.getAll(start, max);
 		return new ResponseEntity<GetAllOrderDetailDtoRes>(orderDetail, HttpStatus.OK);		
+	}
+	
+	@GetMapping("activity/{id}")
+	public ResponseEntity<GetParticipantDtoRes> getParticipantByActivityId(@PathVariable("id") String id) throws Exception{
+		GetParticipantDtoRes order = orderDetailService.getParticipant(id);
+		return new ResponseEntity<GetParticipantDtoRes>(order, HttpStatus.OK);		
+	}
+	
+	@GetMapping("activity")
+	public ResponseEntity<GetParticipantDtoRes> getParticipant() throws Exception{
+		GetParticipantDtoRes order = orderDetailService.getAllParticipant();
+		return new ResponseEntity<GetParticipantDtoRes>(order, HttpStatus.OK);		
+	}
+	
+	@GetMapping("activity-income")
+	public ResponseEntity<GetIncomeActivityDtoRes> getIncome() throws Exception{
+		GetIncomeActivityDtoRes order = orderDetailService.getAllIncome();
+		return new ResponseEntity<GetIncomeActivityDtoRes>(order, HttpStatus.OK);		
 	}
 	
 	@DeleteMapping("{id}")
