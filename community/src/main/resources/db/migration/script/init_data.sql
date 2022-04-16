@@ -31,6 +31,11 @@ INSERT INTO transaction_status (status_code, status_name, created_by) VALUES
 	('ST02', 'Approved', (SELECT id FROM users WHERE email = 'admin@mail.com')),
 	('ST03', 'Rejected', (SELECT id FROM users WHERE email = 'admin@mail.com'));
 
+INSERT INTO subscribe(duration, price, created_by) VALUES
+	(1, 25000, (SELECT id FROM users WHERE email = 'admin@mail.com')),
+	(3, 50000, (SELECT id FROM users WHERE email = 'admin@mail.com')),
+	(6, 100000, (SELECT id FROM users WHERE email = 'admin@mail.com'));
+
 INSERT INTO province (province_code, province_name, created_by) VALUES
 	('11',	'ACEH', (SELECT id FROM users WHERE email = 'admin@mail.com')),
 	('12',	'SUMATERA UTARA', (SELECT id FROM users WHERE email = 'admin@mail.com')),
