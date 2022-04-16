@@ -184,8 +184,11 @@ public class ProfileService extends BaseCommunityService {
 				profileDataRes.setCityId(profile.getCity().getId());
 			}
 			
-			if(profile.getSocialMedia() != null) {
+			if(profile.getFile()!=null) {
 				profileDataRes.setFileId(profile.getFile().getId());
+			}
+			
+			if(profile.getSocialMedia() != null) {
 				profileDataRes.setSocialMediaId(profile.getSocialMedia().getId());
 			}
 			
