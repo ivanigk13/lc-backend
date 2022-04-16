@@ -39,6 +39,7 @@ public class ThreadService extends BaseCommunityService {
 	public InsertThreadDtoRes insert(String content, MultipartFile file) throws Exception {
 		try {
 			InsertThreadDtoReq threadReq = new ObjectMapper().readValue(content, InsertThreadDtoReq.class);
+			valFkNotExist(threadReq.getThreadTypeId());
 			Thread thread = new Thread();
 			ThreadType threadType = threadTypeDao.getById(threadReq.getThreadTypeId());
 			thread.setThreadType(threadType);
@@ -81,23 +82,28 @@ public class ThreadService extends BaseCommunityService {
 
 	public UpdateThreadDtoRes update(UpdateThreadDtoReq data) throws Exception {
 		Thread thread = threadDao.getById(data.getId());
-		thread.setTitle(data.getTitle());
-		thread.setContent(data.getContent());
-		thread.setUpdatedBy(getId());
-		thread.setVersion(data.getVersion());
-		thread.setIsActive(data.getIsActive());
-
-		begin();
-		Thread threadUpdate = threadDao.save(thread);
-		commit();
-
-		UpdateThreadDtoDataRes threadVersion = new UpdateThreadDtoDataRes();
-		threadVersion.setVersion(threadUpdate.getVersion());
-
-		UpdateThreadDtoRes result = new UpdateThreadDtoRes();
-		result.setData(threadVersion);
-		result.setMsg("Update Successfully");
-		return result;
+		
+		if(thread != null) {
+			thread.setTitle(data.getTitle());
+			thread.setContent(data.getContent());
+			thread.setUpdatedBy(getId());
+			thread.setVersion(data.getVersion());
+			thread.setIsActive(data.getIsActive());
+			
+			begin();
+			Thread threadUpdate = threadDao.save(thread);
+			commit();
+			
+			UpdateThreadDtoDataRes threadVersion = new UpdateThreadDtoDataRes();
+			threadVersion.setVersion(threadUpdate.getVersion());
+			
+			UpdateThreadDtoRes result = new UpdateThreadDtoRes();
+			result.setData(threadVersion);
+			result.setMsg("Update Successfully");
+			return result;
+		}
+		
+		throw new RuntimeException("Thread Id doesn't exist");
 	}
 
 	public GetAllThreadDtoRes getAll(Integer start, Integer max) throws Exception {
@@ -138,28 +144,39 @@ public class ThreadService extends BaseCommunityService {
 	public GetByIdThreadDtoRes getById(String id) throws Exception {
 		Thread thread = threadDao.getById(id);
 
-		GetThreadDtoDataRes threadData = new GetThreadDtoDataRes();
-		threadData.setId(thread.getId());
-		
-		Profile profile = profileDao.getByUserId(thread.getCreatedBy());
-		if(profile.getFile() != null) {
-		threadData.setProfilePictureId(profile.getFile().getId());
+		if(thread != null) {
+			GetThreadDtoDataRes threadData = new GetThreadDtoDataRes();
+			threadData.setId(thread.getId());
+			
+			Profile profile = profileDao.getByUserId(thread.getCreatedBy());
+			if(profile.getFile() != null) {
+				threadData.setProfilePictureId(profile.getFile().getId());
+			}
+			
+			threadData.setFullName(profile.getFullName());
+			threadData.setThreadTypeId(thread.getThreadType().getId());
+			threadData.setThreadTypeName(thread.getThreadType().getThreadTypeName());
+			if(thread.getFile() != null) {
+				threadData.setFileId(thread.getFile().getId());
+			}
+			threadData.setTitle(thread.getTitle());
+			threadData.setContent(thread.getContent());
+			threadData.setVersion(thread.getVersion());
+			threadData.setIsActive(thread.getIsActive());
+			
+			GetByIdThreadDtoRes result = new GetByIdThreadDtoRes();
+			result.setData(threadData);
+			
+			return result;
 		}
 		
-		threadData.setFullName(profile.getFullName());
-		threadData.setThreadTypeId(thread.getThreadType().getId());
-		threadData.setThreadTypeName(thread.getThreadType().getThreadTypeName());
-		if(thread.getFile() != null) {
-		threadData.setFileId(thread.getFile().getId());
+		throw new RuntimeException("Thread Id doesn't exist");
+	}
+	
+	private void valFkNotExist(String typeId) {
+		Object resultType = threadTypeDao.getById(typeId);
+		if(resultType == null) {
+			throw new RuntimeException("Thread Type Id doesn't exist");
 		}
-		threadData.setTitle(thread.getTitle());
-		threadData.setContent(thread.getContent());
-		threadData.setVersion(thread.getVersion());
-		threadData.setIsActive(thread.getIsActive());
-
-		GetByIdThreadDtoRes result = new GetByIdThreadDtoRes();
-		result.setData(threadData);
-
-		return result;
 	}
 }

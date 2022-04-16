@@ -8,6 +8,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lawencon.community.dao.ActivityDao;
+import com.lawencon.community.dao.ActivityTypeDao;
+import com.lawencon.community.dao.CategoryDao;
 import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dao.TransactionStatusDao;
 import com.lawencon.community.dto.activity.DeleteActivityDtoRes;
@@ -40,6 +42,8 @@ public class ActivityService extends BaseCommunityService {
 	private final ActivityDao activityDao;
 	private final TransactionStatusDao transactionStatusDao;
 	private final FileDao fileDao;
+	private final ActivityTypeDao activityTypeDao;
+	private final CategoryDao categoryDao;
 
 	public GetAllActivityDtoRes getAll(String query, Integer start, Integer max) throws Exception {
 		SearchQuery<Activity> activities = activityDao.findAll(query, start, max);
@@ -99,6 +103,7 @@ public class ActivityService extends BaseCommunityService {
 	public InsertActivityDtoRes insert(String data, MultipartFile[] files) throws Exception {
 		try {
 			InsertActivityDtoReq req = new ObjectMapper().readValue(data, InsertActivityDtoReq.class);
+			valFkNotExist(req.getActivityTypeId(),req.getCategoryId(),files);
 			Activity activity = new Activity();
 			activity.setActivityName(req.getActivityName());
 
@@ -162,6 +167,7 @@ public class ActivityService extends BaseCommunityService {
 
 	public UpdateActivityDtoRes update(String data, MultipartFile[] files) throws Exception {
 		UpdateActivityDtoReq req = new ObjectMapper().readValue(data, UpdateActivityDtoReq.class);
+		
 		Activity activity = activityDao.getById(req.getId());
 		activity.setActivityName(req.getActivityName());
 
@@ -208,23 +214,26 @@ public class ActivityService extends BaseCommunityService {
 	
 	public UpdateActivityTransactionStatusDtoRes updateApprove(UpdateActivityTransactionStatusDtoReq data) throws Exception {
 		Activity activity = activityDao.getById(data.getId());
+		if(activity != null) {
+			TransactionStatus transactionStatus = new TransactionStatus();
+			transactionStatus.setId(transactionStatusDao.getStatusApproveId());
+			activity.setTransactionStatus(transactionStatus);
+			activity.setUpdatedBy(getId());
+			
+			begin();
+			Activity activityUpdate = activityDao.save(activity);
+			commit();
+			
+			UpdateActivityTransactionStatusDtoDataRes activityVersion = new UpdateActivityTransactionStatusDtoDataRes();
+			activityVersion.setVersion(activityUpdate.getVersion());
+			
+			UpdateActivityTransactionStatusDtoRes result = new UpdateActivityTransactionStatusDtoRes();
+			result.setData(activityVersion);
+			result.setMsg("Update Successfully");
+			return result;
+		}
 		
-		TransactionStatus transactionStatus = new TransactionStatus();
-		transactionStatus.setId(transactionStatusDao.getStatusApproveId());
-		activity.setTransactionStatus(transactionStatus);
-		activity.setUpdatedBy(getId());
-		
-		begin();
-		Activity activityUpdate = activityDao.save(activity);
-		commit();
-
-		UpdateActivityTransactionStatusDtoDataRes activityVersion = new UpdateActivityTransactionStatusDtoDataRes();
-		activityVersion.setVersion(activityUpdate.getVersion());
-
-		UpdateActivityTransactionStatusDtoRes result = new UpdateActivityTransactionStatusDtoRes();
-		result.setData(activityVersion);
-		result.setMsg("Update Successfully");
-		return result;
+		throw new RuntimeException("Activity Id doesn't exist");
 	}
 	
 	public UpdateActivityTransactionStatusDtoRes updateReject(UpdateActivityTransactionStatusDtoReq data) throws Exception {
@@ -495,4 +504,22 @@ public class ActivityService extends BaseCommunityService {
 		return activityRes;
 	}
 	
+	private void valFkNotExist(String typeId, String categoryId, MultipartFile[] file) {
+		Object resultType = activityTypeDao.getById(typeId);
+		if(resultType == null) {
+			throw new RuntimeException("Activity Type Id doesn't exist");
+		}
+		
+		Object resultCategory = categoryDao.getById(categoryId);
+		if(resultCategory == null) {
+			throw new RuntimeException("Category Id doesn't exist");
+		}
+		
+		if(file[0] == null) {
+			throw new RuntimeException("You must upload your picture");
+		}
+		if(file[1] == null) {
+			throw new RuntimeException("You must upload your payment file");
+		}
+	}
 }
