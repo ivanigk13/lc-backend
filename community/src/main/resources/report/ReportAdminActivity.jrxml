@@ -84,15 +84,15 @@ INNER JOIN activity_type at2 ON at2.id = a.activity_type_id]]>
 					<text><![CDATA[Date : ]]></text>
 				</staticText>
 				<textField pattern="dd/MM/yyyy">
-					<reportElement x="51" y="32" width="160" height="20" uuid="4e2bab06-47b6-45dd-a7f3-36c7dfeb3a35"/>
+					<reportElement x="51" y="32" width="149" height="20" uuid="4e2bab06-47b6-45dd-a7f3-36c7dfeb3a35"/>
 					<textFieldExpression><![CDATA[$F{dateStart} + " - " + $F{dateEnd}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="221" y="31" width="50" height="20" uuid="ccc295fc-152b-4c5f-81c3-73660692201b"/>
+					<reportElement x="200" y="30" width="50" height="20" uuid="ccc295fc-152b-4c5f-81c3-73660692201b"/>
 					<text><![CDATA[Location :]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="173" y="44" width="247" height="20" uuid="c9af68c8-9ee6-44ac-867e-fb183be30874"/>
+					<reportElement x="200" y="44" width="200" height="20" uuid="c9af68c8-9ee6-44ac-867e-fb183be30874"/>
 					<box>
 						<pen lineWidth="0.75"/>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -106,11 +106,11 @@ INNER JOIN activity_type at2 ON at2.id = a.activity_type_id]]>
 					<text><![CDATA[Email]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="271" y="31" width="130" height="20" uuid="fef01c3e-b799-4193-9344-18c0cfebe26d"/>
+					<reportElement x="260" y="30" width="130" height="20" uuid="fef01c3e-b799-4193-9344-18c0cfebe26d"/>
 					<textFieldExpression><![CDATA[$F{location}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="441" y="44" width="122" height="20" uuid="4721a9d2-5a2a-46dc-857b-104e98891f84"/>
+					<reportElement x="420" y="44" width="113" height="20" uuid="4721a9d2-5a2a-46dc-857b-104e98891f84"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -123,7 +123,9 @@ INNER JOIN activity_type at2 ON at2.id = a.activity_type_id]]>
 					<text><![CDATA[Phone Number]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="11" y="44" width="90" height="22" uuid="71e7e301-1c91-408a-ab54-0ae58965d98c"/>
+					<reportElement x="11" y="44" width="169" height="22" uuid="71e7e301-1c91-408a-ab54-0ae58965d98c">
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					</reportElement>
 					<box>
 						<pen lineWidth="1.0"/>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -133,11 +135,12 @@ INNER JOIN activity_type at2 ON at2.id = a.activity_type_id]]>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="12" isBold="true"/>
+						<paragraph leftIndent="3"/>
 					</textElement>
 					<text><![CDATA[Full Name]]></text>
 				</staticText>
 				<line>
-					<reportElement x="11" y="64" width="542" height="1" uuid="90b2417a-39c9-44b0-a677-8320ca1de857"/>
+					<reportElement x="11" y="65" width="534" height="1" uuid="90b2417a-39c9-44b0-a677-8320ca1de857"/>
 				</line>
 			</band>
 		</groupHeader>
@@ -181,9 +184,9 @@ INNER JOIN activity_type at2 ON at2.id = a.activity_type_id]]>
 		</band>
 	</title>
 	<detail>
-		<band height="20" splitType="Stretch">
+		<band height="21" splitType="Stretch">
 			<textField>
-				<reportElement x="10" y="-1" width="140" height="21" uuid="4dd37cd6-0abc-4aaf-8f44-9d65354a836a">
+				<reportElement x="10" y="-1" width="170" height="21" uuid="4dd37cd6-0abc-4aaf-8f44-9d65354a836a">
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
 				</reportElement>
@@ -199,7 +202,7 @@ INNER JOIN activity_type at2 ON at2.id = a.activity_type_id]]>
 				<textFieldExpression><![CDATA[$F{fullName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="172" y="-1" width="249" height="21" uuid="b711bb40-6b5e-4e17-8e94-2987a738294f">
+				<reportElement x="200" y="-1" width="200" height="21" uuid="b711bb40-6b5e-4e17-8e94-2987a738294f">
 					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
@@ -210,12 +213,12 @@ INNER JOIN activity_type at2 ON at2.id = a.activity_type_id]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement>
-					<paragraph leftIndent="3" spacingBefore="6"/>
+					<paragraph leftIndent="0" spacingBefore="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="440" y="-1" width="122" height="21" uuid="36f3a44b-2848-41e8-8ac7-1ace2f93aeeb">
+				<reportElement x="420" y="0" width="114" height="21" uuid="36f3a44b-2848-41e8-8ac7-1ace2f93aeeb">
 					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
@@ -226,7 +229,7 @@ INNER JOIN activity_type at2 ON at2.id = a.activity_type_id]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement>
-					<paragraph leftIndent="3" spacingBefore="0"/>
+					<paragraph leftIndent="0" spacingBefore="0"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{phoneNumber}]]></textFieldExpression>
 			</textField>
