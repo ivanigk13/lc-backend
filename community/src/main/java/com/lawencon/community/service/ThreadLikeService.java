@@ -123,7 +123,15 @@ public class ThreadLikeService extends BaseCommunityService{
 		}
 	}  
 
-	public String getIdByThreadIdAndUser(String threadId, String userId) throws Exception {
-		return threadLikeDao.getIdByThreadIdAndUser(threadId, userId);
+	public GetByIdThreadLikeDtoRes getIdByThreadIdAndUser(String threadId, String userId) throws Exception {
+		ThreadLike threadLike = threadLikeDao.getIdByThreadIdAndUser(threadId,userId);
+
+		GetThreadLikeDtoDataRes threadLikeData = new GetThreadLikeDtoDataRes();
+		threadLikeData.setId(threadLike.getId());		
+
+		GetByIdThreadLikeDtoRes result = new GetByIdThreadLikeDtoRes();
+		result.setData(threadLikeData);
+
+		return result;
 	}
 }
