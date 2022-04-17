@@ -27,16 +27,15 @@ public class ThreadLikeDao extends AbstractJpaDao<ThreadLike>{
 		return counter;
 	}
 	
-	public ThreadLike getIdByThreadId(String threadId, String userId) {
+	public String getIdByThreadIdAndUser(String threadId, String userId) {
 		String sql = "SELECT tl.id FROM thread_like as tl WHERE tl.thread_id = :id AND tl.user_id = :user_id";
 		Object result = createNativeQuery(sql)
 							.setParameter("id", threadId)
 							.setParameter("user_id", userId)
 							.getSingleResult();
 		Object obj = (Object) result;
-		ThreadLike threadLike = new ThreadLike();
-		threadLike.setId(obj.toString());
-		return threadLike;
+		String id = obj.toString();
+		return id;
 	}
 	
 	

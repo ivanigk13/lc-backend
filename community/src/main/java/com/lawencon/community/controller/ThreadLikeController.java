@@ -53,11 +53,17 @@ public class ThreadLikeController {
 	}
 	
 	@GetMapping("thread/{threadId}/{userId}")
-	ResponseEntity<Integer> isUserLikeByThreadId(
+	public ResponseEntity<Integer> isUserLikeByThreadId(
 										@PathVariable("threadId") String threadId, 
 										@PathVariable("userId") String userId) throws Exception{
 		Integer counter = threadLikeService.isUserLikeByThreadId(threadId, userId);
 		return new ResponseEntity<Integer>(counter, HttpStatus.OK);	
+	}
+	
+	@GetMapping
+	public ResponseEntity<String> getIdByThreadIdAndUser(String threadId, String userId) throws Exception {
+		String result = threadLikeService.getIdByThreadIdAndUser(threadId, userId);
+		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 	
 }
