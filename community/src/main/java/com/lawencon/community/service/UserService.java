@@ -156,6 +156,7 @@ public class UserService extends BaseCommunityService implements UserDetailsServ
 		return subscriptionRes;
 	}
 	
+		
 	public DeleteUserDtoRes deleteById(String id) throws Exception {
 		try {			
 			begin();
@@ -222,6 +223,7 @@ public class UserService extends BaseCommunityService implements UserDetailsServ
 	}
 	
 	public GetVerificationCodeRes getVerificationCode(String email) throws Exception {
+		valBkNotExist(email);
 		ExecutorService executorService = Executors.newFixedThreadPool(1);
 		String code = generateVerificationCode(6);
 		EmailTemplate emailTemplate= new EmailTemplate();
